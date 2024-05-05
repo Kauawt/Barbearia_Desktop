@@ -14,21 +14,24 @@ insert into tbCliente values(
 'Mauricio de Souza',
 'Rua das Flores 510',
 '(11)99708-73121',
-'465.176.722-71')
+'465.176.722-71',
+'Ativo')
 
 insert into tbCliente values(
 2,
 'Luiz Felipe',
 'Rua dos bobos 0',
 '(11)98728-7121',
-'465.146.721-76')
+'465.146.721-76',
+'Ativo')
 
 insert into tbCliente values(
 3,
 'Vanessa Camargo',
 'Rua Afonso Vergueiro 25',
 '(11)97348-8981',
-'265.746.921-16')
+'265.746.921-16',
+'Inativo')
 
 create table tbBarbeiro(
 codUsuario int primary key,
