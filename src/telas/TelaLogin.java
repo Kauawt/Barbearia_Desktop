@@ -18,6 +18,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class TelaLogin extends JFrame {
 	
@@ -29,6 +31,7 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUserUsuario;
 	private JPasswordField txtSenhaUsuario;
+	private JLabel lblConexao;
 
 	/**
 	 * Launch the application.
@@ -52,20 +55,27 @@ public class TelaLogin extends JFrame {
 	public TelaLogin() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 426, 188);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		
 		txtUserUsuario = new JTextField();
+		txtUserUsuario.setBounds(106, 25, 117, 20);
 		txtUserUsuario.setColumns(10);
 		
 		JLabel lblUseUsuario = new JLabel("User");
+		lblUseUsuario.setBounds(38, 22, 50, 22);
+		lblUseUsuario.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
 		JLabel lblSenhaUsuario = new JLabel("Senha");
+		lblSenhaUsuario.setBounds(38, 65, 59, 22);
+		lblSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		
 		JButton btnLoginUsuario = new JButton("Login");
+		btnLoginUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		btnLoginUsuario.setBounds(71, 98, 96, 23);
 		btnLoginUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				logar();
@@ -73,64 +83,39 @@ public class TelaLogin extends JFrame {
 		});
 		
 		txtSenhaUsuario = new JPasswordField();
+		txtSenhaUsuario.setBounds(107, 65, 117, 20);
 		
 		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(5, 5, 0, 0);
 		
-		JLabel lblStatus = new JLabel("---");
-		lblStatus.setIcon(null);
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(27)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblSenhaUsuario, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUseUsuario, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStatus))
-							.addGap(49)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnLoginUsuario)
-								.addComponent(txtUserUsuario)
-								.addComponent(txtSenhaUsuario)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNewLabel)))
-					.addContainerGap(203, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(62)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblUseUsuario)
-							.addGap(26)
-							.addComponent(lblSenhaUsuario))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtUserUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(txtSenhaUsuario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnLoginUsuario)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblNewLabel))
-						.addComponent(lblStatus))
-					.addGap(23))
-		);
-		contentPane.setLayout(gl_contentPane);
+		JLabel lblStatus = new JLabel("");
+		lblStatus.setBounds(291, 11, 48, 48);
+		lblStatus.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/notconnectedicon.png")));
+		
+		lblConexao = new JLabel("Banco Desconectado");
+		lblConexao.setBounds(249, 65, 138, 18);
+		lblConexao.setFont(new Font("Arial Black", Font.PLAIN, 12));
+		contentPane.setLayout(null);
+		contentPane.add(lblNewLabel);
+		contentPane.add(lblUseUsuario);
+		contentPane.add(txtUserUsuario);
+		contentPane.add(lblSenhaUsuario);
+		contentPane.add(txtSenhaUsuario);
+		contentPane.add(lblConexao);
+		contentPane.add(lblStatus);
+		contentPane.add(btnLoginUsuario);
 		
 		
 		// conecta com banco
 		
 		conexao = ModuloConexao.conector();
 		if(conexao != null) {
-			lblStatus.setText("Conectou");
+			lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/connectedicon.png")));
+			lblConexao.setText("Banco Conectado");
+			
 		}else {
-			lblStatus.setText("Não Conectou");
+			lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/notconnectedicon.png")));
+			lblConexao.setText("Banco Desconectado");
 		}
 		
 	}
@@ -149,7 +134,7 @@ public class TelaLogin extends JFrame {
 		    
 			//se existir usuário e senha correspondente
 			if(rs.next()){
-				TelaPrincipal principal = new TelaPrincipal();
+				TelaMenuPrincipal principal = new TelaMenuPrincipal();
 				principal.setVisible(true);
 			}else {
 				JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s)");
