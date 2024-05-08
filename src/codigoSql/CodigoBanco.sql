@@ -33,33 +33,47 @@ insert into tbCliente values(
 '265.746.921-16',
 'Inativo')
 
-create table tbBarbeiro(
+create table tbUsuario(
 codUsuario int primary key,
 nomeUsuario varchar(50) not null,
 cpfUsuario varchar(50) not null,
 dataNascimento date not null,
 salarioUsuario money not null,
 userUsuario varchar(10) not null unique,
-senhaUsuario varchar(15) not null);
+senhaUsuario varchar(15) not null,
+perfilUsuario varchar(10) not null);
 
 
-insert into tbBarbeiro values (
+insert into tbUsuario values (
 1,
 'João Paulo',
 '342.173.728-12',
 '1996-05-21',
-200,
+10000,
+'Admin',
 'Admin',
 'Admin');
 
-insert into tbBarbeiro values (
+insert into tbUsuario values (
 2,
-'Fabricio',
+'Fabricio Vieira',
 '522.313.228-12',
 '1991-08-21',
-200,
+3000,
 'Fabricio',
-'Fabricio123');
+'Fabricio123',
+'user');
+
+insert into tbUsuario values (
+3,
+'Matheus Inacio',
+'999.999.999-99',
+'1996-09-11',
+3000,
+'Matheus',
+'Matheuzinho123',
+'user');
+
 
 
 
