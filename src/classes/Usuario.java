@@ -1,8 +1,6 @@
 package classes;
 import java.time.LocalDate;
 
-import conexao.ModuloConexao;
-
 public class Usuario {
     private int codUsuario;
     private String nomeUsuario;
@@ -18,11 +16,6 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
         this.salarioUsuario = salarioUsuario;
         this.horarioTurno = horarioTurno;
-    }
-    
-    public static void cadastraCliente(ModuloConexao conexao ,Cliente cliente) {
-    	
-    	
     }
 
     public int getCodUsuario() {

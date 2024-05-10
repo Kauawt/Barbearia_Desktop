@@ -37,12 +37,11 @@ create table tbUsuario(
 codUsuario int primary key,
 nomeUsuario varchar(50) not null,
 cpfUsuario varchar(50) not null,
-dataNascimento date not null,
+dataNascimentoUsuario date not null,
 salarioUsuario money not null,
-userUsuario varchar(10) not null unique,
-senhaUsuario varchar(15) not null,
+userUsuario varchar(40) not null unique,
+senhaUsuario varchar(20) not null,
 perfilUsuario varchar(10) not null);
-
 
 insert into tbUsuario values (
 1,
@@ -50,7 +49,7 @@ insert into tbUsuario values (
 '342.173.728-12',
 '1996-05-21',
 10000,
-'Admin',
+'Admin@gmail.com',
 'Admin',
 'Admin');
 
@@ -60,7 +59,7 @@ insert into tbUsuario values (
 '522.313.228-12',
 '1991-08-21',
 3000,
-'Fabricio',
+'Fabricio@hotmail.com',
 'Fabricio123',
 'user');
 
@@ -70,9 +69,17 @@ insert into tbUsuario values (
 '999.999.999-99',
 '1996-09-11',
 3000,
-'Matheus',
+'Matheus@gmail.com',
 'Matheuzinho123',
 'user');
+
+create table tbServico(
+codServico int primary key,
+tipoServico varchar(20) not null,
+descricaoServico varchar(120) not null,
+precoServico float not null,
+duracaoServico float not null,
+statusServico varchar(10) not null);
 
 
 

@@ -1,4 +1,4 @@
-package telas;
+package view;
 
 import java.awt.EventQueue;
 

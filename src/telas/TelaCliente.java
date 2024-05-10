@@ -188,7 +188,7 @@ public class TelaCliente extends JInternalFrame {
 		setClosable(true);
 		setRootPaneCheckingEnabled(false);
 		setMinimumSize(new Dimension(450, 480));
-		setTitle("Cliente");
+		setTitle("Usuario");
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
