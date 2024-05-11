@@ -21,7 +21,7 @@ public class UsuarioDao {
 			pst.setInt(1, usuario.getCodUsuario()); // atribui o valor do model a linha SQL
 			pst.setString(2, usuario.getNomeUsuario());
 			pst.setString(3, usuario.getCpfUsuario());
-			pst.setDate(4, new Date (usuario.getDataNascimentoUsuario().getTime()));
+			pst.setString(4, usuario.getDataNascimentoUsuario());
 			pst.setDouble(5, usuario.getSalarioUsuario());
 			pst.setString(6, usuario.getUserUsuario());
 			pst.setString(7, usuario.getSenhaUsuario());
@@ -29,17 +29,21 @@ public class UsuarioDao {
 			pst.executeUpdate(); // atualiza o banco de dados
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Cliente: " + e);
-		}finally {
+		} finally {
 			try {
-				if(pst != null) {pst.close();} // fecha conexão com banco
-			}catch(SQLException e) {
+				if (pst != null) {
+					pst.close();
+				} // fecha conexão com banco
+			} catch (SQLException e) {
 				throw new ExceptionDao("Erro ao fechar o Statement" + e);
 			}
 			try {
-				if(conexao != null) {conexao.close();}
-			}catch(SQLException e) {
-				 throw new ExceptionDao ("Erro ao fechar a conexão: "+ e);
-			 }
+				if (conexao != null) {
+					conexao.close();
 				}
+			} catch (SQLException e) {
+				throw new ExceptionDao("Erro ao fechar a conexão: " + e);
+			}
+		}
 	}
 }

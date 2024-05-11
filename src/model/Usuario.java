@@ -10,14 +10,14 @@ public class Usuario {
     private int codUsuario;
     private String nomeUsuario;
     private String cpfUsuario;
-    private Date dataNascimentoUsuario;
+    private String dataNascimentoUsuario;
     private double salarioUsuario;
     private String emailUsuario;
     private String senhaUsuario;
     private String perfilUsuario;
     
-   public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, Date dataNascimentoUsuario,
-			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario) {
+   public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+		double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario) {
 		this.codUsuario = codUsuario;
 		this.nomeUsuario = nomeUsuario;
 		this.cpfUsuario = cpfUsuario;
@@ -27,6 +27,16 @@ public class Usuario {
 		this.senhaUsuario = senhaUsuario;
 		this.perfilUsuario = perfilUsuario;
 	}
+   
+   public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+			double salarioUsuario, String perfilUsuario) {
+			this.codUsuario = codUsuario;
+			this.nomeUsuario = nomeUsuario;
+			this.cpfUsuario = cpfUsuario;
+			this.dataNascimentoUsuario = dataNascimentoUsuario;
+			this.salarioUsuario = salarioUsuario;
+			this.perfilUsuario = perfilUsuario;
+		}
 
 
 public int getCodUsuario() {
@@ -65,13 +75,13 @@ public int getCodUsuario() {
 
 
 
-	public Date getDataNascimentoUsuario() {
+	public String getDataNascimentoUsuario() {
 		return dataNascimentoUsuario;
 	}
 
 
 
-	public void setDataNascimentoUsuario(Date dataNascimentoUsuario) {
+	public void setDataNascimentoUsuario(String dataNascimentoUsuario) {
 		this.dataNascimentoUsuario = dataNascimentoUsuario;
 	}
 

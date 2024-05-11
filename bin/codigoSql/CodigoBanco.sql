@@ -8,7 +8,7 @@ enderecoCliente varchar(100) not null,
 telefoneCliente varchar(100) not null,
 cpfCliente varchar(14) not null);
 
-
+select * from tbUsuario;
 insert into tbCliente values(
 1,
 'Mauricio de Souza',
@@ -71,6 +71,16 @@ insert into tbUsuario values (
 3000,
 'Matheus@gmail.com',
 'Matheuzinho123',
+'user');
+
+insert into tbUsuario values (
+5,
+'Anthony Oliveira',
+'999.999.999-99',
+'2001-05-29',
+3000,
+'Anthony',
+'senhaSenha',
 'user');
 
 create table tbServico(
