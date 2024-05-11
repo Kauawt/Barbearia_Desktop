@@ -12,7 +12,9 @@ public class ClienteDao {
 		Connection conexao = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		
 		try {
+			
 			conexao = ModuloConexao.conector(); // abre conexao
 			pst = conexao.prepareStatement(sql); // passa o comando sql como argumento
 			pst.setInt(1, cliente.getCodCliente()); // atribui o valor do model a linha SQL
@@ -24,17 +26,21 @@ public class ClienteDao {
 			pst.executeUpdate(); // atualiza o banco de dados
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Cliente: " + e);
-		}finally {
+		} finally {
 			try {
-				if(pst != null) {pst.close();} // fecha conexão com banco
-			}catch(SQLException e) {
+				if (pst != null) {
+					pst.close();
+				} // fecha conexão com banco
+			} catch (SQLException e) {
 				throw new ExceptionDao("Erro ao fechar o Statement" + e);
 			}
 			try {
-				if(conexao != null) {conexao.close();}
-			}catch(SQLException e) {
-				 throw new ExceptionDao ("Erro ao fechar a conexão: "+ e);
-			 }
+				if (conexao != null) {
+					conexao.close();
 				}
+			} catch (SQLException e) {
+				throw new ExceptionDao("Erro ao fechar a conexão: " + e);
+			}
+		}
 	}
 }

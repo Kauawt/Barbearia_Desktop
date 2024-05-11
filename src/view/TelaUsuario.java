@@ -201,9 +201,15 @@ public class TelaUsuario extends JInternalFrame {
 		ftxtDataNascimentoUsuario.setText("");
 		ftxtDataNascimentoUsuario.setBounds(452, 186, 168, 20);
 		getContentPane().add(ftxtDataNascimentoUsuario);
+		
+		JLabel lblConsultarUsuario = new JLabel("ConsultarUsuario");
+		lblConsultarUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblConsultarUsuario.setBounds(336, 346, 161, 21);
+		getContentPane().add(lblConsultarUsuario);
 		btnConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	
+				TelaConsultaUsuario telaConsultaUsuario = new TelaConsultaUsuario();
+				telaConsultaUsuario.setVisible(true);
 			}
 		});
 		btnCadastrarUsuario.addActionListener(new ActionListener() {

@@ -43,6 +43,7 @@ public class TelaLogin extends JFrame {
 			public void run() {
 				try {
 					TelaLogin frame = new TelaLogin();
+					frame.setLocationRelativeTo(frame);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -116,6 +117,8 @@ public class TelaLogin extends JFrame {
 		// conecta com banco
 
 		conexao = ModuloConexao.conector();
+		ModuloConexao.conector();
+		
 		if (conexao != null) {
 			lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/connectedicon1.png")));
 			lblConexao.setText("Conectado");
@@ -144,6 +147,7 @@ public class TelaLogin extends JFrame {
 				String perfil = rs.getString(8);
 				if (perfil.equals("Admin")) { // uso do equal porque é String
 					TelaMenuPrincipal principal = new TelaMenuPrincipal();
+					principal.setLocationRelativeTo(principal);
 					principal.setVisible(true);
 					principal.mntmCadastrarUsuario.setEnabled(true);
 					principal.mntmRelatorioAgendamento.setEnabled(true); // libera a opção de gerar relatorio
@@ -158,6 +162,7 @@ public class TelaLogin extends JFrame {
 				else {
 					TelaMenuPrincipal principal = new TelaMenuPrincipal();
 					principal.setVisible(true);
+					principal.setLocationRelativeTo(principal);
 					principal.lblUser.setText(rs.getString(6));
 					//formatar a data do sistema de dia e hora para apenas dia
 					Date data = new Date();
@@ -169,10 +174,7 @@ public class TelaLogin extends JFrame {
 			else {
 				JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s)");
 			}
-		}catch(
-
-	Exception e)
-	{
+		}catch(	Exception e){
 		JOptionPane.showMessageDialog(null, e);
 	}
 }	
