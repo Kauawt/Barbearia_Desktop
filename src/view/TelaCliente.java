@@ -16,11 +16,14 @@ import java.awt.Point;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import controller.ClienteController;
+import dao.ExceptionDao;
 import dao.ModuloConexao;
 
 import javax.swing.JLabel;
@@ -36,6 +39,7 @@ import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
+import javax.swing.JFormattedTextField;
 
 public class TelaCliente extends JInternalFrame {
 	
@@ -47,8 +51,6 @@ public class TelaCliente extends JInternalFrame {
 	private JTextField txtCodigoCliente;
 	private JTextField txtNomeCliente;
 	private JTextField txtEnderecoCliente;
-	private JTextField txtTelefoneCliente;
-	private JTextField txtCpfCliente;
 	private JComboBox cbStatusCliente;
 
 	/**
@@ -118,20 +120,10 @@ public class TelaCliente extends JInternalFrame {
 		getContentPane().add(lblTelefone);
 		lblTelefone.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
-		txtTelefoneCliente = new JTextField();
-		txtTelefoneCliente.setBounds(452, 186, 176, 20);
-		getContentPane().add(txtTelefoneCliente);
-		txtTelefoneCliente.setColumns(10);
-		
 		JLabel lblCpf = new JLabel("CPF");
 		lblCpf.setBounds(10, 249, 112, 21);
 		getContentPane().add(lblCpf);
 		lblCpf.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		
-		txtCpfCliente = new JTextField();
-		txtCpfCliente.setBounds(126, 251, 176, 20);
-		getContentPane().add(txtCpfCliente);
-		txtCpfCliente.setColumns(10);
 		
 		JLabel lblStatusCliente = new JLabel("Status");
 		lblStatusCliente.setBounds(336, 249, 49, 21);
@@ -168,6 +160,26 @@ public class TelaCliente extends JInternalFrame {
 		btnDeletarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/deleteicon.png")));
 		btnDeletarCliente.setBounds(487, 374, 117, 68);
 		getContentPane().add(btnDeletarCliente);
+		
+		MaskFormatter cpfMask = null;
+		MaskFormatter dataMask = null;
+		MaskFormatter telefoneMask = null;
+		
+		try {
+			cpfMask = new MaskFormatter("###.###.###-##");
+			dataMask = new MaskFormatter("##/##/####");
+			telefoneMask = new MaskFormatter("(##)#####-####");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		JFormattedTextField ftxtCpfCliente = new JFormattedTextField(cpfMask);
+		ftxtCpfCliente.setBounds(126, 251, 176, 20);
+		getContentPane().add(ftxtCpfCliente);
+		
+		JFormattedTextField ftxtTelefoneCliente = new JFormattedTextField(telefoneMask);
+		ftxtTelefoneCliente.setBounds(452, 187, 176, 20);
+		getContentPane().add(ftxtTelefoneCliente);
 		btnConsultarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -177,16 +189,13 @@ public class TelaCliente extends JInternalFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				int codCliente = Integer.parseInt(txtCodigoCliente.getText());
-				boolean sucesso;
-				try {
+				
 					ClienteController clienteController = new ClienteController();
-					sucesso = clienteController.validarCliente(codCliente,txtNomeCliente.getText(),txtEnderecoCliente.getText(),txtTelefoneCliente.getText(),txtCpfCliente.getText(),cbStatusCliente.getSelectedItem().toString());
-					if(sucesso == true) {
-						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso");
+					try {
+						clienteController.cadastarCliente(codCliente,txtNomeCliente.getText(),txtEnderecoCliente.getText(),ftxtTelefoneCliente.getText(),ftxtCpfCliente.getText(),cbStatusCliente.getSelectedItem().toString());
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados" );
 					}
-				}catch(Exception el) {
-					JOptionPane.showMessageDialog(null, "Erro: " + el);
-				}
 			}
 		});
 		setIconifiable(true);

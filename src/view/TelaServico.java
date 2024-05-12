@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import controller.ClienteController;
 import controller.ServicoController;
 import controller.UsuarioController;
+import dao.ExceptionDao;
 import dao.ModuloConexao;
 
 import javax.swing.JLabel;
@@ -180,15 +181,11 @@ public class TelaServico extends JInternalFrame {
 				int codServico = Integer.parseInt(txtCodigoServico.getText());
 				double precoServico = Double.parseDouble(txtPrecoServico.getText());
 				double duracaoServico =Double.parseDouble(txtDuracaoServico.getText());
-				boolean sucesso;
+				ServicoController servicoController = new ServicoController();
 				try {
-					ServicoController servicoController = new ServicoController();
-					sucesso = servicoController.cadastrarServico(codServico,txtTipoServico.getText(),txtDescricaoServico.getText(),precoServico,duracaoServico,cbStatusServico.getSelectedItem().toString());
-					if(sucesso == true) {
-						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso");
-					}
-				}catch(Exception el) {
-					JOptionPane.showMessageDialog(null, "Erro: " + el);
+					servicoController.cadastrarServico(codServico,txtTipoServico.getText(),txtDescricaoServico.getText(),precoServico,duracaoServico,cbStatusServico.getSelectedItem().toString());
+				} catch (ExceptionDao e1) {
+					e1.printStackTrace();
 				}
 			}
 		});

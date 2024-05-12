@@ -1,8 +1,10 @@
 package model;
 
+import javax.swing.JOptionPane;
+
 import dao.ClienteDao;
 import dao.ExceptionDao;
-
+import model.Validador;
 public class Cliente {
 	private int codCliente;
 	private String nomeCliente;
@@ -12,12 +14,21 @@ public class Cliente {
 	private String statusCliente;
 	
 	public Cliente(int codCliente, String nomeCliente, String enderecoCliente, String telefoneCliente, String cpfCliente,String statusCliente) {
-		this.codCliente = codCliente;
-		this.nomeCliente = nomeCliente;
-		this.enderecoCliente = enderecoCliente;
-		this.telefoneCliente = telefoneCliente;
-		this.cpfCliente = cpfCliente;
-		this.statusCliente = statusCliente;
+		if(codCliente >0 && nomeCliente != null && enderecoCliente != null && Validador.validadorTelefone(telefoneCliente) && Validador.validadorCpf(cpfCliente)  && Validador.validadorStatus(statusCliente)) {
+			this.codCliente = codCliente;
+			this.nomeCliente = nomeCliente;
+			this.enderecoCliente = enderecoCliente;
+			this.telefoneCliente = telefoneCliente;
+			this.cpfCliente = cpfCliente;
+			this.statusCliente = statusCliente;
+			JOptionPane.showMessageDialog(null, "Cliente Cadastrados com Sucesso");
+		}else if(codCliente<0) {
+			JOptionPane.showMessageDialog(null, "Não é permitido ter valores negativos");
+		}else if(Validador.validadorCpf(cpfCliente) == false) {
+			JOptionPane.showMessageDialog(null, "CPF Inválido");
+		}else if(Validador.validadorStatus(statusCliente)==false) {
+			JOptionPane.showMessageDialog(null, "O Status deve ser Ativo durante a criação de um novo Cadastro");
+				}
 	}
 
 	public int getCodCliente() {

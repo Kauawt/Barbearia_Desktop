@@ -130,7 +130,7 @@ public class TelaLogin extends JFrame {
 
 	}
 	public void logar() {
-		String sql = "select * from tbUsuario where userUsuario=? and senhaUsuario=?";
+		String sql = "select * from tbUsuario where emailUsuario=? and senhaUsuario=?";
 		try {
 			// preparar banco para consulta em função do que foi digitado nas caixas de
 			// texto.
@@ -145,13 +145,13 @@ public class TelaLogin extends JFrame {
 			if (rs.next()) {
 				// verifica o perfil do usuario
 				String perfil = rs.getString(8);
-				if (perfil.equals("Admin")) { // uso do equal porque é String
+				if (perfil.equals("Administrador")) { // uso do equal porque é String
 					TelaMenuPrincipal principal = new TelaMenuPrincipal();
 					principal.setLocationRelativeTo(principal);
 					principal.setVisible(true);
 					principal.mntmCadastrarUsuario.setEnabled(true);
 					principal.mntmRelatorioAgendamento.setEnabled(true); // libera a opção de gerar relatorio
-					principal.lblUser.setText(rs.getString(6));
+					principal.lblUser.setText(rs.getString(8));
 					principal.lblUser.setForeground(Color.red);
 					//formatar a data do sistema de dia e hora para apenas dia
 					Date data = new Date();

@@ -24,6 +24,7 @@ import javax.swing.text.MaskFormatter;
 
 import controller.ClienteController;
 import controller.UsuarioController;
+import dao.ExceptionDao;
 import dao.ModuloConexao;
 
 import javax.swing.JLabel;
@@ -88,47 +89,47 @@ public class TelaUsuario extends JInternalFrame {
 		lblFormularioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 22));
 		
 		JLabel lblCodigoUsuario = new JLabel("ID");
-		lblCodigoUsuario.setBounds(10, 126, 112, 21);
+		lblCodigoUsuario.setBounds(10, 71, 112, 21);
 		getContentPane().add(lblCodigoUsuario);
 		lblCodigoUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
 		txtCodigoUsuario = new JTextField();
-		txtCodigoUsuario.setBounds(126, 128, 176, 20);
+		txtCodigoUsuario.setBounds(126, 73, 176, 20);
 		getContentPane().add(txtCodigoUsuario);
 		txtCodigoUsuario.setColumns(10);
 	
 		JLabel lblNomeusuario = new JLabel("Nome");
-		lblNomeusuario.setBounds(336, 126, 112, 21);
+		lblNomeusuario.setBounds(336, 71, 112, 21);
 		getContentPane().add(lblNomeusuario);
 		lblNomeusuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
 		txtNomeUsuario = new JTextField();
-		txtNomeUsuario.setBounds(452, 128, 176, 20);
+		txtNomeUsuario.setBounds(452, 73, 176, 20);
 		getContentPane().add(txtNomeUsuario);
 		txtNomeUsuario.setColumns(10);
 		
 		JLabel lblSalarioUsuario = new JLabel("Salario");
-		lblSalarioUsuario.setBounds(10, 234, 112, 21);
+		lblSalarioUsuario.setBounds(10, 179, 112, 21);
 		getContentPane().add(lblSalarioUsuario);
 		lblSalarioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
 		txtSalarioUsuario = new JTextField();
-		txtSalarioUsuario.setBounds(126, 236, 176, 20);
+		txtSalarioUsuario.setBounds(126, 181, 176, 20);
 		getContentPane().add(txtSalarioUsuario);
 		txtSalarioUsuario.setColumns(10);
 		
 		JLabel lblDataNascimentoUsuario = new JLabel("Data Nascimento");
-		lblDataNascimentoUsuario.setBounds(312, 184, 136, 21);
+		lblDataNascimentoUsuario.setBounds(312, 129, 136, 21);
 		getContentPane().add(lblDataNascimentoUsuario);
 		lblDataNascimentoUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
 		JLabel lblCpfUsuario = new JLabel("CPF");
-		lblCpfUsuario.setBounds(10, 184, 112, 21);
+		lblCpfUsuario.setBounds(10, 129, 112, 21);
 		getContentPane().add(lblCpfUsuario);
 		lblCpfUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(335, 234, 49, 21);
+		lblEmail.setBounds(335, 179, 49, 21);
 		getContentPane().add(lblEmail);
 		lblEmail.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		
@@ -160,27 +161,27 @@ public class TelaUsuario extends JInternalFrame {
 		
 		txtUserUsuario = new JTextField();
 		txtUserUsuario.setColumns(10);
-		txtUserUsuario.setBounds(452, 236, 176, 20);
+		txtUserUsuario.setBounds(452, 181, 176, 20);
 		getContentPane().add(txtUserUsuario);
 		
 		JLabel lblSenhaUsuario = new JLabel("Senha");
 		lblSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblSenhaUsuario.setBounds(10, 284, 49, 21);
+		lblSenhaUsuario.setBounds(10, 229, 49, 21);
 		getContentPane().add(lblSenhaUsuario);
 		
 		txtSenhaUsuario = new JTextField();
 		txtSenhaUsuario.setColumns(10);
-		txtSenhaUsuario.setBounds(127, 286, 176, 20);
+		txtSenhaUsuario.setBounds(127, 231, 176, 20);
 		getContentPane().add(txtSenhaUsuario);
 		
 		JLabel lblPerfilUsuario = new JLabel("Perfil");
 		lblPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblPerfilUsuario.setBounds(336, 284, 49, 21);
+		lblPerfilUsuario.setBounds(336, 229, 49, 21);
 		getContentPane().add(lblPerfilUsuario);
 		
 		final JComboBox cbPerfilUsuario = new JComboBox();
-		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Admin", "User"}));
-		cbPerfilUsuario.setBounds(452, 285, 176, 22);
+		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
+		cbPerfilUsuario.setBounds(452, 230, 176, 22);
 		getContentPane().add(cbPerfilUsuario);
 		
 		MaskFormatter cpfMask = null;
@@ -194,18 +195,28 @@ public class TelaUsuario extends JInternalFrame {
 		}
 		final JFormattedTextField ftxtCpfUsuario = new JFormattedTextField(cpfMask);
 		ftxtCpfUsuario.setText("");
-		ftxtCpfUsuario.setBounds(126, 186, 168, 20);
+		ftxtCpfUsuario.setBounds(126, 131, 176, 20);
 		getContentPane().add(ftxtCpfUsuario);
 		
 		final JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField(dataMask);
 		ftxtDataNascimentoUsuario.setText("");
-		ftxtDataNascimentoUsuario.setBounds(452, 186, 168, 20);
+		ftxtDataNascimentoUsuario.setBounds(452, 131, 176, 20);
 		getContentPane().add(ftxtDataNascimentoUsuario);
 		
 		JLabel lblConsultarUsuario = new JLabel("ConsultarUsuario");
 		lblConsultarUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
 		lblConsultarUsuario.setBounds(336, 346, 161, 21);
 		getContentPane().add(lblConsultarUsuario);
+		
+		JLabel lblStatusUsuario = new JLabel("Status");
+		lblStatusUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblStatusUsuario.setBounds(220, 287, 49, 21);
+		getContentPane().add(lblStatusUsuario);
+		
+		JComboBox cbStatusUsuario = new JComboBox();
+		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
+		cbStatusUsuario.setBounds(292, 288, 156, 22);
+		getContentPane().add(cbStatusUsuario);
 		btnConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConsultaUsuario telaConsultaUsuario = new TelaConsultaUsuario();
@@ -217,15 +228,12 @@ public class TelaUsuario extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				int codUsuario = Integer.parseInt(txtCodigoUsuario.getText());
 				double salarioUsuario = Integer.parseInt(txtSalarioUsuario.getText());
-				boolean sucesso;
+				UsuarioController usuarioController = new UsuarioController();
 				try {
-					UsuarioController usuarioController = new UsuarioController();
-					sucesso = usuarioController.cadastrarUsuario(codUsuario,txtNomeUsuario.getText(),ftxtCpfUsuario.getText(),ftxtDataNascimentoUsuario.getText(),salarioUsuario,txtUserUsuario.getText(),txtSenhaUsuario.getText(),cbPerfilUsuario.getSelectedItem().toString());
-					if(sucesso == true) {
-						JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso");
-					}
-				}catch(Exception el) {
-					JOptionPane.showMessageDialog(null, "Erro: " + el);
+					usuarioController.cadastrarUsuario(codUsuario,txtNomeUsuario.getText(),ftxtCpfUsuario.getText(),ftxtDataNascimentoUsuario.getText(),salarioUsuario,txtUserUsuario.getText(),txtSenhaUsuario.getText(),cbPerfilUsuario.getSelectedItem().toString(),cbStatusUsuario.getSelectedItem().toString());
+				} catch (ParseException | ExceptionDao e1) {
+					JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
+					e1.printStackTrace();
 				}
 			}
 		});

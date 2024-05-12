@@ -173,7 +173,7 @@ public class TelaMenuPrincipal extends JFrame {
 		desktop.setPreferredSize(new Dimension(640, 480));
 		
 		JLabel lblNomeUser = new JLabel("USER:");
-		lblNomeUser.setBounds(658, 90, 68, 29);
+		lblNomeUser.setBounds(650, 89, 68, 29);
 		lblNomeUser.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -181,7 +181,7 @@ public class TelaMenuPrincipal extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/jpIcon.png")));
 		
 		JLabel lblNomeData = new JLabel("DATA:");
-		lblNomeData.setBounds(658, 160, 69, 29);
+		lblNomeData.setBounds(650, 159, 69, 29);
 		lblNomeData.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		contentPane.setLayout(null);
 		desktop.setLayout(new CardLayout(0, 0));
@@ -191,12 +191,12 @@ public class TelaMenuPrincipal extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		lblData = new JLabel("----");
-		lblData.setBounds(737, 163, 138, 22);
+		lblData.setBounds(729, 162, 159, 22);
 		lblData.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		contentPane.add(lblData);
 		
 		lblUser = new JLabel("----");
-		lblUser.setBounds(736, 93, 129, 22);
+		lblUser.setBounds(728, 92, 160, 22);
 		lblUser.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		contentPane.add(lblUser);
 	

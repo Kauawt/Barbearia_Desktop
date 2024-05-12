@@ -1,5 +1,7 @@
 package model;
 
+import javax.swing.JOptionPane;
+
 import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.ServicoDao;
@@ -14,12 +16,24 @@ public class Servico {
 
     
 	public Servico(int codServico, String tipoServico, String descricaoServico, double precoServico,double duracaoServico, String statusServico) {
-		this.codServico = codServico;
-		this.tipoServico = tipoServico;
-		this.descricaoServico = descricaoServico;
-		this.precoServico = precoServico;
-		this.duracaoServico = duracaoServico;
-		this.statusServico = statusServico;
+		if(codServico > 0 && tipoServico != null && descricaoServico != null && descricaoServico.length()>0 && precoServico > 0 && duracaoServico>0 && Validador.validadorStatus(statusServico)){
+			this.codServico = codServico;
+			this.tipoServico = tipoServico;
+			this.descricaoServico = descricaoServico;
+			this.precoServico = precoServico;
+			this.duracaoServico = duracaoServico;
+			this.statusServico = statusServico;
+		}
+		else if(codServico<0) {
+			JOptionPane.showMessageDialog(null, "O código não pode ser negativo");
+		}else if(precoServico<0) {
+			JOptionPane.showMessageDialog(null, "O Preço do serviço não pode ser negativo");
+		}else if(duracaoServico<0) {
+			JOptionPane.showMessageDialog(null, "A duração do serviço não pode ser negativa");
+		}else if(Validador.validadorCpf(statusServico) == false) {
+			JOptionPane.showMessageDialog(null, "Durante a criação do Serviço, o status precisa ser ativo");
+		}
+	
 	}
 	
 

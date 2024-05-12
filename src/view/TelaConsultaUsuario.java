@@ -82,7 +82,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 			
 			while(rs.next()) {
 				usuarios.add(new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"), rs.getString("cpfUsuario"),
-						rs.getString("dataNascimento"), rs.getDouble("salarioUsuario"), rs.getString("perfilUsuario")));
+						rs.getString("dataNascimentoUsuario"), rs.getDouble("salarioUsuario"), rs.getString("perfilUsuario")));
 			};
 			
 		} catch (SQLException e) {
