@@ -6,7 +6,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class ModeloTabelaUsuario extends AbstractTableModel{
 
-	private static final String[] colunas = {"codUsuario", "nomeUsuario", "cpfUsuario", "dataNascimento", "emailUsuario", "PerfilUsuario"};
+	private static final String[] colunas = {"codUsuario", "nomeUsuario", "cpfUsuario", "dataNascimento", "salarioUsuario",
+			"emailUsuario", "PerfilUsuario", "statusUsuario"};
 	private ArrayList<Usuario> usuarios;
 	
 	public ModeloTabelaUsuario(ArrayList<Usuario> usuarios) {
@@ -37,10 +38,14 @@ public class ModeloTabelaUsuario extends AbstractTableModel{
 			return usuario.getCpfUsuario();
 		}else if(columnIndex == 0 ) {
 			return usuario.getDataNascimentoUsuario();
+		}else if(columnIndex == 0) {
+			return usuario.getSalarioUsuario();
 		}else if(columnIndex == 0 ) {
-			return usuario.getUserUsuario();
+			return usuario.getEmailUsuario();
 		}else if(columnIndex == 0 ) {
 			return usuario.getPerfilUsuario();
+		}else if(columnIndex == 0 ) {
+			return usuario.getStatusUsuario();
 		}else {
 			return null;
 		}
