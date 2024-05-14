@@ -71,8 +71,8 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		Connection conexao = ModuloConexao.conector();;
 		
 		usuarios = new ArrayList<>();
-		usuarios.add(new Usuario(1, "Anthony", "999.999.999-99", "29/05/2001", 5000.00, "Admin"));
-		usuarios.add(new Usuario(2, "Anthony2", "999.999.999-99", "29/05/2001", 5000.00, "User"));
+		//usuarios.add(new Usuario(1, "Anthony", "999.999.999-99", "29/05/2001", 5000.00, "anthony@hotmail.com", "Admin","ativo"));
+		//usuarios.add(new Usuario(2, "Anthony2", "999.999.999-99", "29/05/2001", 5000.00, "anthony2@hotmail.com", "User","ativo")); 
 		
 		try {
 			conexao = ModuloConexao.conector(); // abre conexao pst =
@@ -82,7 +82,8 @@ public class TelaConsultaUsuario extends JInternalFrame {
 			
 			while(rs.next()) {
 				usuarios.add(new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"), rs.getString("cpfUsuario"),
-						rs.getString("dataNascimentoUsuario"), rs.getDouble("salarioUsuario"), rs.getString("perfilUsuario")));
+						rs.getString("dataNascimentoUsuario"), rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), 
+						rs.getString("perfilUsuario"), rs.getString("statusUsuario")));
 			};
 			
 		} catch (SQLException e) {
