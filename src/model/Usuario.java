@@ -55,23 +55,9 @@ public class Usuario {
 		else if(salarioUsuario<0) {
 			JOptionPane.showMessageDialog(null, "O Salário do Usuário não pode ser negativo");
 		}
-	}
-	
-	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
-			double salarioUsuario, String emailUsuario, String perfilUsuario,String statusUsuario) {
-		
-			this.codUsuario = codUsuario;
-			this.nomeUsuario = nomeUsuario;
-			this.cpfUsuario = cpfUsuario;
-			try {
-				this.dataNascimentoUsuario = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoUsuario); // converte String em Date
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			this.salarioUsuario = salarioUsuario;
-			this.emailUsuario = emailUsuario;
-			this.perfilUsuario = perfilUsuario;
-			this.statusUsuario = statusUsuario;
+		else if(Validador.validadorStatus(statusUsuario)==false) {
+			JOptionPane.showMessageDialog(null, "O usuário deve ser cadastrado como ativo");
+		}
 	}
 
 	public int getCodUsuario() {
