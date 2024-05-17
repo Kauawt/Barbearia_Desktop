@@ -34,17 +34,17 @@ public class ModeloTabelaUsuario extends AbstractTableModel{
 			return usuario.getCodUsuario();
 		}else if(columnIndex == 1 ) {
 			return usuario.getNomeUsuario();
-		}else if(columnIndex == 0 ) {
+		}else if(columnIndex == 2 ) {
 			return usuario.getCpfUsuario();
-		}else if(columnIndex == 0 ) {
+		}else if(columnIndex == 3 ) {
 			return usuario.getDataNascimentoUsuario();
-		}else if(columnIndex == 0) {
+		}else if(columnIndex == 4) {
 			return usuario.getSalarioUsuario();
-		}else if(columnIndex == 0 ) {
+		}else if(columnIndex == 5 ) {
 			return usuario.getEmailUsuario();
-		}else if(columnIndex == 0 ) {
+		}else if(columnIndex == 6 ) {
 			return usuario.getPerfilUsuario();
-		}else if(columnIndex == 0 ) {
+		}else if(columnIndex == 7 ) {
 			return usuario.getStatusUsuario();
 		}else {
 			return null;

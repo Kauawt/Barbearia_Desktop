@@ -1,5 +1,3 @@
-codigosql/
-controller/
-dao/
-model/
-view/
+/dao/
+/view/
+/model/

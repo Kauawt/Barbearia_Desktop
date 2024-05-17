@@ -18,5 +18,16 @@ public class ModuloConexao {
 			return null;
 		}
 	}
-
+	public static void fecharConexao() {
+		
+		try {
+			if(conexao!=null && !conexao.isClosed()) {
+				conexao.close();
+			}
+		}catch(SQLException e) {
+			System.out.println("Erro ao encerrar a conexão: " + e.getMessage());
+		}finally {
+			conexao = null;
+		}
+	}
 }
