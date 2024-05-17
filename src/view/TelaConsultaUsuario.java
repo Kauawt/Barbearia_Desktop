@@ -26,6 +26,7 @@ import model.Usuario;
 import java.util.Date;
 
 import javax.swing.JScrollPane;
+import dao.UsuarioDao;
 
 public class TelaConsultaUsuario extends JInternalFrame {
 
@@ -36,7 +37,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private ArrayList<Usuario> usuarios;
-	
 
 	/**
 	 * Launch the application.
@@ -59,6 +59,11 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	 */
 	public TelaConsultaUsuario() {
 		
+		/*
+		 * UsuarioDao usuarioDao = new UsuarioDao(); try { usuarios =
+		 * UsuarioDao.listarUsuarios(); } catch(Exception e) { e.printStackTrace(); }
+		 */
+		
 		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setBackground(new Color(232, 227, 225));
 		
@@ -66,29 +71,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		getContentPane().setSize(new Dimension(450, 480));
 		getContentPane().setPreferredSize(new Dimension(450, 480));
 		getContentPane().setLayout(null);
-		
-		String sql = "select * from tbUsuario"; 
-		Connection conexao = ModuloConexao.conector();;
-		
-		usuarios = new ArrayList<>();
-		//usuarios.add(new Usuario(1, "Anthony", "999.999.999-99", "29/05/2001", 5000.00, "anthony@hotmail.com", "Admin","ativo"));
-		//usuarios.add(new Usuario(2, "Anthony2", "999.999.999-99", "29/05/2001", 5000.00, "anthony2@hotmail.com", "User","ativo")); 
-		
-		try {
-			conexao = ModuloConexao.conector(); // abre conexao pst =
-			Statement pst = conexao.createStatement();
-			ResultSet rs = pst.executeQuery(sql);
-			conexao.prepareStatement(sql);
-			
-			while(rs.next()) {
-				usuarios.add(new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"), rs.getString("cpfUsuario"),
-						rs.getString("dataNascimentoUsuario"), rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), 
-						rs.getString("perfilUsuario"), rs.getString("statusUsuario")));
-			};
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		 
 		setBounds(100, 100, 708, 465);
 		contentPane = new JPanel();
@@ -101,7 +83,9 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		scrollPane.setBounds(25, 125, 591, 301);
 		contentPane.add(scrollPane);
 		
-		ModeloTabelaUsuario modeloTabela = new ModeloTabelaUsuario(usuarios);
+		
+		
+		ModeloTabelaUsuario modeloTabela = new ModeloTabelaUsuario(UsuarioDao.listarUsuarios());
 		
 		table = new JTable();
 		table.setModel(modeloTabela);

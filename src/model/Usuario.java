@@ -64,7 +64,8 @@ public class Usuario {
 			this.nomeUsuario = nomeUsuario;
 			this.cpfUsuario = cpfUsuario;
 			try {
-				this.dataNascimentoUsuario = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoUsuario); // converte String em Date
+				this.dataNascimentoUsuario = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascimentoUsuario); // converte String em Date
+				System.out.println(dataNascimentoUsuario);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

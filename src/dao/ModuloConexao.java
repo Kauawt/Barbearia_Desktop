@@ -19,7 +19,7 @@ public class ModuloConexao {
 		}
 	}
 	
-	public void fecharConexao() {
+	public static void fecharConexao() {
 		
 		try {
 			if(conexao!=null && !conexao.isClosed()) {
