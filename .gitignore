@@ -1,0 +1,5 @@
+bin/dao/
+bin/view/
+bin/model/
+bin/codigoSql/
+bin/controller/
