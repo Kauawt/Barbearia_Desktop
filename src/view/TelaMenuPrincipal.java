@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.ClienteController;
+import controller.LoginController;
+
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -36,13 +40,13 @@ public class TelaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JDesktopPane desktop;
-	public JMenuItem mntmNewSair;
-	public JMenuItem mntmRelatorioAgendamento;
-	public JMenuItem mntmCadastrarUsuario;
-	public JMenu mnRelatorio;
-	public JMenu mnMenuCadastro;
-	public JLabel lblData;
-	public JLabel lblUser;
+	private JMenuItem mntmNewSair;
+	private JMenuItem mntmRelatorioAgendamento;
+	private JMenuItem mntmCadastrarUsuario;
+	private JMenu mnRelatorio;
+	private JMenu mnMenuCadastro;
+	private JLabel lblData;
+	private JLabel lblUser;
 
 	/**
 	 * Launch the application.
@@ -63,6 +67,7 @@ public class TelaMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
+		
 		setTitle("Menu");
 		addWindowListener(new WindowAdapter() {
 		});
@@ -113,9 +118,6 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaConsultaUsuario consultaUsuario = new TelaConsultaUsuario();
-				consultaUsuario.setVisible(true);
-				desktop.add(consultaUsuario);
 			}
 		});
 		mnConsulta.add(mntmConsultaUsuario);
@@ -201,5 +203,55 @@ public class TelaMenuPrincipal extends JFrame {
 		contentPane.add(lblUser);
 	
 	}
+	public JDesktopPane getDesktop() {
+		return desktop;
+	}
+	public void setDesktop(JDesktopPane desktop) {
+		this.desktop = desktop;
+	}
+	public JMenuItem getMntmNewSair() {
+		return mntmNewSair;
+	}
+	public void setMntmNewSair(JMenuItem mntmNewSair) {
+		this.mntmNewSair = mntmNewSair;
+	}
+	public JMenuItem getMntmRelatorioAgendamento() {
+		return mntmRelatorioAgendamento;
+	}
+	public void setMntmRelatorioAgendamento(JMenuItem mntmRelatorioAgendamento) {
+		this.mntmRelatorioAgendamento = mntmRelatorioAgendamento;
+	}
+	public JMenuItem getMntmCadastrarUsuario() {
+		return mntmCadastrarUsuario;
+	}
+	public void setMntmCadastrarUsuario(JMenuItem mntmCadastrarUsuario) {
+		this.mntmCadastrarUsuario = mntmCadastrarUsuario;
+	}
+	public JMenu getMnRelatorio() {
+		return mnRelatorio;
+	}
+	public void setMnRelatorio(JMenu mnRelatorio) {
+		this.mnRelatorio = mnRelatorio;
+	}
+	public JMenu getMnMenuCadastro() {
+		return mnMenuCadastro;
+	}
+	public void setMnMenuCadastro(JMenu mnMenuCadastro) {
+		this.mnMenuCadastro = mnMenuCadastro;
+	}
+	public JLabel getLblData() {
+		return lblData;
+	}
+	public void setLblData(JLabel lblData) {
+		this.lblData = lblData;
+	}
+	public JLabel getLblUser() {
+		return lblUser;
+	}
+	public void setLblUser(JLabel lblUser) {
+		this.lblUser = lblUser;
+	}
+	
+	
 
 }

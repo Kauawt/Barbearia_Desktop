@@ -14,7 +14,7 @@ public class Cliente {
 	private String statusCliente;
 	
 	public Cliente(int codCliente, String nomeCliente, String enderecoCliente, String telefoneCliente, String cpfCliente,String statusCliente) {
-		if(codCliente >0 && nomeCliente != null && enderecoCliente != null && Validador.validadorTelefone(telefoneCliente) && Validador.validadorCpf(cpfCliente)  && Validador.validadorStatus(statusCliente)) {
+		if(codCliente >0 && enderecoCliente != null && Validador.validadorTelefone(telefoneCliente) && Validador.validadorCpf(cpfCliente)  && Validador.validadorStatus(statusCliente)) {
 			this.codCliente = codCliente;
 			this.nomeCliente = nomeCliente;
 			this.enderecoCliente = enderecoCliente;

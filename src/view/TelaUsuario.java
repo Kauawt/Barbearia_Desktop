@@ -219,8 +219,7 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().add(cbStatusUsuario);
 		btnConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaConsultaUsuario telaConsultaUsuario = new TelaConsultaUsuario();
-				telaConsultaUsuario.setVisible(true);
+	
 			}
 		});
 		btnCadastrarUsuario.addActionListener(new ActionListener() {

@@ -1,18 +1,20 @@
 package dao;
 
-import java.sql.*;
-import javax.swing.JOptionPane;
-import dao.ExceptionDao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import model.Cliente;
 
 public class ClienteDao {
-
+	
 	public void cadastrarCliente(Cliente cliente) throws ExceptionDao {
 		String sql = "insert into tbCliente(codCliente,nomeCliente,enderecoCliente,telefoneCliente,cpfCliente,statusCliente) values (?,?,?,?,?,?)";
 		Connection conexao = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+	
 		try {
 			
 			conexao = ModuloConexao.conector(); // abre conexao

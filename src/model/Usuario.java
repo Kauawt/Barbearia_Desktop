@@ -73,6 +73,9 @@ public class Usuario {
 			this.emailUsuario = emailUsuario;
 			this.perfilUsuario = perfilUsuario;
 			this.statusUsuario = statusUsuario;
+		else if(Validador.validadorStatus(statusUsuario)==false) {
+			JOptionPane.showMessageDialog(null, "O usuário deve ser cadastrado como ativo");
+		}
 	}
 
 	public int getCodUsuario() {

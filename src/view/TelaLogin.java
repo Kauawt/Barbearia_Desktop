@@ -22,18 +22,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import java.awt.Font;
-
+import controller.LoginController;
 public class TelaLogin extends JFrame {
-
-	public Connection conexao = null;
-	public PreparedStatement pst = null;
-	public ResultSet rs = null;
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUserUsuario;
 	private JPasswordField txtSenhaUsuario;
 	private JLabel lblConexao;
+	private JLabel lblStatus;
 
 	/**
 	 * Launch the application.
@@ -56,6 +53,7 @@ public class TelaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
+		LoginController loginController = new LoginController(this); // passando a propria view como parâ admetro
 		setTitle("Login");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,7 +80,7 @@ public class TelaLogin extends JFrame {
 		btnLoginUsuario.setBounds(97, 77, 96, 23);
 		btnLoginUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logar();
+				loginController.fazLogin();
 			}
 		});
 		
@@ -92,7 +90,7 @@ public class TelaLogin extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(5, 5, 0, 0);
 
-		JLabel lblStatus = new JLabel("");
+		lblStatus = new JLabel("");
 		lblStatus.setBounds(24, 84, 39, 42);
 		lblStatus.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/notconnectedicon1.png")));
 
@@ -113,69 +111,33 @@ public class TelaLogin extends JFrame {
 		lblUserIcon.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/usericone.png")));
 		lblUserIcon.setBounds(220, 6, 59, 64);
 		contentPane.add(lblUserIcon);
-
-		// conecta com banco
-
-		conexao = ModuloConexao.conector();
-		ModuloConexao.conector();
 		
-		if (conexao != null) {
-			lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/connectedicon1.png")));
-			lblConexao.setText("Conectado");
-
-		} else {
-			lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/notconnectedicon1.png")));
-			lblConexao.setText("Desconectado");
-		}
+		loginController.verificaConexão();
 
 	}
-	public void logar() {
-		String sql = "select * from tbUsuario where emailUsuario=? and senhaUsuario=?";
-		try {
-			// preparar banco para consulta em função do que foi digitado nas caixas de
-			// texto.
-			// O ? é substituido pelo conteeúdo das variáveis 
-
-			pst = conexao.prepareStatement(sql);
-			pst.setString(1, txtUserUsuario.getText()); //o numero é 1 do setString e referente a primeira posição do?
-			pst.setString(2, txtSenhaUsuario.getText()); //o numero é 2 do setString e referente a segunda posição do?
-
-			// executa a Query
-			rs = pst.executeQuery();
-			if (rs.next()) {
-				// verifica o perfil do usuario
-				String perfil = rs.getString(8);
-				if (perfil.equals("Administrador")) { // uso do equal porque é String
-					TelaMenuPrincipal principal = new TelaMenuPrincipal();
-					principal.setLocationRelativeTo(principal);
-					principal.setVisible(true);
-					principal.mntmCadastrarUsuario.setEnabled(true);
-					principal.mntmRelatorioAgendamento.setEnabled(true); // libera a opção de gerar relatorio
-					principal.lblUser.setText(rs.getString(8));
-					principal.lblUser.setForeground(Color.red);
-					//formatar a data do sistema de dia e hora para apenas dia
-					Date data = new Date();
-					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
-					principal.lblData.setText(formatador.format(data).toString());
-					this.dispose();
-				}
-				else {
-					TelaMenuPrincipal principal = new TelaMenuPrincipal();
-					principal.setVisible(true);
-					principal.setLocationRelativeTo(principal);
-					principal.lblUser.setText(rs.getString(6));
-					//formatar a data do sistema de dia e hora para apenas dia
-					Date data = new Date();
-					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
-					principal.lblData.setText(formatador.format(data).toString());
-					this.dispose();
-				}
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s)");
-			}
-		}catch(	Exception e){
-		JOptionPane.showMessageDialog(null, e);
+	public JTextField getTxtUserUsuario() {
+		return txtUserUsuario;
 	}
-}	
+	public void setTxtUserUsuario(JTextField txtUserUsuario) {
+		this.txtUserUsuario = txtUserUsuario;
+	}
+	public JPasswordField getTxtSenhaUsuario() {
+		return txtSenhaUsuario;
+	}
+	public void setTxtSenhaUsuario(JPasswordField txtSenhaUsuario) {
+		this.txtSenhaUsuario = txtSenhaUsuario;
+	}
+	public JLabel getLblConexao() {
+		return lblConexao;
+	}
+	public void setLblConexao(JLabel lblConexao) {
+		this.lblConexao = lblConexao;
+	}
+	public JLabel getLblStatus() {
+		return lblStatus;
+	}
+	public void setLblStatus(JLabel lblStatus) {
+		this.lblStatus = lblStatus;
 }
+	}
+	
