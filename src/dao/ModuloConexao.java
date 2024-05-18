@@ -4,8 +4,10 @@ import java.sql.*;
 
 public class ModuloConexao {
 	
+	private static Connection conexao = null;
+	
 	public static Connection conector() {
-		java.sql.Connection conexao = null;
+		Connection conexao = null;
 		String driver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
 		String url="jdbc:sqlserver://localhost:1433;databasename=dbBarbearia";
 		String user ="sa";

@@ -132,33 +132,7 @@ public class TelaUsuario extends JInternalFrame {
 		lblEmail.setBounds(335, 179, 49, 21);
 		getContentPane().add(lblEmail);
 		lblEmail.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		
-		JButton btnCadastrarUsuario = new JButton("");
-		btnCadastrarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCadastrarUsuario.setBackground(new Color(240, 240, 240));
-		btnCadastrarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/addicon.png")));
-		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarUsuario.setBounds(34, 374, 117, 68);
-		getContentPane().add(btnCadastrarUsuario);
-		
-		JButton btnAlterarUsuario = new JButton("");
-		btnAlterarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/editicon.png")));
-		btnAlterarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnAlterarUsuario.setPreferredSize(new Dimension(80, 80));
-		btnAlterarUsuario.setBounds(185, 374, 117, 68);
-		getContentPane().add(btnAlterarUsuario);
-		
-		JButton btnConsultarUsuario = new JButton("");
-		btnConsultarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/findicon.png")));
-		btnConsultarUsuario.setBounds(336, 374, 117, 68);
-		getContentPane().add(btnConsultarUsuario);
-		
-		JButton btnDeletarUsuario = new JButton("");
-		btnDeletarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDeletarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/deleteicon.png")));
-		btnDeletarUsuario.setBounds(487, 374, 117, 68);
-		getContentPane().add(btnDeletarUsuario);
-		
+			
 		txtUserUsuario = new JTextField();
 		txtUserUsuario.setColumns(10);
 		txtUserUsuario.setBounds(452, 181, 176, 20);
@@ -217,13 +191,15 @@ public class TelaUsuario extends JInternalFrame {
 		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
 		cbStatusUsuario.setBounds(292, 288, 156, 22);
 		getContentPane().add(cbStatusUsuario);
-		btnConsultarUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-	
-			}
-		});
+		
+		JButton btnCadastrarUsuario = new JButton("");
+		btnCadastrarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrarUsuario.setBackground(new Color(240, 240, 240));
+		btnCadastrarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/addicon.png")));
+		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
+		btnCadastrarUsuario.setBounds(34, 374, 117, 68);
+		getContentPane().add(btnCadastrarUsuario);
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
-			
 			public void actionPerformed(ActionEvent e) {
 				int codUsuario = Integer.parseInt(txtCodigoUsuario.getText());
 				double salarioUsuario = Integer.parseInt(txtSalarioUsuario.getText());
@@ -236,6 +212,31 @@ public class TelaUsuario extends JInternalFrame {
 				}
 			}
 		});
+		
+		JButton btnAlterarUsuario = new JButton("");
+		btnAlterarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/editicon.png")));
+		btnAlterarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAlterarUsuario.setPreferredSize(new Dimension(80, 80));
+		btnAlterarUsuario.setBounds(185, 374, 117, 68);
+		getContentPane().add(btnAlterarUsuario);
+		
+		JButton btnConsultarUsuario = new JButton("");
+		btnConsultarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/findicon.png")));
+		btnConsultarUsuario.setBounds(336, 374, 117, 68);
+		getContentPane().add(btnConsultarUsuario);
+		btnConsultarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+	
+			}
+		});
+		
+		JButton btnDeletarUsuario = new JButton("");
+		btnDeletarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDeletarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/deleteicon.png")));
+		btnDeletarUsuario.setBounds(487, 374, 117, 68);
+		getContentPane().add(btnDeletarUsuario);
+		
+		
 		setIconifiable(true);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setBorder(null);

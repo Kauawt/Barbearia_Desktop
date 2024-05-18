@@ -6,8 +6,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class ModeloTabelaUsuario extends AbstractTableModel{
 
-	private static final String[] colunas = {"codUsuario", "nomeUsuario", "cpfUsuario", "dataNascimento", "salarioUsuario",
-			"emailUsuario", "PerfilUsuario", "statusUsuario"};
+	private static final String[] colunas = {"Código", "Nome", "CPF", "data de Nascimento", "salario",
+			"email", "Perfil", "status"};
 	private ArrayList<Usuario> usuarios;
 	
 	public ModeloTabelaUsuario(ArrayList<Usuario> usuarios) {
