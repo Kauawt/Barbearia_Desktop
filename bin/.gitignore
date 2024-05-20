@@ -1,5 +1,4 @@
-/dao/
 /view/
-/model/
 /controller/
-/codigoSql/
+/model/
+/dao/
