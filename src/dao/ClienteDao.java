@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import model.Cliente;
 
 public class ClienteDao {
@@ -26,6 +28,8 @@ public class ClienteDao {
 			pst.setString(5, cliente.getCpfCliente());
 			pst.setString(6, cliente.getStatusCliente());
 			pst.executeUpdate(); // atualiza o banco de dados
+			
+			JOptionPane.showMessageDialog(null, "Cadastro Realizado com Sucesso!!" );
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Cliente: " + e);
 		} finally {
