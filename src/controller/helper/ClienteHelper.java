@@ -65,7 +65,7 @@ public class ClienteHelper {
 		telaCliente.getTxtCodigoCliente().setText("");
 		telaCliente.getTxtNomeCliente().setText("");
 		telaCliente.getTxtEnderecoCliente().setText("");
-		telaCliente.getFtxtTelefoneCliente().setText("");
+		telaCliente.getTxtTelefoneCliente().setText("");
 		telaCliente.getFtxtCpfCliente().setText("");
 		telaCliente.getCbStatusCliente().setSelectedItem("");
 	}

@@ -42,6 +42,7 @@ public class TelaLogin extends JFrame {
 					TelaLogin frame = new TelaLogin();
 					frame.setLocationRelativeTo(frame);
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,7 +57,7 @@ public class TelaLogin extends JFrame {
 		LoginController loginController = new LoginController(this); // passando a propria view como parâ admetro
 		setTitle("Login");
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 320, 176);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,6 +65,7 @@ public class TelaLogin extends JFrame {
 		setContentPane(contentPane);
 
 		txtUserUsuario = new JTextField();
+		txtUserUsuario.setText("admin@gmail.com");
 		txtUserUsuario.setBounds(93, 8, 117, 20);
 		txtUserUsuario.setColumns(10);
 
@@ -81,10 +83,12 @@ public class TelaLogin extends JFrame {
 		btnLoginUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loginController.fazLogin();
+				
 			}
 		});
 		
 		txtSenhaUsuario = new JPasswordField();
+		txtSenhaUsuario.setText("admin");
 		txtSenhaUsuario.setBounds(94, 48, 117, 20);
 
 		JLabel lblNewLabel = new JLabel("");
@@ -93,7 +97,7 @@ public class TelaLogin extends JFrame {
 		lblStatus = new JLabel("");
 		lblStatus.setBounds(24, 84, 39, 42);
 		lblStatus.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/notconnectedicon1.png")));
-
+		
 		lblConexao = new JLabel("Desconectado");
 		lblConexao.setBounds(5, 123, 81, 18);
 		lblConexao.setFont(new Font("Arial Black", Font.PLAIN, 10));

@@ -3,8 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,13 +15,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+import dao.ExceptionDao;
 import dao.ModuloConexao;
 import model.ModeloTabelaUsuario;
 import model.Usuario;
@@ -36,8 +42,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private ArrayList<Usuario> usuarios;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -58,12 +63,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaConsultaUsuario() {
-		
-		/*
-		 * UsuarioDao usuarioDao = new UsuarioDao(); try { usuarios =
-		 * UsuarioDao.listarUsuarios(); } catch(Exception e) { e.printStackTrace(); }
-		 */
-		
+			
 		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setBackground(new Color(232, 227, 225));
 		
@@ -90,6 +90,34 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		table = new JTable();
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton()==1) {
+					try {
+						Usuario usuarioSelecionado = UsuarioDao.consultarUsuarioByCPF(modeloTabela.getValueAt(table.getSelectedRow(), 2).toString());
+						TelaUsuario cadastraUsuario = new TelaUsuario(usuarioSelecionado);
+						JDesktopPane desktop = getDesktopPane();
+						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
+						TelaMenuPrincipal frameCadastro = (TelaMenuPrincipal) frame;
+						
+						if (frame instanceof TelaMenuPrincipal) {
+							JInternalFrame[] frames = desktop.getAllFrames();
+			                for (JInternalFrame frame1 : frames) {
+			                    frame1.dispose();
+			                }
+						}
+						desktop.add(cadastraUsuario);
+						cadastraUsuario.setVisible(true);
+						System.out.println(cadastraUsuario);
+						System.out.println(frameCadastro);
+					} catch (ExceptionDao e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+		});
 		
 		setIconifiable(true);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

@@ -20,7 +20,7 @@ public class Usuario {
 	private String perfilUsuario;
 	private String statusUsuario;
 
-	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+	public Usuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario,
 			String statusUsuario) {
 		if (codUsuario > 0 && nomeUsuario != null
@@ -28,7 +28,6 @@ public class Usuario {
 						&& salarioUsuario > 0 && Validador.validadorEmail(emailUsuario) && senhaUsuario != null
 						&& senhaUsuario.length() > 0 && perfilUsuario != null
 						&& (Validador.validadorStatus(statusUsuario)))) {
-			this.codUsuario = codUsuario;
 			this.nomeUsuario = nomeUsuario;
 			this.cpfUsuario = cpfUsuario;
 			try {
@@ -74,7 +73,6 @@ public class Usuario {
 			this.perfilUsuario = perfilUsuario;
 			this.statusUsuario = statusUsuario;
 			if(Validador.validadorStatus(statusUsuario)==false) {
-			JOptionPane.showMessageDialog(null, "O usuário deve ser cadastrado como ativo");
 		}
 	}
 

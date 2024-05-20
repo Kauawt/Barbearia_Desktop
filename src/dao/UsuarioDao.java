@@ -96,11 +96,10 @@ public class UsuarioDao {
 
 		try {
 			preparedStatement = conexao.prepareStatement(query);
-			rs = preparedStatement.executeQuery(query);
 			
 			int i = 1;
 			preparedStatement.setString(i++, cpfUsuario);
-			
+			rs = preparedStatement.executeQuery();
 			while(rs.next()) {
 				usuario = new Usuario(rs.getInt("codUsuario"), 
 							rs.getString("nomeUsuario"), 

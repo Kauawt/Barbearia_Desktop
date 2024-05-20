@@ -2,6 +2,7 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -84,6 +85,10 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cliente");
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+                for (JInternalFrame frame1 : frames) {
+                    frame1.dispose();
+                }
 				TelaCliente telaCliente = new TelaCliente();
 				telaCliente.setVisible(true);
 				desktop.add(telaCliente);
@@ -94,8 +99,11 @@ public class TelaMenuPrincipal extends JFrame {
 		mntmCadastrarUsuario = new JMenuItem("Usuario");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				TelaUsuario telaUsuario = new TelaUsuario();
+				JInternalFrame[] frames = desktop.getAllFrames();
+                for (JInternalFrame frame1 : frames) {
+                    frame1.dispose();
+                }
+				TelaUsuario telaUsuario = new TelaUsuario(null);
 				telaUsuario.setVisible(true);
 				desktop.add(telaUsuario);
 			}
@@ -105,6 +113,10 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmCadastrarServico = new JMenuItem("Servico");
 		mntmCadastrarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+                for (JInternalFrame frame1 : frames) {
+                    frame1.dispose();
+                }
 				TelaServico telaServico = new TelaServico();
 				telaServico.setVisible(true);
 				desktop.add(telaServico);
@@ -118,6 +130,13 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+                for (JInternalFrame frame1 : frames) {
+                    frame1.dispose();
+                }
+				TelaConsultaUsuario consulta = new TelaConsultaUsuario();
+				consulta.setVisible(true);
+				desktop.add(consulta);
 			}
 		});
 		mnConsulta.add(mntmConsultaUsuario);
@@ -251,7 +270,4 @@ public class TelaMenuPrincipal extends JFrame {
 	public void setLblUser(JLabel lblUser) {
 		this.lblUser = lblUser;
 	}
-	
-	
-
 }
