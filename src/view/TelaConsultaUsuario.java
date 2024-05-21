@@ -99,7 +99,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 						TelaUsuario cadastraUsuario = new TelaUsuario(usuarioSelecionado);
 						JDesktopPane desktop = getDesktopPane();
 						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
-						TelaMenuPrincipal frameCadastro = (TelaMenuPrincipal) frame;
 						
 						if (frame instanceof TelaMenuPrincipal) {
 							JInternalFrame[] frames = desktop.getAllFrames();
@@ -110,7 +109,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 						desktop.add(cadastraUsuario);
 						cadastraUsuario.setVisible(true);
 						System.out.println(cadastraUsuario);
-						System.out.println(frameCadastro);
 					} catch (ExceptionDao e1) {
 						e1.printStackTrace();
 					}
