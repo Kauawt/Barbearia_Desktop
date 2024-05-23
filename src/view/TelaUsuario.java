@@ -47,7 +47,6 @@ import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 
-
 public class TelaUsuario extends JInternalFrame {
 
 	public Connection conexao = null;
@@ -63,6 +62,7 @@ public class TelaUsuario extends JInternalFrame {
 	private JFormattedTextField ftxtCpfUsuario = new JFormattedTextField();
 	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
 	private JComboBox cbStatusUsuario = new JComboBox();
+	private UsuarioController usuarioController = new UsuarioController();
 
 	/**
 	 * Launch the application.
@@ -193,11 +193,13 @@ public class TelaUsuario extends JInternalFrame {
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
-				UsuarioController usuarioController = new UsuarioController();
 				try {
 					System.out.println(ftxtDataNascimentoUsuario.getText());
 					if(usuarioSelecionado == null) {
 						usuarioController.cadastrarUsuario(txtNomeUsuario.getText(),ftxtCpfUsuario.getText(),ftxtDataNascimentoUsuario.getText(), salarioUsuario,txtEmailUsuario.getText(),txtSenhaUsuario.getText(),cbPerfilUsuario.getSelectedItem().toString(),cbStatusUsuario.getSelectedItem().toString());
+					}else {
+						usuarioController.alterarUsuario(txtNomeUsuario.getText(),ftxtCpfUsuario.getText(),ftxtDataNascimentoUsuario.getText(), salarioUsuario,txtEmailUsuario.getText(),txtSenhaUsuario.getText(),cbPerfilUsuario.getSelectedItem().toString(),cbStatusUsuario.getSelectedItem().toString());
+
 					}
 				} catch (ParseException | ExceptionDao e1) {
 					JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
@@ -245,15 +247,17 @@ public class TelaUsuario extends JInternalFrame {
 			preencherCampos(usuarioSelecionado);
 		}
 	}
-	
+
 	private void preencherCampos(Usuario usuarioSelecionado) {
 		txtNomeUsuario.setText(usuarioSelecionado.getNomeUsuario());
 		ftxtCpfUsuario.setText(usuarioSelecionado.getCpfUsuario());
-		ftxtDataNascimentoUsuario.setValue(usuarioSelecionado.getDataNascimentoUsuario());
+		ftxtDataNascimentoUsuario
+				.setText(usuarioSelecionado.converteDataBancoTela(usuarioSelecionado.getDataNascimentoUsuario()));
 		txtEmailUsuario.setText(usuarioSelecionado.getEmailUsuario());
-		//txtSalarioUsuario.setValue(usuarioSelecionado.getSalarioUsuario());
+		txtSalarioUsuario.setText(usuarioSelecionado.getSalarioUsuario() + "");
+		txtSenhaUsuario.setText(usuarioSelecionado.getSenhaUsuario());
 		cbPerfilUsuario.setSelectedItem(usuarioSelecionado.getPerfilUsuario());
 		cbStatusUsuario.setSelectedItem(usuarioSelecionado.getStatusUsuario());
-		
+
 	}
 }

@@ -37,7 +37,7 @@ public class ModeloTabelaUsuario extends AbstractTableModel{
 		}else if(columnIndex == 2 ) {
 			return usuario.getCpfUsuario();
 		}else if(columnIndex == 3 ) {
-			return usuario.getDataNascimentoUsuario();
+			return usuario.converteDataBancoTela(usuario.getDataNascimentoUsuario());
 		}else if(columnIndex == 4) {
 			return usuario.getSalarioUsuario();
 		}else if(columnIndex == 5 ) {

@@ -2,6 +2,9 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -13,66 +16,40 @@ public class Usuario {
 	private int codUsuario;
 	private String nomeUsuario;
 	private String cpfUsuario;
-	private Date dataNascimentoUsuario;
+	private String dataNascimentoUsuario;
 	private double salarioUsuario;
 	private String emailUsuario;
 	private String senhaUsuario;
 	private String perfilUsuario;
 	private String statusUsuario;
 
-	public Usuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
-			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario,
-			String statusUsuario) {
-		if (codUsuario > 0 && nomeUsuario != null
-				&& (Validador.validadorCpf(cpfUsuario) && Validador.validadorDataNascimento(dataNascimentoUsuario)
-						&& salarioUsuario > 0 && Validador.validadorEmail(emailUsuario) && senhaUsuario != null
-						&& senhaUsuario.length() > 0 && perfilUsuario != null
-						&& (Validador.validadorStatus(statusUsuario)))) {
+	public Usuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario, double salarioUsuario,
+			String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario) {
+		
 			this.nomeUsuario = nomeUsuario;
 			this.cpfUsuario = cpfUsuario;
-			try {
-				this.dataNascimentoUsuario = new SimpleDateFormat("dd/MM/yyyy").parse(dataNascimentoUsuario); // converte String em Date
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			this.dataNascimentoUsuario = dataNascimentoUsuario;
 			this.salarioUsuario = salarioUsuario;
 			this.emailUsuario = emailUsuario;
 			this.senhaUsuario = senhaUsuario;
 			this.perfilUsuario = perfilUsuario;
 			this.statusUsuario = statusUsuario;
 			JOptionPane.showMessageDialog(null, "Usuário Cadastrado com sucesso!");
-		} else if (codUsuario < 0) {
-			JOptionPane.showMessageDialog(null, "Código do Usuário Inválido!");
-		} else if (Validador.validadorCpf(cpfUsuario) == false) {
-			JOptionPane.showMessageDialog(null, "CPF do Usuário Inválido");
-		} else if (Validador.validadorDataNascimento(dataNascimentoUsuario) == false) {
-			JOptionPane.showMessageDialog(null, "O Usuário deve Possuir Mais de 18 Anos e Menos de 100 Anos");
-		} else if (Validador.validadorEmail(emailUsuario) == false) {
-			JOptionPane.showMessageDialog(null,
-					"O email do Usuário deve possuir um dos seguintes domínios: @gmail.com // @hotmail.com // outlook.com // yahoo.com // @terra.com // @icloud.com ");
-		}
-		else if(salarioUsuario<0) {
-			JOptionPane.showMessageDialog(null, "O Salário do Usuário não pode ser negativo");
-		}
-	}
-	
-	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
-			double salarioUsuario, String emailUsuario, String perfilUsuario,String statusUsuario) {
 		
-			this.codUsuario = codUsuario;
-			this.nomeUsuario = nomeUsuario;
-			this.cpfUsuario = cpfUsuario;
-			try {
-				this.dataNascimentoUsuario = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascimentoUsuario); // converte String em Date
-				System.out.println(dataNascimentoUsuario);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			this.salarioUsuario = salarioUsuario;
-			this.emailUsuario = emailUsuario;
-			this.perfilUsuario = perfilUsuario;
-			this.statusUsuario = statusUsuario;
-			if(Validador.validadorStatus(statusUsuario)==false) {
+	}
+
+	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+			double salarioUsuario, String emailUsuario, String perfilUsuario, String statusUsuario) {
+
+		this.codUsuario = codUsuario;
+		this.nomeUsuario = nomeUsuario;
+		this.cpfUsuario = cpfUsuario;
+		this.dataNascimentoUsuario = dataNascimentoUsuario;
+		this.salarioUsuario = salarioUsuario;
+		this.emailUsuario = emailUsuario;
+		this.perfilUsuario = perfilUsuario;
+		this.statusUsuario = statusUsuario;
+		if (Validador.validadorStatus(statusUsuario) == false) {
 		}
 	}
 
@@ -100,11 +77,11 @@ public class Usuario {
 		this.cpfUsuario = cpfUsuario;
 	}
 
-	public Date getDataNascimentoUsuario() {
+	public String getDataNascimentoUsuario() {
 		return dataNascimentoUsuario;
 	}
 
-	public void setDataNascimentoUsuario(Date dataNascimentoUsuario) {
+	public void setDataNascimentoUsuario(String dataNascimentoUsuario) {
 		this.dataNascimentoUsuario = dataNascimentoUsuario;
 	}
 
@@ -150,5 +127,35 @@ public class Usuario {
 
 	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
 		new UsuarioDao().cadastrarUsuario(usuario);
+	}
+	public void alterarUsuario(Usuario usuario) throws ExceptionDao {
+		new UsuarioDao().alterarUsuario(cpfUsuario, usuario);
+	}
+
+	public String converteDataBancoTela(String dataString) {
+		SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
+		Date data = null;
+
+		try {
+			data = formatoOriginal.parse(dataString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		SimpleDateFormat formatoDesejado = new SimpleDateFormat("dd/MM/yyyy");
+		return formatoDesejado.format(data);
+	}
+
+	public String converteDataTelaBanco(String dataString) {
+		SimpleDateFormat formatoOriginal = new SimpleDateFormat("dd/MM/yyyy");
+		Date data = null;
+		try {
+			data = formatoOriginal.parse(dataString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		SimpleDateFormat formatoDesejado = new SimpleDateFormat("yyyy-MM-dd");
+
+		return formatoDesejado.format(data);
 	}
 }
