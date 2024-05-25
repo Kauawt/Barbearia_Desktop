@@ -25,17 +25,16 @@ public class Usuario {
 
 	public Usuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario, double salarioUsuario,
 			String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario) {
-		
-			this.nomeUsuario = nomeUsuario;
-			this.cpfUsuario = cpfUsuario;
-			this.dataNascimentoUsuario = dataNascimentoUsuario;
-			this.salarioUsuario = salarioUsuario;
-			this.emailUsuario = emailUsuario;
-			this.senhaUsuario = senhaUsuario;
-			this.perfilUsuario = perfilUsuario;
-			this.statusUsuario = statusUsuario;
-			JOptionPane.showMessageDialog(null, "Usuário Cadastrado com sucesso!");
-		
+
+		this.nomeUsuario = nomeUsuario;
+		this.cpfUsuario = cpfUsuario;
+		this.dataNascimentoUsuario = dataNascimentoUsuario;
+		this.salarioUsuario = salarioUsuario;
+		this.emailUsuario = emailUsuario;
+		this.senhaUsuario = senhaUsuario;
+		this.perfilUsuario = perfilUsuario;
+		this.statusUsuario = statusUsuario;
+
 	}
 
 	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
@@ -49,8 +48,21 @@ public class Usuario {
 		this.emailUsuario = emailUsuario;
 		this.perfilUsuario = perfilUsuario;
 		this.statusUsuario = statusUsuario;
-		if (Validador.validadorStatus(statusUsuario) == false) {
-		}
+	}
+
+	public Usuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario,
+			String statusUsuario) {
+
+		this.codUsuario = codUsuario;
+		this.nomeUsuario = nomeUsuario;
+		this.cpfUsuario = cpfUsuario;
+		this.dataNascimentoUsuario = dataNascimentoUsuario;
+		this.salarioUsuario = salarioUsuario;
+		this.emailUsuario = emailUsuario;
+		this.senhaUsuario = senhaUsuario;
+		this.perfilUsuario = perfilUsuario;
+		this.statusUsuario = statusUsuario;
 	}
 
 	public int getCodUsuario() {
@@ -128,6 +140,7 @@ public class Usuario {
 	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
 		new UsuarioDao().cadastrarUsuario(usuario);
 	}
+
 	public void alterarUsuario(Usuario usuario) throws ExceptionDao {
 		new UsuarioDao().alterarUsuario(cpfUsuario, usuario);
 	}
@@ -158,4 +171,12 @@ public class Usuario {
 
 		return formatoDesejado.format(data);
 	}
+
+	public String toString() {
+		return "Usuario [codUsuario=" + codUsuario + ", nomeUsuario=" + nomeUsuario + ", cpfUsuario=" + cpfUsuario
+				+ ", dataNascimentoUsuario=" + dataNascimentoUsuario + ", salarioUsuario=" + salarioUsuario
+				+ ", emailUsuario=" + emailUsuario + ", senhaUsuario=" + senhaUsuario + ", perfilUsuario="
+				+ perfilUsuario + ", statusUsuario=" + statusUsuario + "]";
+	}
+
 }
