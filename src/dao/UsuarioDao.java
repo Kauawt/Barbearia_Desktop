@@ -20,8 +20,8 @@ public class UsuarioDao {
 	
 	private static final String LISTAR_USUARIOS = "select * from tbUsuario";
 	private static final String CONSULTAR_USUARIO_BY_CPF = "select * from tbUsuario where cpfUsuario = ?";
-	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ? emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where cpfUsuario = ?";
-	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'INATIVO' where codUsuario = ?";
+	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where cpfUsuario = ?";
+	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'Inativo' where codUsuario = ?";
 	
 	private Connection conexao = null;
 	private static PreparedStatement preparedStatement = null;
@@ -44,21 +44,12 @@ public class UsuarioDao {
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
 		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				} // fecha conexão com banco
-			} catch (SQLException e) {
-				throw new ExceptionDao("Erro ao fechar o Statement" + e);
-			}
-			try {
-				if (conexao != null) {
+				try {
 					conexao.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (SQLException e) {
-				throw new ExceptionDao("Erro ao fechar a conexão: " + e);
 			}
-		}
 	}
 	public static ArrayList<Usuario> listarUsuarios() {
 		String query = LISTAR_USUARIOS;
@@ -107,6 +98,7 @@ public class UsuarioDao {
 							rs.getString("dataNascimentoUsuario"), 
 							rs.getDouble("salarioUsuario"), 
 							rs.getString("emailUsuario"), 
+							rs.getString("senhaUsuario"),
 							rs.getString("perfilUsuario"), 
 							rs.getString("statusUsuario"));
 			};
@@ -131,9 +123,7 @@ public class UsuarioDao {
 			preparedStatement.setString(2, usuario.getCpfUsuario());
 			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario())); // a data do java e do sql são diferentes, por isso é necessário criar uma nova variável com os padrões sql e posteriormente utilizar getTIme para converter em um tipo long
 			preparedStatement.setDouble(4, usuario.getSalarioUsuario());
-			System.out.println(usuario.getSalarioUsuario());
 			preparedStatement.setString(5, usuario.getEmailUsuario());
-			System.out.println(usuario.getEmailUsuario());
 			preparedStatement.setString(6, usuario.getSenhaUsuario());
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
@@ -152,7 +142,7 @@ public class UsuarioDao {
 			String query = DELETAR_USUARIO;
 			conexao = ModuloConexao.conector(); // abre conexao
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
-			preparedStatement.setInt(9, codUsuario);
+			preparedStatement.setInt(1, codUsuario);
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
 			
 			JOptionPane.showMessageDialog(null, "Usuário deletado com sucesso!");
