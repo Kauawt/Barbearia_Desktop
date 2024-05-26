@@ -102,6 +102,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 				if(e.getButton()==1) {
 					try {
 						Usuario usuarioSelecionado = UsuarioDao.consultarUsuarioByCPF(modeloTabela.getValueAt(table.getSelectedRow(), 2).toString());
+						
 						TelaUsuario cadastraUsuario = new TelaUsuario(usuarioSelecionado);
 						JDesktopPane desktop = getDesktopPane();
 						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);

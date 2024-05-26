@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
 import controller.LoginController;
+import dao.ExceptionDao;
 
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
@@ -31,6 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -103,9 +105,16 @@ public class TelaMenuPrincipal extends JFrame {
                 for (JInternalFrame frame1 : frames) {
                     frame1.dispose();
                 }
-				TelaUsuario telaUsuario = new TelaUsuario(null);
-				telaUsuario.setVisible(true);
-				desktop.add(telaUsuario);
+                TelaUsuario telaUsuario;
+				try {
+					telaUsuario = new TelaUsuario(null);
+					telaUsuario.setVisible(true);
+					desktop.add(telaUsuario);
+				} catch (ExceptionDao e1) {
+					e1.printStackTrace();
+				}
+				
+				
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarUsuario);
