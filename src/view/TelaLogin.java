@@ -58,7 +58,7 @@ public class TelaLogin extends JFrame {
 		setTitle("Login");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 320, 176);
+		setBounds(100, 100, 655, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -66,20 +66,22 @@ public class TelaLogin extends JFrame {
 
 		txtUserUsuario = new JTextField();
 		txtUserUsuario.setText("admin@gmail.com");
-		txtUserUsuario.setBounds(93, 8, 117, 20);
+		txtUserUsuario.setBounds(315, 165, 117, 20);
 		txtUserUsuario.setColumns(10);
 
 		JLabel lblUseUsuario = new JLabel("User");
-		lblUseUsuario.setBounds(25, 5, 50, 22);
-		lblUseUsuario.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblUseUsuario.setForeground(new Color(255, 255, 255));
+		lblUseUsuario.setBounds(247, 162, 50, 22);
+		lblUseUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblSenhaUsuario = new JLabel("Senha");
-		lblSenhaUsuario.setBounds(25, 48, 59, 22);
-		lblSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		lblSenhaUsuario.setForeground(new Color(255, 255, 255));
+		lblSenhaUsuario.setBounds(247, 205, 59, 22);
+		lblSenhaUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JButton btnLoginUsuario = new JButton("Login");
 		btnLoginUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		btnLoginUsuario.setBounds(97, 77, 96, 23);
+		btnLoginUsuario.setBounds(315, 236, 117, 25);
 		btnLoginUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				loginController.fazLogin();
@@ -89,17 +91,18 @@ public class TelaLogin extends JFrame {
 		
 		txtSenhaUsuario = new JPasswordField();
 		txtSenhaUsuario.setText("admin");
-		txtSenhaUsuario.setBounds(94, 48, 117, 20);
+		txtSenhaUsuario.setBounds(316, 205, 117, 20);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(5, 5, 0, 0);
 
 		lblStatus = new JLabel("");
-		lblStatus.setBounds(24, 84, 39, 42);
+		lblStatus.setBounds(223, 238, 39, 42);
 		lblStatus.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/notconnectedicon1.png")));
 		
 		lblConexao = new JLabel("Desconectado");
-		lblConexao.setBounds(5, 123, 81, 18);
+		lblConexao.setForeground(new Color(255, 255, 255));
+		lblConexao.setBounds(207, 277, 81, 18);
 		lblConexao.setFont(new Font("Arial Black", Font.PLAIN, 10));
 		contentPane.setLayout(null);
 		contentPane.add(lblNewLabel);
@@ -111,10 +114,16 @@ public class TelaLogin extends JFrame {
 		contentPane.add(lblStatus);
 		contentPane.add(btnLoginUsuario);
 		
-		JLabel lblUserIcon = new JLabel("");
-		lblUserIcon.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/usericone.png")));
-		lblUserIcon.setBounds(220, 6, 59, 64);
-		contentPane.add(lblUserIcon);
+		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setForeground(new Color(255, 255, 255));
+		lblLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
+		lblLogin.setBounds(307, 124, 111, 27);
+		contentPane.add(lblLogin);
+		
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/wallpaper_login.png")));
+		pictureBox.setBounds(5, 5, 634, 406);
+		contentPane.add(pictureBox);
 		
 		loginController.verificaConexão();
 
