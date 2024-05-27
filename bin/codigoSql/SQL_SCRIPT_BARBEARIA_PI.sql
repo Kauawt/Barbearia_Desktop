@@ -33,12 +33,12 @@ codAgendamento int identity(1,1) primary key,
 codUsuario int not null references tbUsuario,
 codCliente int not null references tbCliente,
 codServico int not null references tbServico,
-precoServico float not null, --tratar no código pra puxar o valor da tabela serviço
+precoServico float not null, --tratar no cï¿½digo pra puxar o valor da tabela serviï¿½o
 dataAgendamento date not null,
 horaAtendimento time not null);
 
 insert into tbUsuario values (
-'João Paulo',
+'JoÃ£o Paulo',
 '260.263.490-57',
 '1996-05-21',
 10000,
@@ -54,7 +54,7 @@ insert into tbUsuario values (
 3000,
 'Fabricio@hotmail.com',
 'Fabricio123',
-'Funcionário',
+'Funcionï¿½rio',
 'Ativo');
 
 insert into tbUsuario values (
@@ -64,7 +64,7 @@ insert into tbUsuario values (
 3000,
 'Matheus@gmail.com',
 'Matheuzinho123',
-'Funcionário',
+'Funcionï¿½rio',
 'Inativo');
 
 insert into tbUsuario values (
@@ -74,7 +74,7 @@ insert into tbUsuario values (
 3000,
 'Anthony@gmail.com',
 'minhasenha',
-'Funcionário',
+'Funcionï¿½rio',
 'Inativo');
 
 insert into tbUsuario values (
@@ -84,7 +84,7 @@ insert into tbUsuario values (
 3000,
 'sergiramos@outlook.com',
 'ramos',
-'Funcionário',
+'FuncionÃ¡rio',
 'Ativo');
 
 insert into tbCliente values(
@@ -117,7 +117,7 @@ insert into tbCliente values(
 
 insert into tbCliente values(
 'Steve Rogers',
-'Rua América, 3125',
+'Rua AmÃ©rica, 3125',
 '(11)92348-8981',
 '503.581.880-24',
 'Inativo')
@@ -138,21 +138,21 @@ insert into tbServico values(
 
 insert into tbServico values(
 'Sobrancelha',
-'Remoção do excesso de pelos e design',
+'RemoÃ§Ã£o do excesso de pelos e design',
 15,
 10,
 'Ativo')
 
 insert into tbServico values(
 'Cabelo + Barba',
-'Combo envolvendo os dois serviços',
+'Combo envolvendo os dois serviï¿½os',
 50,
 60,
 'Ativo')
 
 insert into tbServico values(
 'Nevou',
-'Descoloração do cabelo e aplicação de tintura prateada',
+'DescoloraÃ§Ã£o do cabelo e aplicaÃ§Ã£o de tintura prateada',
 50,
 120,
 'Ativo')

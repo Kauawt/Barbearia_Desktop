@@ -24,14 +24,14 @@ public class ClienteController {
 	 * passa este objeto como parâmetro para o método cadastrarCliente da ClasseDao (Responsável por puxar dados do BD)
 	 */
 	public void cadastrarCliente() {
-			Cliente cliente = clienteHelper.validadorCamposTelaCliente(); // pega o objeto criado a partir dos dados da telaCliente e instância em um novo objeto de mesmo tipo
-		try {
-			this.clienteDao = new ClienteDao();
-			clienteDao.cadastrarCliente(cliente);
-		} catch (ExceptionDao e) {
-			e.printStackTrace();
-		}
+		Cliente cliente = clienteHelper.validadorCamposTelaCliente(); // pega o objeto criado a partir dos dados da telaCliente e instância em um novo objeto de mesmo tipo
+	try {
+		this.clienteDao = new ClienteDao();
+		clienteDao.cadastrarCliente(cliente);
+	} catch (ExceptionDao e) {
+		e.printStackTrace();
 	}
+}
 
 
 }
