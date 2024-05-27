@@ -39,6 +39,7 @@ import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
+import javax.swing.SwingConstants;
 
 public class TelaServico extends JInternalFrame {
 
@@ -81,95 +82,129 @@ public class TelaServico extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblFormularioServico = new JLabel("Formulário Serviço");
-		lblFormularioServico.setBounds(211, 11, 280, 32);
+		lblFormularioServico.setForeground(new Color(255, 255, 255));
+		lblFormularioServico.setBounds(224, 77, 280, 32);
 		getContentPane().add(lblFormularioServico);
-		lblFormularioServico.setFont(new Font("Arial Black", Font.PLAIN, 22));
+		lblFormularioServico.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 		
 		JLabel lblCodigoServico = new JLabel("ID");
-		lblCodigoServico.setBounds(10, 126, 112, 21);
+		lblCodigoServico.setForeground(new Color(255, 255, 255));
+		lblCodigoServico.setBounds(133, 126, 112, 21);
 		getContentPane().add(lblCodigoServico);
-		lblCodigoServico.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblCodigoServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		txtCodigoServico = new JTextField();
-		txtCodigoServico.setBounds(126, 128, 176, 20);
+		txtCodigoServico.setHorizontalAlignment(SwingConstants.CENTER);
+		txtCodigoServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtCodigoServico.setForeground(new Color(128, 128, 128));
+		txtCodigoServico.setText("ID");
+		txtCodigoServico.setBounds(249, 128, 176, 20);
 		getContentPane().add(txtCodigoServico);
 		txtCodigoServico.setColumns(10);
 		
 		JLabel lblNomeServico = new JLabel("Tipo");
-		lblNomeServico.setBounds(336, 126, 112, 21);
+		lblNomeServico.setForeground(new Color(255, 255, 255));
+		lblNomeServico.setBounds(133, 163, 112, 21);
 		getContentPane().add(lblNomeServico);
-		lblNomeServico.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblNomeServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		txtTipoServico = new JTextField();
-		txtTipoServico.setBounds(452, 128, 176, 20);
+		txtTipoServico.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTipoServico.setText("Tipo");
+		txtTipoServico.setForeground(new Color(128, 128, 128));
+		txtTipoServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtTipoServico.setBounds(249, 165, 176, 20);
 		getContentPane().add(txtTipoServico);
 		txtTipoServico.setColumns(10);
 		
 		JLabel lblDuracao = new JLabel("Duração");
-		lblDuracao.setBounds(10, 234, 112, 21);
+		lblDuracao.setForeground(new Color(255, 255, 255));
+		lblDuracao.setBounds(133, 227, 112, 21);
 		getContentPane().add(lblDuracao);
-		lblDuracao.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblDuracao.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		txtDuracaoServico = new JTextField();
-		txtDuracaoServico.setBounds(126, 236, 176, 20);
+		txtDuracaoServico.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDuracaoServico.setText("Duração");
+		txtDuracaoServico.setForeground(new Color(128, 128, 128));
+		txtDuracaoServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtDuracaoServico.setBounds(249, 229, 176, 20);
 		getContentPane().add(txtDuracaoServico);
 		txtDuracaoServico.setColumns(10);
 		
 		JLabel lblPrecoServico = new JLabel("Preço");
-		lblPrecoServico.setBounds(336, 184, 58, 21);
+		lblPrecoServico.setForeground(new Color(255, 255, 255));
+		lblPrecoServico.setBounds(133, 259, 58, 21);
 		getContentPane().add(lblPrecoServico);
-		lblPrecoServico.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblPrecoServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		txtPrecoServico = new JTextField();
-		txtPrecoServico.setBounds(452, 186, 176, 20);
+		txtPrecoServico.setHorizontalAlignment(SwingConstants.CENTER);
+		txtPrecoServico.setText("Preço");
+		txtPrecoServico.setForeground(new Color(128, 128, 128));
+		txtPrecoServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtPrecoServico.setBounds(249, 261, 176, 20);
 		getContentPane().add(txtPrecoServico);
 		txtPrecoServico.setColumns(10);
 		
 		JLabel lblDescricaoServico = new JLabel("Descrição");
-		lblDescricaoServico.setBounds(10, 184, 112, 21);
+		lblDescricaoServico.setForeground(new Color(255, 255, 255));
+		lblDescricaoServico.setBounds(133, 195, 112, 21);
 		getContentPane().add(lblDescricaoServico);
-		lblDescricaoServico.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblDescricaoServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
 		txtDescricaoServico = new JTextField();
-		txtDescricaoServico.setBounds(126, 186, 176, 20);
+		txtDescricaoServico.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDescricaoServico.setText("Descrição");
+		txtDescricaoServico.setForeground(new Color(128, 128, 128));
+		txtDescricaoServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtDescricaoServico.setBounds(249, 197, 176, 20);
 		getContentPane().add(txtDescricaoServico);
 		txtDescricaoServico.setColumns(10);
 		
 		JLabel lblStatusServico = new JLabel("Status");
-		lblStatusServico.setBounds(335, 234, 49, 21);
+		lblStatusServico.setForeground(new Color(255, 255, 255));
+		lblStatusServico.setBounds(133, 291, 49, 21);
 		getContentPane().add(lblStatusServico);
-		lblStatusServico.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblStatusServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		
-		JButton btnCadastrarServico = new JButton("");
+		JButton btnCadastrarServico = new JButton("Adicionar");
 		btnCadastrarServico.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCadastrarServico.setBackground(new Color(240, 240, 240));
-		btnCadastrarServico.setIcon(new ImageIcon(TelaServico.class.getResource("/icones/addicon.png")));
+		btnCadastrarServico.setIcon(null);
 		btnCadastrarServico.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarServico.setBounds(34, 374, 117, 68);
+		btnCadastrarServico.setBounds(84, 342, 104, 40);
 		getContentPane().add(btnCadastrarServico);
 		
-		JButton btnAlterarServico = new JButton("");
-		btnAlterarServico.setIcon(new ImageIcon(TelaServico.class.getResource("/icones/editicon.png")));
+		JButton btnAlterarServico = new JButton("Alterar");
+		btnAlterarServico.setIcon(null);
 		btnAlterarServico.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAlterarServico.setPreferredSize(new Dimension(80, 80));
-		btnAlterarServico.setBounds(185, 374, 117, 68);
+		btnAlterarServico.setBounds(203, 342, 104, 40);
 		getContentPane().add(btnAlterarServico);
 		
-		JButton btnConsultarServico = new JButton("");
-		btnConsultarServico.setIcon(new ImageIcon(TelaServico.class.getResource("/icones/findicon.png")));
-		btnConsultarServico.setBounds(336, 374, 117, 68);
+		JButton btnConsultarServico = new JButton("Pesquisar");
+		btnConsultarServico.setIcon(null);
+		btnConsultarServico.setBounds(321, 342, 104, 40);
 		getContentPane().add(btnConsultarServico);
 		
-		JButton btnDeletarServico = new JButton("");
+		JButton btnDeletarServico = new JButton("Excluir");
 		btnDeletarServico.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnDeletarServico.setIcon(new ImageIcon(TelaServico.class.getResource("/icones/deleteicon.png")));
-		btnDeletarServico.setBounds(487, 374, 117, 68);
+		btnDeletarServico.setIcon(null);
+		btnDeletarServico.setBounds(444, 342, 104, 40);
 		getContentPane().add(btnDeletarServico);
 		
 		final JComboBox cbStatusServico = new JComboBox();
+		cbStatusServico.setForeground(new Color(128, 128, 128));
+		cbStatusServico.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		cbStatusServico.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
-		cbStatusServico.setBounds(452, 235, 176, 22);
+		cbStatusServico.setBounds(250, 292, 176, 22);
 		getContentPane().add(cbStatusServico);
+		
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaServico.class.getResource("/icones/wallpaper_telas.png")));
+		pictureBox.setBounds(0, 0, 640, 453);
+		getContentPane().add(pictureBox);
 		btnConsultarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	

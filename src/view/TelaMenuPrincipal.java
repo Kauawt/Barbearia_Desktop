@@ -75,7 +75,7 @@ public class TelaMenuPrincipal extends JFrame {
 		addWindowListener(new WindowAdapter() {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 904, 542);
+		setBounds(100, 100, 879, 538);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -204,31 +204,31 @@ public class TelaMenuPrincipal extends JFrame {
 		
 		JLabel lblNomeUser = new JLabel("USER:");
 		lblNomeUser.setBounds(650, 89, 68, 29);
-		lblNomeUser.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(650, 245, 225, 225);
-		lblNewLabel_2.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/jpIcon.png")));
+		lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		
 		JLabel lblNomeData = new JLabel("DATA:");
 		lblNomeData.setBounds(650, 159, 69, 29);
-		lblNomeData.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.setLayout(null);
 		desktop.setLayout(new CardLayout(0, 0));
 		contentPane.add(desktop);
 		contentPane.add(lblNomeUser);
 		contentPane.add(lblNomeData);
-		contentPane.add(lblNewLabel_2);
 		
 		lblData = new JLabel("----");
 		lblData.setBounds(729, 162, 159, 22);
-		lblData.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.add(lblData);
 		
 		lblUser = new JLabel("----");
 		lblUser.setBounds(728, 92, 160, 22);
-		lblUser.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		lblUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.add(lblUser);
+		
+		JPictureBox pbox_iconeJP = new JPictureBox();
+		pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
+		pbox_iconeJP.setBounds(650, 199, 203, 227);
+		contentPane.add(pbox_iconeJP);
 	
 	}
 	public JDesktopPane getDesktop() {

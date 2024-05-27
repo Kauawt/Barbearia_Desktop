@@ -47,7 +47,9 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 
 public class TelaUsuario extends JInternalFrame {
 
@@ -96,67 +98,100 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		JLabel lblFormularioUsuario = new JLabel("Formulário Usuario");
-		lblFormularioUsuario.setBounds(217, 11, 280, 32);
+		lblFormularioUsuario.setForeground(new Color(255, 255, 255));
+		lblFormularioUsuario.setBounds(220, 57, 280, 32);
 		getContentPane().add(lblFormularioUsuario);
-		lblFormularioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 22));
+
+		lblFormularioUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 
 		JLabel lblNomeusuario = new JLabel("Nome");
-		lblNomeusuario.setBounds(197, 86, 60, 21);
+		lblNomeusuario.setForeground(new Color(255, 255, 255));
+		lblNomeusuario.setBounds(197, 108, 60, 21);
 		getContentPane().add(lblNomeusuario);
-		lblNomeusuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+
+		lblNomeusuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtNomeUsuario = new JTextField();
-		txtNomeUsuario.setBounds(261, 88, 176, 20);
+		txtNomeUsuario.setText("Nome");
+		txtNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNomeUsuario.setForeground(new Color(128, 128, 128));
+		txtNomeUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtNomeUsuario.setBounds(261, 110, 176, 20);
 		getContentPane().add(txtNomeUsuario);
 		txtNomeUsuario.setColumns(10);
 
 		JLabel lblSalarioUsuario = new JLabel("Salario");
-		lblSalarioUsuario.setBounds(185, 179, 68, 21);
+		lblSalarioUsuario.setForeground(new Color(255, 255, 255));
+		lblSalarioUsuario.setBounds(185, 201, 68, 21);
 		getContentPane().add(lblSalarioUsuario);
-		lblSalarioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+
+		lblSalarioUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtSalarioUsuario = new JTextField();
-		txtSalarioUsuario.setBounds(261, 181, 176, 20);
+		txtSalarioUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSalarioUsuario.setText("Salário");
+		txtSalarioUsuario.setForeground(new Color(128, 128, 128));
+		txtSalarioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtSalarioUsuario.setBounds(261, 203, 176, 20);
 		getContentPane().add(txtSalarioUsuario);
 		txtSalarioUsuario.setColumns(10);
 
 		JLabel lblDataNascimentoUsuario = new JLabel("Data Nascimento");
-		lblDataNascimentoUsuario.setBounds(121, 149, 136, 21);
+		lblDataNascimentoUsuario.setForeground(new Color(255, 255, 255));
+		lblDataNascimentoUsuario.setBounds(121, 171, 136, 21);
 		getContentPane().add(lblDataNascimentoUsuario);
-		lblDataNascimentoUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+
+		lblDataNascimentoUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblCpfUsuario = new JLabel("CPF");
-		lblCpfUsuario.setBounds(204, 117, 49, 21);
+		lblCpfUsuario.setForeground(new Color(255, 255, 255));
+		lblCpfUsuario.setBounds(204, 139, 49, 21);
 		getContentPane().add(lblCpfUsuario);
-		lblCpfUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
+
+		lblCpfUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(202, 218, 49, 21);
+		lblEmail.setForeground(new Color(255, 255, 255));
+		lblEmail.setBounds(202, 240, 49, 21);
 		getContentPane().add(lblEmail);
-		lblEmail.setFont(new Font("Arial Black", Font.PLAIN, 14));
+
+		lblEmail.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtEmailUsuario = new JTextField();
+		txtEmailUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtEmailUsuario.setText("E-mail");
+		txtEmailUsuario.setForeground(new Color(128, 128, 128));
+		txtEmailUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		txtEmailUsuario.setColumns(10);
-		txtEmailUsuario.setBounds(261, 220, 176, 20);
+		txtEmailUsuario.setBounds(261, 242, 176, 20);
 		getContentPane().add(txtEmailUsuario);
 
 		JLabel lblSenhaUsuario = new JLabel("Senha");
-		lblSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblSenhaUsuario.setBounds(202, 250, 49, 21);
+		lblSenhaUsuario.setForeground(new Color(255, 255, 255));
+		lblSenhaUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblSenhaUsuario.setBounds(202, 272, 49, 21);
 		getContentPane().add(lblSenhaUsuario);
 
 		txtSenhaUsuario = new JTextField();
+		txtSenhaUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSenhaUsuario.setText("Senha");
+		txtSenhaUsuario.setForeground(new Color(128, 128, 128));
+		txtSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		txtSenhaUsuario.setColumns(10);
-		txtSenhaUsuario.setBounds(261, 252, 176, 20);
+		txtSenhaUsuario.setBounds(261, 274, 176, 20);
 		getContentPane().add(txtSenhaUsuario);
 
 		JLabel lblPerfilUsuario = new JLabel("Perfil");
-		lblPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblPerfilUsuario.setBounds(202, 283, 49, 21);
+		lblPerfilUsuario.setForeground(new Color(255, 255, 255));
+		lblPerfilUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblPerfilUsuario.setBounds(202, 305, 49, 21);
 		getContentPane().add(lblPerfilUsuario);
 
-		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] { "Administrador", "Funcionário" }));
-		cbPerfilUsuario.setBounds(261, 284, 176, 22);
+		cbPerfilUsuario.setForeground(new Color(128, 128, 128));
+		cbPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		
+		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
+
 		getContentPane().add(cbPerfilUsuario);
 
 		MaskFormatter cpfMask = null;
@@ -169,30 +204,39 @@ public class TelaUsuario extends JInternalFrame {
 			e.printStackTrace();
 		}
 		ftxtCpfUsuario = new JFormattedTextField(cpfMask);
-		ftxtCpfUsuario.setText("");
-		ftxtCpfUsuario.setBounds(261, 119, 176, 20);
+		ftxtCpfUsuario.setForeground(new Color(128, 128, 128));
+		ftxtCpfUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		ftxtCpfUsuario.setText("CPF");
+		ftxtCpfUsuario.setBounds(261, 141, 176, 20);
 		getContentPane().add(ftxtCpfUsuario);
 
 		ftxtDataNascimentoUsuario = new JFormattedTextField(dataMask);
+		ftxtDataNascimentoUsuario.setForeground(new Color(128, 128, 128));
+		ftxtDataNascimentoUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		ftxtDataNascimentoUsuario.setText("");
-		ftxtDataNascimentoUsuario.setBounds(261, 150, 176, 20);
+		ftxtDataNascimentoUsuario.setBounds(261, 172, 176, 20);
 		getContentPane().add(ftxtDataNascimentoUsuario);
 
 		JLabel lblStatusUsuario = new JLabel("Status");
-		lblStatusUsuario.setFont(new Font("Arial Black", Font.PLAIN, 14));
-		lblStatusUsuario.setBounds(202, 312, 49, 21);
+		lblStatusUsuario.setForeground(new Color(255, 255, 255));
+		lblStatusUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblStatusUsuario.setBounds(202, 334, 49, 21);
 		getContentPane().add(lblStatusUsuario);
 
-		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
-		cbStatusUsuario.setBounds(261, 313, 176, 22);
+		cbStatusUsuario.setForeground(new Color(128, 128, 128));
+		cbStatusUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		
+		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
+		cbStatusUsuario.setBounds(261, 335, 176, 22);
+
 		getContentPane().add(cbStatusUsuario);
 
 		JButton btnCadastrarUsuario = new JButton(usuarioSelecionado == null ? "Cadastrar" : "Alterar");
 		btnCadastrarUsuario.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCadastrarUsuario.setBackground(new Color(240, 240, 240));
-		btnCadastrarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/addicon.png")));
+		btnCadastrarUsuario.setIcon(null);
 		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarUsuario.setBounds(469, 374, 155, 68);
+		btnCadastrarUsuario.setBounds(286, 367, 124, 41);
 		getContentPane().add(btnCadastrarUsuario);
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -218,9 +262,14 @@ public class TelaUsuario extends JInternalFrame {
 		});
 
 		JButton btnConsultarUsuario = new JButton("Consultar");
-		btnConsultarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/findicon.png")));
-		btnConsultarUsuario.setBounds(469, 11, 155, 68);
+		btnConsultarUsuario.setIcon(null);
+		btnConsultarUsuario.setBounds(481, 104, 104, 32);
 		getContentPane().add(btnConsultarUsuario);
+		
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
+		pictureBox.setBounds(0, 0, 640, 453);
+		getContentPane().add(pictureBox);
 		btnConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
