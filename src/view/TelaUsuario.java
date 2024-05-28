@@ -65,7 +65,7 @@ public class TelaUsuario extends JInternalFrame {
 	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
 	private JComboBox cbStatusUsuario = new JComboBox();
 	private UsuarioController usuarioController = new UsuarioController();
-
+	private JButton btnDeletarUsuario;
 	/**
 	 * Launch the application.
 	 */
@@ -236,11 +236,16 @@ public class TelaUsuario extends JInternalFrame {
 				listarUsuarios.setVisible(true);
 			}
 		});
+		JButton btnDeletarUsuario = new JButton("Deletar");
+		btnDeletarUsuario.setPreferredSize(new Dimension(80, 80));
+		btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
+		btnDeletarUsuario.setBounds(172, 366, 104, 41);
+		getContentPane().add(btnDeletarUsuario);
+		
 		if (usuarioSelecionado != null) {
-			JButton btnDeletarUsuario = new JButton("Deletar");
+			btnDeletarUsuario.setVisible(true);
 			btnDeletarUsuario.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
 					UsuarioDao usuario = new UsuarioDao();
 					try {
 						usuario.deletarUsuario(usuarioSelecionado.getCodUsuario());
@@ -250,10 +255,9 @@ public class TelaUsuario extends JInternalFrame {
 
 				}
 			});
-			btnDeletarUsuario.setPreferredSize(new Dimension(80, 80));
-			btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
-			btnDeletarUsuario.setBounds(37, 374, 155, 68);
-			getContentPane().add(btnDeletarUsuario);
+			
+		} else {
+			btnDeletarUsuario.setVisible(false);
 		}
 
 		setIconifiable(true);
