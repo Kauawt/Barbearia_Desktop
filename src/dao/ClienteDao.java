@@ -17,7 +17,7 @@ public class ClienteDao {
 	private final String CADASTRAR_CLIENTE = "insert into tbCliente(nomeCliente,enderecoCliente,telefoneCliente,cpfCliente,statusCliente) values (?,?,?,?,?)";
 	private static final String LISTAR_CLIENTES = "select * from tbCliente";
 	private static final String CONSULTAR_CLIENTE_POR_CPF = "select * from tbCliente where cpfCliente = ?";
-	private static final String ALTERAR_CLIENTE = "UPDATE tbCliente set nomeCliente = ?, enderecoCliente = ?, telefoneCliente = ?, cpfCliente = ?, statusCliente = ? where cpfUsuario = ?";
+	private static final String ALTERAR_CLIENTE = "UPDATE tbCliente set nomeCliente = ?, enderecoCliente = ?, telefoneCliente = ?, cpfCliente = ?, statusCliente = ? where cpfCliente = ?";
 	private static final String DELETAR_CLIENTE = "UPDATE tbCliente set statusCliente = 'Inativo' where codCliente = ?";
 
 	private Connection conexao = null;
@@ -124,9 +124,11 @@ public class ClienteDao {
 			pst.setString(3, cliente.getTelefoneCliente());
 			pst.setString(4, cliente.getCpfCliente());
 			pst.setString(5, cliente.getStatusCliente());
+			pst.setString(6, cpfCliente);
 			pst.executeUpdate(); // atualiza o banco de dados		
 			JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso!");
 		} catch (SQLException e) {
+			
 			throw new ExceptionDao("Erro ao alterar o Cliente: " + e);
 		} finally {
 			ModuloConexao.fecharConexao();

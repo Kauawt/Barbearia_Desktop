@@ -39,22 +39,6 @@ public class ClienteHelper {
 		}
 	}
 
-	public void setarModeloTelaCliente(Cliente cliente) {
-		int codCliente = cliente.getCodCliente();
-		String nomeCliente = cliente.getNomeCliente();
-		String enderecoCliente = cliente.getEnderecoCliente();
-		String telefoneCliente = cliente.getTelefoneCliente();
-		String cpfCliente = cliente.getCpfCliente();
-		String statusCliente = cliente.getStatusCliente();
-
-
-		telaCliente.getTxtNomeCliente().setText(nomeCliente.toString());
-		telaCliente.getTxtEnderecoCliente().setText(enderecoCliente.toString());
-		telaCliente.getFtxtCpfCliente().setText(telefoneCliente.toString());
-		telaCliente.getFtxtCpfCliente().setText(cpfCliente.toString());
-		telaCliente.getCbStatusCliente().setSelectedItem(statusCliente.toString());
-
-	}
 
 	public void limparTelaCliente() {
 	

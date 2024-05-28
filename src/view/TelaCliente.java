@@ -18,17 +18,24 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 
 import controller.ClienteController;
 import controller.helper.ClienteHelper;
 import dao.ClienteDao;
+import dao.ExceptionDao;
 import dao.UsuarioDao;
+import model.Cliente;
 import model.ModeloTabelaCliente;
 import model.ModeloTabelaUsuario;
 import javax.swing.JScrollPane;
@@ -53,7 +60,6 @@ public class TelaCliente extends JInternalFrame {
 	private JTextField txtNomeCliente;
 	private JFormattedTextField ftxtTelefoneCliente;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -61,7 +67,7 @@ public class TelaCliente extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaCliente frame = new TelaCliente();
+					TelaCliente frame = new TelaCliente(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,210 +79,237 @@ public class TelaCliente extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCliente() {
-		
-			ClienteController clienteController = new ClienteController(this);
-			ClienteHelper clienteHelper = new ClienteHelper(this);
-			getContentPane().setBackground(new Color(232, 227, 225));
+	public TelaCliente(Cliente clienteSelecionado) throws ExceptionDao {
 
-			setResizable(true);
-			getContentPane().setSize(new Dimension(450, 480));
-			getContentPane().setPreferredSize(new Dimension(450, 480));
-			getContentPane().setLayout(null);
+		ClienteController clienteController = new ClienteController(this);
+		ClienteHelper clienteHelper = new ClienteHelper(this);
+		getContentPane().setBackground(new Color(232, 227, 225));
 
-			JLabel lblFormularioCliente = new JLabel("Formulário Cliente");
-			lblFormularioCliente.setBounds(211, 11, 224, 32);
-			getContentPane().add(lblFormularioCliente);
-			lblFormularioCliente.setFont(new Font("Arial Black", Font.PLAIN, 22));
+		setResizable(true);
+		getContentPane().setSize(new Dimension(450, 480));
+		getContentPane().setPreferredSize(new Dimension(450, 480));
+		getContentPane().setLayout(null);
 
-			JLabel lblNome = new JLabel("Nome");
-			lblNome.setBounds(10, 123, 112, 21);
-			getContentPane().add(lblNome);
-			lblNome.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		JLabel lblFormularioCliente = new JLabel("Formulário Cliente");
+		lblFormularioCliente.setBounds(208, 11, 224, 32);
+		getContentPane().add(lblFormularioCliente);
+		lblFormularioCliente.setFont(new Font("Arial Black", Font.PLAIN, 22));
 
-			JLabel lblEndereco = new JLabel("Endereço");
-			lblEndereco.setBounds(336, 123, 112, 21);
-			getContentPane().add(lblEndereco);
-			lblEndereco.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setBounds(181, 119, 112, 21);
+		getContentPane().add(lblNome);
+		lblNome.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
-			txtEnderecoCliente = new JTextField();
-			txtEnderecoCliente.setBounds(452, 125, 176, 20);
-			getContentPane().add(txtEnderecoCliente);
-			txtEnderecoCliente.setColumns(10);
+		JLabel lblEndereco = new JLabel("Endereço");
+		lblEndereco.setBounds(181, 233, 112, 21);
+		getContentPane().add(lblEndereco);
+		lblEndereco.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
-			JLabel lblTelefone = new JLabel("Telefone");
-			lblTelefone.setBounds(10, 172, 112, 21);
-			getContentPane().add(lblTelefone);
-			lblTelefone.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		txtEnderecoCliente = new JTextField();
+		txtEnderecoCliente.setBounds(297, 235, 176, 20);
+		getContentPane().add(txtEnderecoCliente);
+		txtEnderecoCliente.setColumns(10);
 
-			JLabel lblCpf = new JLabel("CPF");
-			lblCpf.setBounds(336, 172, 112, 21);
-			getContentPane().add(lblCpf);
-			lblCpf.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		JLabel lblTelefone = new JLabel("Telefone");
+		lblTelefone.setBounds(181, 176, 112, 21);
+		getContentPane().add(lblTelefone);
+		lblTelefone.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
-			JLabel lblStatusCliente = new JLabel("Status");
-			lblStatusCliente.setBounds(185, 241, 49, 21);
-			getContentPane().add(lblStatusCliente);
-			lblStatusCliente.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setBounds(181, 290, 112, 21);
+		getContentPane().add(lblCpf);
+		lblCpf.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
-			cbStatusCliente = new JComboBox<String>();
-			cbStatusCliente.setModel(new DefaultComboBoxModel<String>(new String[] { "Ativo", "Inativo" }));
-			cbStatusCliente.setBounds(301, 243, 176, 20);
-			getContentPane().add(cbStatusCliente);
+		JLabel lblStatusCliente = new JLabel("Status");
+		lblStatusCliente.setBounds(181, 347, 49, 21);
+		getContentPane().add(lblStatusCliente);
+		lblStatusCliente.setFont(new Font("Arial Black", Font.PLAIN, 14));
 
-			JButton btnCadastrarCliente = new JButton("");
-			btnCadastrarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnCadastrarCliente.setBackground(new Color(240, 240, 240));
-			btnCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/addicon.png")));
-			btnCadastrarCliente.setPreferredSize(new Dimension(80, 80));
-			btnCadastrarCliente.setBounds(34, 374, 117, 68);
-			getContentPane().add(btnCadastrarCliente);
+		cbStatusCliente = new JComboBox<String>();
+		cbStatusCliente.setModel(new DefaultComboBoxModel<String>(new String[] { "Ativo", "Inativo" }));
+		cbStatusCliente.setBounds(297, 349, 176, 20);
+		getContentPane().add(cbStatusCliente);
 
-			JButton btnAlterarCliente = new JButton("");
-			btnAlterarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/editicon.png")));
-			btnAlterarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnAlterarCliente.setPreferredSize(new Dimension(80, 80));
-			btnAlterarCliente.setBounds(185, 374, 117, 68);
-			getContentPane().add(btnAlterarCliente);
+		txtNomeCliente = new JTextField();
+		txtNomeCliente.setBounds(297, 121, 173, 20);
+		getContentPane().add(txtNomeCliente);
+		txtNomeCliente.setColumns(10);
 
-			JButton btnConsultarCliente = new JButton("");
-			btnConsultarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/findicon.png")));
-			btnConsultarCliente.setBounds(336, 374, 117, 68);
-			getContentPane().add(btnConsultarCliente);
+		MaskFormatter cpfMask = null;
+		MaskFormatter dataMask = null;
+		MaskFormatter telefoneMask = null;
 
-			JButton btnDeletarCliente = new JButton("");
-			btnDeletarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnDeletarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/deleteicon.png")));
-			btnDeletarCliente.setBounds(487, 374, 117, 68);
-			getContentPane().add(btnDeletarCliente);
-			
-			txtNomeCliente = new JTextField();
-			txtNomeCliente.setBounds(129, 125, 173, 20);
-			getContentPane().add(txtNomeCliente);
-			txtNomeCliente.setColumns(10);
-			
-			
-			MaskFormatter cpfMask = null;
-			MaskFormatter dataMask = null;
-			MaskFormatter telefoneMask = null;
+		try {
+			cpfMask = new MaskFormatter("###.###.###-##");
+			dataMask = new MaskFormatter("##/##/####");
+			telefoneMask = new MaskFormatter("(##)#####-####");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
-			try {
-				cpfMask = new MaskFormatter("###.###.###-##");
-				dataMask = new MaskFormatter("##/##/####");
-				telefoneMask = new MaskFormatter("(##)#####-####");
-			} catch (ParseException e) {
-				e.printStackTrace();
+		ftxtTelefoneCliente = new JFormattedTextField(telefoneMask);
+		ftxtTelefoneCliente.setBounds(297, 178, 173, 20);
+		getContentPane().add(ftxtTelefoneCliente);
+
+		ftxtCpfCliente = new JFormattedTextField(cpfMask);
+		ftxtCpfCliente.setBounds(297, 292, 176, 20);
+		getContentPane().add(ftxtCpfCliente);
+
+		JButton btnConsultarCliente = new JButton("");
+		btnConsultarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/findicon.png")));
+		btnConsultarCliente.setBounds(513, 47, 117, 68);
+		getContentPane().add(btnConsultarCliente);
+		btnConsultarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConsultaCliente listarClientes = new TelaConsultaCliente();
+				JDesktopPane desktop = getDesktopPane();
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
+				if (frame instanceof TelaMenuPrincipal) {
+					JInternalFrame[] frames = desktop.getAllFrames();
+					for (JInternalFrame frame1 : frames) {
+						frame1.dispose();
+					}
+				}
+				desktop.add(listarClientes);
+				listarClientes.setVisible(true);
 			}
-			
-			ftxtTelefoneCliente = new JFormattedTextField(telefoneMask);
-			ftxtTelefoneCliente.setBounds(129, 174, 173, 20);
-			getContentPane().add(ftxtTelefoneCliente);
-			
-			ftxtCpfCliente = new JFormattedTextField(cpfMask);
-			ftxtCpfCliente.setBounds(452, 174, 176, 20);
-			getContentPane().add(ftxtCpfCliente);
-			
-			
-			btnConsultarCliente.addActionListener(new ActionListener() {
+		});
+		if (clienteSelecionado != null) {
+			JButton btnDeletarCliente = new JButton("");
+			btnDeletarCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
+					ClienteDao cliente = new ClienteDao();
+					try {
+						cliente.deletarCliente(clienteSelecionado.getCodCliente());
+					} catch (ExceptionDao e1) {
+						e1.printStackTrace();
+					}
 				}
 			});
-			btnCadastrarCliente.addActionListener(new ActionListener() {
+			btnDeletarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnDeletarCliente.setBackground(UIManager.getColor("Button.background"));
+			btnDeletarCliente.setPreferredSize(new Dimension(80, 80));
+			btnDeletarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/deleteicon.png")));
+			btnDeletarCliente.setBounds(37, 374, 155, 68);
+			getContentPane().add(btnDeletarCliente);
+		}
 
-				public void actionPerformed(ActionEvent e) {
+		JButton btnCadastrarCliente = new JButton();
+		btnCadastrarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrarCliente.setBackground(new Color(240, 240, 240));
+		if (clienteSelecionado == null) {
+			btnCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/addicon.png")));
+		} else {
+			btnCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/editicon.png")));
+		}
+		btnCadastrarCliente.setPreferredSize(new Dimension(80, 80));
+		btnCadastrarCliente.setBounds(513, 374, 117, 68);
+		getContentPane().add(btnCadastrarCliente);
+		btnCadastrarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (clienteSelecionado == null) {
 					clienteController.cadastrarCliente();
-					clienteHelper.limparTelaCliente();
-				
+				} else {
+					clienteController.alterarCliente();
 				}
-			});
-			setIconifiable(true);
-			setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			setBorder(null);
-			setPreferredSize(new Dimension(640, 480));
-			setMaximizable(true);
-			setClosable(true);
-			setRootPaneCheckingEnabled(false);
-			setMinimumSize(new Dimension(450, 480));
-			setTitle("Cliente");
-			setAlignmentY(Component.TOP_ALIGNMENT);
-			setAlignmentX(Component.LEFT_ALIGNMENT);
-			setBounds(100, 100, 640, 480);
+			}
+		});
 
+		setIconifiable(true);
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setBorder(null);
+		setPreferredSize(new Dimension(640, 480));
+		setMaximizable(true);
+		setClosable(true);
+		setRootPaneCheckingEnabled(false);
+		setMinimumSize(new Dimension(450, 480));
+		setTitle("Cliente");
+		setAlignmentY(Component.TOP_ALIGNMENT);
+		setAlignmentX(Component.LEFT_ALIGNMENT);
+		setBounds(100, 100, 640, 480);
+
+		if (clienteSelecionado != null) {
+			preencherCampos(clienteSelecionado);
 		}
+	}
 
+	private void preencherCampos(Cliente clienteSelecionado) throws ExceptionDao {
+		txtNomeCliente.setText(clienteSelecionado.getNomeCliente());
+		txtEnderecoCliente.setText(clienteSelecionado.getEnderecoCliente());
+		ftxtTelefoneCliente.setText(clienteSelecionado.getTelefoneCliente());
+		ftxtCpfCliente.setText(clienteSelecionado.getCpfCliente());
+		cbStatusCliente.setSelectedItem(clienteSelecionado.getStatusCliente());
+	}
 
-		public JTextField getTxtNomeCliente() {
-			return txtNomeCliente;
-		}
+	public JTextField getTxtNomeCliente() {
+		return txtNomeCliente;
+	}
 
-		public void setTxtNomeCliente(JTextField txtNomeCliente) {
-			this.txtNomeCliente = txtNomeCliente;
-		}
+	public void setTxtNomeCliente(JTextField txtNomeCliente) {
+		this.txtNomeCliente = txtNomeCliente;
+	}
 
-		public JTextField getTxtEnderecoCliente() {
-			return txtEnderecoCliente;
-		}
+	public JTextField getTxtEnderecoCliente() {
+		return txtEnderecoCliente;
+	}
 
-		public void setTxtEnderecoCliente(JTextField txtEnderecoCliente) {
-			this.txtEnderecoCliente = txtEnderecoCliente;
-		}
+	public void setTxtEnderecoCliente(JTextField txtEnderecoCliente) {
+		this.txtEnderecoCliente = txtEnderecoCliente;
+	}
 
-		public JComboBox<String> getCbStatusCliente() {
-			return cbStatusCliente;
-		}
+	public JComboBox<String> getCbStatusCliente() {
+		return cbStatusCliente;
+	}
 
-		public void setCbStatusCliente(JComboBox<String> cbStatusCliente) {
-			this.cbStatusCliente = cbStatusCliente;
-		}
+	public void setCbStatusCliente(JComboBox<String> cbStatusCliente) {
+		this.cbStatusCliente = cbStatusCliente;
+	}
 
+	public JButton getBtnCadastrarCliente() {
+		return btnCadastrarCliente;
+	}
 
-		public JButton getBtnCadastrarCliente() {
-			return btnCadastrarCliente;
-		}
+	public void setBtnCadastrarCliente(JButton btnCadastrarCliente) {
+		this.btnCadastrarCliente = btnCadastrarCliente;
+	}
 
-		public void setBtnCadastrarCliente(JButton btnCadastrarCliente) {
-			this.btnCadastrarCliente = btnCadastrarCliente;
-		}
+	public JButton getBtnAlterarCliente() {
+		return btnAlterarCliente;
+	}
 
-		public JButton getBtnAlterarCliente() {
-			return btnAlterarCliente;
-		}
+	public void setBtnAlterarCliente(JButton btnAlterarCliente) {
+		this.btnAlterarCliente = btnAlterarCliente;
+	}
 
-		public void setBtnAlterarCliente(JButton btnAlterarCliente) {
-			this.btnAlterarCliente = btnAlterarCliente;
-		}
+	public JButton getBtnConsultarCliente() {
+		return btnConsultarCliente;
+	}
 
-		public JButton getBtnConsultarCliente() {
-			return btnConsultarCliente;
-		}
+	public void setBtnConsultarCliente(JButton btnConsultarCliente) {
+		this.btnConsultarCliente = btnConsultarCliente;
+	}
 
-		public void setBtnConsultarCliente(JButton btnConsultarCliente) {
-			this.btnConsultarCliente = btnConsultarCliente;
-		}
+	public JButton getBtnDeletarCliente() {
+		return btnDeletarCliente;
+	}
 
-		public JButton getBtnDeletarCliente() {
-			return btnDeletarCliente;
-		}
+	public void setBtnDeletarCliente(JButton btnDeletarCliente) {
+		this.btnDeletarCliente = btnDeletarCliente;
+	}
 
-		public void setBtnDeletarCliente(JButton btnDeletarCliente) {
-			this.btnDeletarCliente = btnDeletarCliente;
-		}
+	public JFormattedTextField getFtxtCpfCliente() {
+		return ftxtCpfCliente;
+	}
 
-		public JFormattedTextField getFtxtCpfCliente() {
-			return ftxtCpfCliente;
-		}
+	public void setFtxtCpfCliente(JFormattedTextField ftxtCpfCliente) {
+		this.ftxtCpfCliente = ftxtCpfCliente;
+	}
 
-		public void setFtxtCpfCliente(JFormattedTextField ftxtCpfCliente) {
-			this.ftxtCpfCliente = ftxtCpfCliente;
-		}
+	public JFormattedTextField getFtxtTelefoneCliente() {
+		return ftxtTelefoneCliente;
+	}
 
-		public JFormattedTextField getFtxtTelefoneCliente() {
-			return ftxtTelefoneCliente;
-		}
-
-		public void setFtxtTelefoneCliente(JFormattedTextField ftxtTelefoneCliente) {
-			this.ftxtTelefoneCliente = ftxtTelefoneCliente;
-		}
-		
+	public void setFtxtTelefoneCliente(JFormattedTextField ftxtTelefoneCliente) {
+		this.ftxtTelefoneCliente = ftxtTelefoneCliente;
+	}
 }
