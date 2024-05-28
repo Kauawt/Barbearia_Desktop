@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import dao.ClienteDao;
 import dao.ExceptionDao;
+import dao.UsuarioDao;
 import model.Validador;
 public class Cliente {
 	private int codCliente;
@@ -14,21 +15,20 @@ public class Cliente {
 	private String statusCliente;
 	
 	public Cliente(int codCliente, String nomeCliente, String enderecoCliente, String telefoneCliente, String cpfCliente,String statusCliente) {
-		if(codCliente >0 && enderecoCliente != null && Validador.validadorTelefone(telefoneCliente) && Validador.validadorCpf(cpfCliente)  && Validador.validadorStatus(statusCliente)) {
-			this.codCliente = codCliente;
-			this.nomeCliente = nomeCliente;
-			this.enderecoCliente = enderecoCliente;
-			this.telefoneCliente = telefoneCliente;
-			this.cpfCliente = cpfCliente;
-			this.statusCliente = statusCliente;
-			JOptionPane.showMessageDialog(null, "Cliente Cadastrados com Sucesso");
-		}else if(codCliente<0) {
-			JOptionPane.showMessageDialog(null, "Não é permitido ter valores negativos");
-		}else if(Validador.validadorCpf(cpfCliente) == false) {
-			JOptionPane.showMessageDialog(null, "CPF Inválido");
-		}else if(Validador.validadorStatus(statusCliente)==false) {
-			JOptionPane.showMessageDialog(null, "O Status deve ser Ativo durante a criação de um novo Cadastro");
-				}
+		this.codCliente = codCliente;
+		this.nomeCliente = nomeCliente;
+		this.enderecoCliente = enderecoCliente;
+		this.telefoneCliente = telefoneCliente;
+		this.cpfCliente = cpfCliente;
+		this.statusCliente = statusCliente;
+	}
+
+	public Cliente(String nomeCliente, String enderecoCliente, String telefoneCliente, String cpfCliente,String statusCliente) {
+		this.nomeCliente = nomeCliente;
+		this.enderecoCliente = enderecoCliente;
+		this.telefoneCliente = telefoneCliente;
+		this.cpfCliente = cpfCliente;
+		this.statusCliente = statusCliente;
 	}
 
 	public int getCodCliente() {
@@ -83,4 +83,9 @@ public class Cliente {
 		
 		new ClienteDao().cadastrarCliente(cliente);
 	}
+	
+	public void alterarCliente(Cliente cliente) throws ExceptionDao {
+		new ClienteDao().alterarCliente(cpfCliente, cliente);
+	}
+	
 }

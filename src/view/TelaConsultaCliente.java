@@ -23,10 +23,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
+import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.ModuloConexao;
+import model.Cliente;
+import model.ModeloTabelaCliente;
 import model.ModeloTabelaUsuario;
 import model.Usuario;
 
@@ -34,14 +36,8 @@ import java.util.Date;
 
 import javax.swing.JScrollPane;
 import dao.UsuarioDao;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.JLabel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
-public class TelaConsultaUsuario extends JInternalFrame {
+public class TelaConsultaCliente extends JInternalFrame {
 
 	/**
 	 * 
@@ -49,8 +45,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField txtFiltrar;
-	private TableRowSorter<ModeloTabelaUsuario> rowSorter;
 	
 	/**
 	 * Launch the application.
@@ -59,7 +53,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaConsultaUsuario frame = new TelaConsultaUsuario();
+					TelaConsultaCliente frame = new TelaConsultaCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +65,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaConsultaUsuario() {
+	public TelaConsultaCliente() {
 			
 		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setBackground(new Color(232, 227, 225));
@@ -88,29 +82,13 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblFiltrar = new JLabel("Filtrar");
-		lblFiltrar.setBounds(32, 34, 46, 14);
-		contentPane.add(lblFiltrar);
-		
-		txtFiltrar = new JTextField();
-		txtFiltrar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				filtrar();
-			}
-
-		});
-		txtFiltrar.setBounds(77, 31, 539, 20);
-		contentPane.add(txtFiltrar);
-		txtFiltrar.setColumns(10);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 125, 591, 301);
 		contentPane.add(scrollPane);
 		
 		
 		
-		ModeloTabelaUsuario modeloTabela = new ModeloTabelaUsuario(UsuarioDao.listarUsuarios());
+		ModeloTabelaCliente modeloTabela = new ModeloTabelaCliente(ClienteDao.listarClientes());
 		
 		table = new JTable();
 		table.setModel(modeloTabela);
@@ -120,9 +98,9 @@ public class TelaConsultaUsuario extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==1) {
 					try {
-						Usuario usuarioSelecionado = UsuarioDao.consultarUsuarioByCPF(modeloTabela.getValueAt(table.getSelectedRow(), 2).toString());
+						Cliente clienteSelecionado = ClienteDao.consultarClientePorCPF(modeloTabela.getValueAt(table.getSelectedRow(), 4).toString());
 						
-						TelaUsuario cadastraUsuario = new TelaUsuario(usuarioSelecionado);
+						TelaCliente cadastrarCliente = new TelaCliente(clienteSelecionado);
 						JDesktopPane desktop = getDesktopPane();
 						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
 						
@@ -132,8 +110,9 @@ public class TelaConsultaUsuario extends JInternalFrame {
 			                    frame1.dispose();
 			                }
 						}
-						desktop.add(cadastraUsuario);
-						cadastraUsuario.setVisible(true);
+						desktop.add(cadastrarCliente);
+						cadastrarCliente.setVisible(true);
+						System.out.println(cadastrarCliente);
 					} catch (ExceptionDao e1) {
 						e1.printStackTrace();
 					}
@@ -154,17 +133,5 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
-		
-		rowSorter = new TableRowSorter<>(modeloTabela);
-		table.setRowSorter(rowSorter);
-		
-	}
-	private void filtrar() {
-		String filtrar = txtFiltrar.getText().trim();
-		if(filtrar.length()==0) {
-			rowSorter.setRowFilter(null);
-		}else {
-			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)"+filtrar));
-		}
 	}
 }
