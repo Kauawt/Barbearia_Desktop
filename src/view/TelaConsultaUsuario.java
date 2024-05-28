@@ -23,7 +23,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 import dao.ExceptionDao;
 import dao.ModuloConexao;
@@ -35,11 +34,6 @@ import java.util.Date;
 import javax.swing.JScrollPane;
 import dao.UsuarioDao;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.JLabel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class TelaConsultaUsuario extends JInternalFrame {
 
@@ -49,8 +43,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField txtFiltrar;
-	private TableRowSorter<ModeloTabelaUsuario> rowSorter;
 	
 	/**
 	 * Launch the application.
@@ -88,22 +80,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblFiltrar = new JLabel("Filtrar");
-		lblFiltrar.setBounds(32, 34, 46, 14);
-		contentPane.add(lblFiltrar);
-		
-		txtFiltrar = new JTextField();
-		txtFiltrar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				filtrar();
-			}
-
-		});
-		txtFiltrar.setBounds(77, 31, 539, 20);
-		contentPane.add(txtFiltrar);
-		txtFiltrar.setColumns(10);
-		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 99, 591, 301);
 		contentPane.add(scrollPane);
@@ -139,6 +115,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 						}
 						desktop.add(cadastraUsuario);
 						cadastraUsuario.setVisible(true);
+						System.out.println(cadastraUsuario);
 					} catch (ExceptionDao e1) {
 						e1.printStackTrace();
 					}
@@ -159,17 +136,5 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
-		
-		rowSorter = new TableRowSorter<>(modeloTabela);
-		table.setRowSorter(rowSorter);
-		
-	}
-	private void filtrar() {
-		String filtrar = txtFiltrar.getText().trim();
-		if(filtrar.length()==0) {
-			rowSorter.setRowFilter(null);
-		}else {
-			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)"+filtrar));
-		}
 	}
 }

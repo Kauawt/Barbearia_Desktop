@@ -15,18 +15,18 @@ import model.Usuario;
 import dao.ExceptionDao;
 
 public class UsuarioDao {
-
+	
 	private final String CADASTRAR_USUARIO = "insert into tbUsuario(nomeUsuario,cpfUsuario,dataNascimentoUsuario,salarioUsuario,emailUsuario,senhaUsuario,perfilUsuario,statusUsuario) values (?,?,?,?,?,?,?,?)";
-
+	
 	private static final String LISTAR_USUARIOS = "select * from tbUsuario";
 	private static final String CONSULTAR_USUARIO_BY_CPF = "select * from tbUsuario where cpfUsuario = ?";
 	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where cpfUsuario = ?";
 	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'Inativo' where codUsuario = ?";
-
+	
 	private Connection conexao = null;
 	private static PreparedStatement preparedStatement = null;
 	private static ResultSet rs = null;
-
+	
 	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
 		try {
 			String query = CADASTRAR_USUARIO;
@@ -34,7 +34,7 @@ public class UsuarioDao {
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
-			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
+			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario())); 
 			preparedStatement.setDouble(4, usuario.getSalarioUsuario());
 			preparedStatement.setString(5, usuario.getEmailUsuario());
 			preparedStatement.setString(6, usuario.getSenhaUsuario());
@@ -44,38 +44,42 @@ public class UsuarioDao {
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
 		} finally {
-			ModuloConexao.fecharConexao();
-		}
+				try {
+					conexao.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 	}
-
 	public static ArrayList<Usuario> listarUsuarios() {
 		String query = LISTAR_USUARIOS;
 		Connection conexao = ModuloConexao.conector();
-
+		
 		ArrayList<Usuario> usuarios = new ArrayList<>();
-
+		
 		try {
 			Statement pst = conexao.createStatement();
 			conexao.prepareStatement(query);
 			rs = pst.executeQuery(query);
-
-			while (rs.next()) {
-				usuarios.add(new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"),
-						rs.getString("cpfUsuario"), rs.getString("dataNascimentoUsuario"),
-						rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), rs.getString("perfilUsuario"),
+			
+			while(rs.next()) {
+				usuarios.add(new Usuario(rs.getInt("codUsuario"), 
+						rs.getString("nomeUsuario"), 
+						rs.getString("cpfUsuario"),
+						rs.getString("dataNascimentoUsuario"), 
+						rs.getDouble("salarioUsuario"), 
+						rs.getString("emailUsuario"), 
+						rs.getString("perfilUsuario"), 
 						rs.getString("statusUsuario")));
-			}
-			;
-
+			};
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			usuarios = null;
-		}finally {
-			ModuloConexao.fecharConexao();
 		}
 		return usuarios;
 	}
-
+	
 	public static Usuario consultarUsuarioByCPF(String cpfUsuario) throws ExceptionDao {
 		String query = CONSULTAR_USUARIO_BY_CPF;
 		Connection conexao = ModuloConexao.conector();
@@ -83,31 +87,33 @@ public class UsuarioDao {
 
 		try {
 			preparedStatement = conexao.prepareStatement(query);
-
+			
 			int i = 1;
 			preparedStatement.setString(i++, cpfUsuario);
 			rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				usuario = new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"), rs.getString("cpfUsuario"),
-						rs.getString("dataNascimentoUsuario"), rs.getDouble("salarioUsuario"),
-						rs.getString("emailUsuario"), rs.getString("senhaUsuario"), rs.getString("perfilUsuario"),
-						rs.getString("statusUsuario"));
-			}
-			;
-
+			while(rs.next()) {
+				usuario = new Usuario(rs.getInt("codUsuario"), 
+							rs.getString("nomeUsuario"), 
+							rs.getString("cpfUsuario"),
+							rs.getString("dataNascimentoUsuario"), 
+							rs.getDouble("salarioUsuario"), 
+							rs.getString("emailUsuario"), 
+							rs.getString("senhaUsuario"),
+							rs.getString("perfilUsuario"), 
+							rs.getString("statusUsuario"));
+			};
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}finally{
 			ModuloConexao.fecharConexao();
 		}
-		if (usuario == null) {
-			JOptionPane.showMessageDialog(null, "Não foi possível encontrar este usuário ", "",
-					JOptionPane.WARNING_MESSAGE);
+		if(usuario == null) {
+			JOptionPane.showMessageDialog(null, "Não foi possível encontrar este usuário ", "", JOptionPane.WARNING_MESSAGE);
 			throw new ExceptionDao("Não foi possivel localizar o cliente selecionado");
 		}
 		return usuario;
 	}
-
 	public void alterarUsuario(String cpfUsuario, Usuario usuario) throws ExceptionDao {
 		try {
 			String query = ALTERAR_USUARIO;
@@ -115,7 +121,7 @@ public class UsuarioDao {
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
-			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
+			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario())); // a data do java e do sql são diferentes, por isso é necessário criar uma nova variável com os padrões sql e posteriormente utilizar getTIme para converter em um tipo long
 			preparedStatement.setDouble(4, usuario.getSalarioUsuario());
 			preparedStatement.setString(5, usuario.getEmailUsuario());
 			preparedStatement.setString(6, usuario.getSenhaUsuario());
@@ -123,7 +129,7 @@ public class UsuarioDao {
 			preparedStatement.setString(8, usuario.getStatusUsuario());
 			preparedStatement.setString(9, cpfUsuario);
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
-
+			
 			JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao alterar o Usuario: " + e);
@@ -131,7 +137,6 @@ public class UsuarioDao {
 			ModuloConexao.fecharConexao();
 		}
 	}
-
 	public void deletarUsuario(int codUsuario) throws ExceptionDao {
 		try {
 			String query = DELETAR_USUARIO;
@@ -139,7 +144,7 @@ public class UsuarioDao {
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			preparedStatement.setInt(1, codUsuario);
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
-
+			
 			JOptionPane.showMessageDialog(null, "Usuário deletado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao alterar o Usuario: " + e);
@@ -147,5 +152,5 @@ public class UsuarioDao {
 			ModuloConexao.fecharConexao();
 		}
 	}
-
+	
 }
