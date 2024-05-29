@@ -39,6 +39,7 @@ import model.Cliente;
 import model.ModeloTabelaCliente;
 import model.ModeloTabelaUsuario;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 public class TelaCliente extends JInternalFrame {
 
@@ -50,10 +51,7 @@ public class TelaCliente extends JInternalFrame {
 	private JTextField txtEnderecoCliente;
 	private JComboBox<String> cbStatusCliente;
 	private JFormattedTextField ftxtCpfCliente;
-	private JButton btnCadastrarCliente;
 	private JButton btnAlterarCliente;
-	private JButton btnConsultarCliente;
-	private JButton btnDeletarCliente;
 	private JFormattedTextField formattedTextField;
 	private JTextField txtCpfCliente;
 	private JTextField txtTelefoneCliente;
@@ -86,55 +84,119 @@ public class TelaCliente extends JInternalFrame {
 		getContentPane().setBackground(new Color(232, 227, 225));
 
 		setResizable(true);
-		getContentPane().setSize(new Dimension(450, 480));
-		getContentPane().setPreferredSize(new Dimension(450, 480));
+		getContentPane().setSize(new Dimension(655, 450));
+		getContentPane().setPreferredSize(new Dimension(655, 450));
 		getContentPane().setLayout(null);
 
-		JLabel lblFormularioCliente = new JLabel("Formulário Cliente");
-		lblFormularioCliente.setBounds(208, 11, 224, 32);
+		JLabel lblFormularioCliente = new JLabel("Cadastro de Clientes");
+		lblFormularioCliente.setForeground(new Color(255, 255, 255));
+		lblFormularioCliente.setBounds(213, 64, 270, 32);
 		getContentPane().add(lblFormularioCliente);
-		lblFormularioCliente.setFont(new Font("Arial Black", Font.PLAIN, 22));
+		lblFormularioCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setBounds(181, 119, 112, 21);
+		lblNome.setForeground(new Color(255, 255, 255));
+		lblNome.setBounds(134, 147, 63, 21);
 		getContentPane().add(lblNome);
-		lblNome.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblNome.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblEndereco = new JLabel("Endereço");
-		lblEndereco.setBounds(181, 233, 112, 21);
+		lblEndereco.setForeground(new Color(255, 255, 255));
+		lblEndereco.setBounds(134, 243, 77, 21);
 		getContentPane().add(lblEndereco);
-		lblEndereco.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblEndereco.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtEnderecoCliente = new JTextField();
-		txtEnderecoCliente.setBounds(297, 235, 176, 20);
+		txtEnderecoCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		txtEnderecoCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtEnderecoCliente.setForeground(new Color(192, 192, 192));
+		txtEnderecoCliente.setText("Endereço");
+		txtEnderecoCliente.setBounds(258, 245, 134, 20);
 		getContentPane().add(txtEnderecoCliente);
 		txtEnderecoCliente.setColumns(10);
 
 		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(181, 176, 112, 21);
+		lblTelefone.setForeground(new Color(255, 255, 255));
+		lblTelefone.setBounds(134, 211, 112, 21);
 		getContentPane().add(lblTelefone);
-		lblTelefone.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblTelefone.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setBounds(181, 290, 112, 21);
+		lblCpf.setForeground(new Color(255, 255, 255));
+		lblCpf.setBounds(134, 179, 49, 21);
 		getContentPane().add(lblCpf);
-		lblCpf.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblCpf.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblStatusCliente = new JLabel("Status");
-		lblStatusCliente.setBounds(181, 347, 49, 21);
+		lblStatusCliente.setForeground(new Color(255, 255, 255));
+		lblStatusCliente.setBounds(134, 275, 49, 21);
 		getContentPane().add(lblStatusCliente);
-		lblStatusCliente.setFont(new Font("Arial Black", Font.PLAIN, 14));
+		lblStatusCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		cbStatusCliente = new JComboBox<String>();
+		cbStatusCliente.setToolTipText("");
+		cbStatusCliente.setBackground(new Color(255, 255, 255));
 		cbStatusCliente.setModel(new DefaultComboBoxModel<String>(new String[] { "Ativo", "Inativo" }));
-		cbStatusCliente.setBounds(297, 349, 176, 20);
+		cbStatusCliente.setBounds(258, 277, 134, 20);
 		getContentPane().add(cbStatusCliente);
 
+		JButton btnCadastrarCliente = new JButton("Adicionar");
+		btnCadastrarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrarCliente.setBackground(new Color(240, 240, 240));
+		btnCadastrarCliente.setIcon(null);
+		btnCadastrarCliente.setPreferredSize(new Dimension(80, 80));
+		btnCadastrarCliente.setBounds(97, 320, 104, 42);
+		getContentPane().add(btnCadastrarCliente);
+
+		JButton btnAlterarCliente = new JButton("Alterar");
+		btnAlterarCliente.setIcon(null);
+		btnAlterarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnAlterarCliente.setPreferredSize(new Dimension(80, 80));
+		btnAlterarCliente.setBounds(226, 320, 104, 42);
+		getContentPane().add(btnAlterarCliente);
+
+		JButton btnConsultarCliente = new JButton("Pesquisar");
+		btnConsultarCliente.setIcon(null);
+		btnConsultarCliente.setBounds(344, 320, 104, 42);
+		getContentPane().add(btnConsultarCliente);
+
+		JButton btnDeletarCliente = new JButton("Excluir");
+		btnDeletarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDeletarCliente.setIcon(null);
+		btnDeletarCliente.setBounds(470, 320, 104, 42);
+		getContentPane().add(btnDeletarCliente);
+
+		txtCpfCliente = new JTextField();
+		txtCpfCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		txtCpfCliente.setForeground(new Color(192, 192, 192));
+		txtCpfCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtCpfCliente.setText("CPF");
+		txtCpfCliente.setBounds(258, 181, 134, 20);
+		getContentPane().add(txtCpfCliente);
+		txtCpfCliente.setColumns(10);
+
+		txtTelefoneCliente = new JTextField();
+		txtTelefoneCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTelefoneCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtTelefoneCliente.setForeground(new Color(192, 192, 192));
+		txtTelefoneCliente.setText("Telefone");
+		txtTelefoneCliente.setBounds(258, 214, 134, 20);
+		getContentPane().add(txtTelefoneCliente);
+		txtTelefoneCliente.setColumns(10);
+
 		txtNomeCliente = new JTextField();
-		txtNomeCliente.setBounds(297, 121, 173, 20);
+		txtNomeCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNomeCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
+		txtNomeCliente.setForeground(new Color(192, 192, 192));
+		txtNomeCliente.setText("Nome");
+		txtNomeCliente.setBounds(258, 149, 134, 20);
 		getContentPane().add(txtNomeCliente);
 		txtNomeCliente.setColumns(10);
 
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/wallpaper_telas.png")));
+		pictureBox.setBounds(0, 0, 655, 423);
+		getContentPane().add(pictureBox);
 		MaskFormatter cpfMask = null;
 		MaskFormatter dataMask = null;
 		MaskFormatter telefoneMask = null;
@@ -147,19 +209,12 @@ public class TelaCliente extends JInternalFrame {
 			e.printStackTrace();
 		}
 
-		ftxtTelefoneCliente = new JFormattedTextField(telefoneMask);
-		ftxtTelefoneCliente.setBounds(297, 178, 173, 20);
-		getContentPane().add(ftxtTelefoneCliente);
 
-		ftxtCpfCliente = new JFormattedTextField(cpfMask);
-		ftxtCpfCliente.setBounds(297, 292, 176, 20);
-		getContentPane().add(ftxtCpfCliente);
-
-		JButton btnConsultarCliente = new JButton("");
-		btnConsultarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/findicon.png")));
-		btnConsultarCliente.setBounds(513, 47, 117, 68);
-		getContentPane().add(btnConsultarCliente);
-		btnConsultarCliente.addActionListener(new ActionListener() {
+		JButton btnConsultarCliente1 = new JButton("");
+		btnConsultarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/findicon.png")));
+		btnConsultarCliente1.setBounds(513, 47, 117, 68);
+		getContentPane().add(btnConsultarCliente1);
+		btnConsultarCliente1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConsultaCliente listarClientes = new TelaConsultaCliente();
 				JDesktopPane desktop = getDesktopPane();
@@ -175,8 +230,8 @@ public class TelaCliente extends JInternalFrame {
 			}
 		});
 		if (clienteSelecionado != null) {
-			JButton btnDeletarCliente = new JButton("");
-			btnDeletarCliente.addActionListener(new ActionListener() {
+			JButton btnDeletarCliente1 = new JButton("");
+			btnDeletarCliente1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ClienteDao cliente = new ClienteDao();
 					try {
@@ -186,26 +241,25 @@ public class TelaCliente extends JInternalFrame {
 					}
 				}
 			});
-			btnDeletarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnDeletarCliente.setBackground(UIManager.getColor("Button.background"));
-			btnDeletarCliente.setPreferredSize(new Dimension(80, 80));
-			btnDeletarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/deleteicon.png")));
-			btnDeletarCliente.setBounds(37, 374, 155, 68);
-			getContentPane().add(btnDeletarCliente);
+			btnDeletarCliente1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnDeletarCliente1.setBackground(UIManager.getColor("Button.background"));
+			btnDeletarCliente1.setPreferredSize(new Dimension(80, 80));
+			btnDeletarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/deleteicon.png")));
+			btnDeletarCliente1.setBounds(37, 374, 155, 68);
+			getContentPane().add(btnDeletarCliente1);
 		}
-
-		JButton btnCadastrarCliente = new JButton();
-		btnCadastrarCliente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCadastrarCliente.setBackground(new Color(240, 240, 240));
+		JButton btnCadastrarCliente1 = new JButton();
+		btnCadastrarCliente1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCadastrarCliente1.setBackground(new Color(240, 240, 240));
 		if (clienteSelecionado == null) {
-			btnCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/addicon.png")));
+			btnCadastrarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/addicon.png")));
 		} else {
-			btnCadastrarCliente.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/editicon.png")));
+			btnCadastrarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/editicon.png")));
 		}
-		btnCadastrarCliente.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarCliente.setBounds(513, 374, 117, 68);
-		getContentPane().add(btnCadastrarCliente);
-		btnCadastrarCliente.addActionListener(new ActionListener() {
+		btnCadastrarCliente1.setPreferredSize(new Dimension(80, 80));
+		btnCadastrarCliente1.setBounds(513, 374, 117, 68);
+		getContentPane().add(btnCadastrarCliente1);
+		btnCadastrarCliente1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clienteSelecionado == null) {
 					clienteController.cadastrarCliente();
@@ -226,7 +280,7 @@ public class TelaCliente extends JInternalFrame {
 		setTitle("Cliente");
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setBounds(100, 100, 640, 480);
+		setBounds(100, 100, 655, 450);
 
 		if (clienteSelecionado != null) {
 			preencherCampos(clienteSelecionado);
@@ -265,14 +319,6 @@ public class TelaCliente extends JInternalFrame {
 		this.cbStatusCliente = cbStatusCliente;
 	}
 
-	public JButton getBtnCadastrarCliente() {
-		return btnCadastrarCliente;
-	}
-
-	public void setBtnCadastrarCliente(JButton btnCadastrarCliente) {
-		this.btnCadastrarCliente = btnCadastrarCliente;
-	}
-
 	public JButton getBtnAlterarCliente() {
 		return btnAlterarCliente;
 	}
@@ -281,21 +327,6 @@ public class TelaCliente extends JInternalFrame {
 		this.btnAlterarCliente = btnAlterarCliente;
 	}
 
-	public JButton getBtnConsultarCliente() {
-		return btnConsultarCliente;
-	}
-
-	public void setBtnConsultarCliente(JButton btnConsultarCliente) {
-		this.btnConsultarCliente = btnConsultarCliente;
-	}
-
-	public JButton getBtnDeletarCliente() {
-		return btnDeletarCliente;
-	}
-
-	public void setBtnDeletarCliente(JButton btnDeletarCliente) {
-		this.btnDeletarCliente = btnDeletarCliente;
-	}
 
 	public JFormattedTextField getFtxtCpfCliente() {
 		return ftxtCpfCliente;
