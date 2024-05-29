@@ -40,6 +40,7 @@ import javax.swing.RowFilter;
 import javax.swing.JLabel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 public class TelaConsultaUsuario extends JInternalFrame {
 
@@ -105,7 +106,7 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		txtFiltrar.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 125, 591, 301);
+		scrollPane.setBounds(25, 99, 591, 301);
 		contentPane.add(scrollPane);
 		
 		
@@ -115,6 +116,10 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		table = new JTable();
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaConsultaUsuario.class.getResource("/icones/fundo_barberia.jpeg")));
+		pictureBox.setBounds(0, 0, 640, 453);
+		contentPane.add(pictureBox);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
