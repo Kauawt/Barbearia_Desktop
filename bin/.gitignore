@@ -1,6 +1,4 @@
-/codigoSql/
-/controller/
-/dao/
-/model/
 /view/
-/icones/
+/model/
+/dao/
+/controller/
