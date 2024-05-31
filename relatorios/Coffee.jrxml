@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Coffee" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ced95029-b569-4027-895c-af2843a4e088">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="src\dao\DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT * FROM tbAgendamento]]>
+	</queryString>
+	<field name="codAgendamento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codAgendamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="codAgendamento"/>
+	</field>
+	<field name="codUsuario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codUsuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="codUsuario"/>
+	</field>
+	<field name="codCliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="codCliente"/>
+	</field>
+	<field name="codServico" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codServico"/>
+		<property name="com.jaspersoft.studio.field.label" value="codServico"/>
+	</field>
+	<field name="precoServico" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="precoServico"/>
+		<property name="com.jaspersoft.studio.field.label" value="precoServico"/>
+	</field>
+	<field name="dataAgendamento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="dataAgendamento"/>
+		<property name="com.jaspersoft.studio.field.label" value="dataAgendamento"/>
+	</field>
+	<field name="horaAtendimento" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="horaAtendimento"/>
+		<property name="com.jaspersoft.studio.field.label" value="horaAtendimento"/>
+	</field>
+	<background>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-30" y="-6" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="183682bc-d976-4756-83e0-6625a3f98ed1"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="0193f9b3-1559-491a-8580-b6988863b6a1"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="d00b105e-494b-418b-8ac9-8b1b4824f4f0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="0616f3fe-0354-456f-8911-ec30ec51a5ae"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="170" y="0" width="320" height="62" uuid="1a652692-054a-40f3-ade5-68d8da36626d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Relatório de Agendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="170" y="62" width="196" height="22" uuid="88d4231e-f014-4b0d-b871-1737ba63a1ae"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Coffee SubTitle]]></text>
+			</staticText>
+			<image>
+				<reportElement x="30" y="10" width="94" height="100" uuid="a69943fb-a9aa-4a27-9fab-33d9bd9a784e"/>
+				<imageExpression><![CDATA["relatorios/logo_JPCortes.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="1a61a836-d137-48b1-ad67-6ff64600bf93"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="54" height="16" uuid="456d9b6f-a90b-425d-a3dd-56ce3a1ad625">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be1acaf7-4e81-4f3c-9190-35e3ceab30ae"/>
+				</reportElement>
+				<text><![CDATA[codAgendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="54" height="16" uuid="2681a351-9bb6-4bd4-86e7-f7cc4341da58">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="95c8554c-48b4-438a-8e24-4578f09e5069"/>
+				</reportElement>
+				<text><![CDATA[codUsuario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="54" height="16" uuid="6e06bc04-4ff1-461d-b293-139d0bb37d6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="880c8987-7a1c-4236-94e3-7799b7eb7b12"/>
+				</reportElement>
+				<text><![CDATA[codCliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="54" height="16" uuid="877fe78b-d05f-4107-bdce-60c7a24720ce">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75460c66-116c-4644-a1e7-0920c85d78a8"/>
+				</reportElement>
+				<text><![CDATA[codServico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="54" height="16" uuid="6668c6ab-95d4-4ffd-aa51-1cc970ff90d5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf9d5e4d-e298-4e16-85ea-5ec6f4d59dcb"/>
+				</reportElement>
+				<text><![CDATA[precoServico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="0" width="54" height="16" uuid="16831eef-c669-42f8-9faf-0e93a5dfacd9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71bb6c52-c6a4-4d6e-81db-2bfa44023bcf"/>
+				</reportElement>
+				<text><![CDATA[dataAgendamento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-1" width="70" height="30" uuid="58a9ec00-5422-4b4a-9d93-1a8e73ff9824">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be1acaf7-4e81-4f3c-9190-35e3ceab30ae"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codAgendamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="70" height="30" uuid="68a80dbf-8c81-4aef-b80a-10176173f67e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="95c8554c-48b4-438a-8e24-4578f09e5069"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codUsuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="78" height="30" uuid="0e2ac801-3d76-444a-97b0-4fea5165c8a0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="880c8987-7a1c-4236-94e3-7799b7eb7b12"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="-1" width="80" height="30" uuid="e0b41991-9913-4ff5-85f6-886980051809">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75460c66-116c-4644-a1e7-0920c85d78a8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codServico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="-2" width="94" height="30" uuid="b690e863-3f4c-49fe-8a93-35ea30c88627">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf9d5e4d-e298-4e16-85ea-5ec6f4d59dcb"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{precoServico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="-2" width="160" height="30" uuid="c972b020-08af-4981-9e8a-762aa2fff33c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71bb6c52-c6a4-4d6e-81db-2bfa44023bcf"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dataAgendamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="65" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="fa45a887-615a-4d84-a2d7-8a2219671b3c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

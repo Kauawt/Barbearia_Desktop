@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 17
+Bundle-ManifestVersion: 2
+Bundle-Name: JasperReports Documentation
+Bundle-SymbolicName: net.sf.jasperreports.doc; singleton:=true
+Bundle-Version: 6.21.3.final
+Bundle-Vendor: Cloud Software Group, Inc.
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Eclipse-BundleShape: dir
+

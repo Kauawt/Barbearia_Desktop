@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven Bundle Plugin
+Built-By: simonetripodi
+Build-Jdk: 1.6.0_29
+Implementation-Build: tags/DIGESTER3_3_2_RC2@r1212807; 2011-12-10 15:5
+ 7:06+0100
+Implementation-Title: Apache Commons Digester
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Vendor-Id: org.apache
+Implementation-Version: 3.2
+Specification-Title: Apache Commons Digester
+Specification-Vendor: The Apache Software Foundation
+Specification-Version: 3.2
+X-Compile-Source-JDK: 1.5
+X-Compile-Target-JDK: 1.5
+Export-Package: org.apache.commons.digester3.annotations.rules;version
+ ="3.2",org.apache.commons.digester3.annotations.utils;version="3.2",o
+ rg.apache.commons.digester3.binder;version="3.2",org.apache.commons.d
+ igester3.plugins;version="3.2",org.apache.commons.digester3.xmlrules;
+ version="3.2",org.apache.commons.digester3.substitution;version="3.2"
+ ,org.apache.commons.digester3;version="3.2",org.apache.commons.digest
+ er3.annotations.handlers;version="3.2",org.apache.commons.digester3.a
+ nnotations.reflect;version="3.2",org.apache.commons.digester3.annotat
+ ions;version="3.2",org.apache.commons.digester3.plugins.strategies;ve
+ rsion="3.2"
+Tool: Bnd-1.43.0
+Bundle-Name: Apache Commons Digester
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Version: 3.2.0
+Bnd-LastModified: 1323529036195
+Bundle-ManifestVersion: 2
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-Description: The Apache Commons Digester package lets you confi
+ gure an XML to Java    object mapping module which triggers certain a
+ ctions called rules whenever    a particular pattern of nested XML el
+ ements is recognized.
+Import-Package: javax.xml.parsers,javax.xml.validation,net.sf.cglib.pr
+ oxy,org.apache.commons.beanutils,org.apache.commons.logging,org.apach
+ e.commons.logging.impl,org.w3c.dom,org.xml.sax,org.xml.sax.helpers
+Bundle-DocURL: http://commons.apache.org/digester/
+Include-Resource: META-INF/LICENSE.txt=LICENSE.txt,META-INF/NOTICE.txt
+ =NOTICE.txt,org/apache/commons/digester3/xmlrules/digester-rules.dtd=
+ src/main/resources/org/apache/commons/digester3/xmlrules/digester-rul
+ es.dtd
+Bundle-SymbolicName: org.apache.commons.digester
+

@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
+import controller.GeraRelatorio;
 import controller.LoginController;
 import dao.ExceptionDao;
 
@@ -78,7 +79,7 @@ public class TelaMenuPrincipal extends JFrame {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 879, 538);
-
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -174,7 +175,12 @@ public class TelaMenuPrincipal extends JFrame {
 		mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
 
-		mntmRelatorioAgendamento = new JMenuItem("Mensal");
+		mntmRelatorioAgendamento = new JMenuItem("Agendamento");
+		mntmRelatorioAgendamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GeraRelatorio();
+			}
+		});
 		mntmRelatorioAgendamento.setEnabled(false);
 		mnRelatorio.add(mntmRelatorioAgendamento);
 
