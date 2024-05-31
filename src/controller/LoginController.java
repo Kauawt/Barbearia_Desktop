@@ -82,6 +82,7 @@ public class LoginController {
 					Date data = new Date();
 					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
 					principal.getLblData().setText(formatador.format(data).toString());
+					telaLogin.dispose();
 					
 				}
 				else {
@@ -93,6 +94,7 @@ public class LoginController {
 					Date data = new Date();
 					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
 					principal.getLblData().setText(formatador.format(data).toString());
+					telaLogin.dispose();
 				}
 			}
 			else {

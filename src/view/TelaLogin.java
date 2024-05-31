@@ -23,6 +23,8 @@ import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import controller.LoginController;
+import javax.swing.SwingConstants;
+import view.JPictureBox.SizeMode;
 public class TelaLogin extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -56,7 +58,6 @@ public class TelaLogin extends JFrame {
 	public TelaLogin() {
 		LoginController loginController = new LoginController(this); // passando a propria view como parametro
 		setTitle("Login");
-
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 655, 450);
 		contentPane = new JPanel();
@@ -115,6 +116,7 @@ public class TelaLogin extends JFrame {
 		contentPane.add(btnLoginUsuario);
 		
 		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setForeground(new Color(255, 255, 255));
 		lblLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 		lblLogin.setBounds(307, 124, 111, 27);

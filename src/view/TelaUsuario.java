@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.text.ParseException;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
@@ -60,7 +61,7 @@ public class TelaUsuario extends JInternalFrame {
 	private JTextField txtNomeUsuario;
 	private JTextField txtSalarioUsuario;
 	private JTextField txtEmailUsuario;
-	private JTextField txtSenhaUsuario;
+	private JPasswordField txtSenhaUsuario;
 	private JComboBox cbPerfilUsuario = new JComboBox();
 	private JFormattedTextField ftxtCpfUsuario = new JFormattedTextField();
 	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
@@ -165,7 +166,7 @@ public class TelaUsuario extends JInternalFrame {
 		lblSenhaUsuario.setBounds(202, 272, 49, 21);
 		getContentPane().add(lblSenhaUsuario);
 
-		txtSenhaUsuario = new JTextField();
+		txtSenhaUsuario = new JPasswordField();
 		txtSenhaUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSenhaUsuario.setText("Senha");
 		txtSenhaUsuario.setForeground(new Color(128, 128, 128));
