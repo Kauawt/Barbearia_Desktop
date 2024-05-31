@@ -54,7 +54,7 @@ public class TelaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
-		LoginController loginController = new LoginController(this); // passando a propria view como parâ admetro
+		LoginController loginController = new LoginController(this); // passando a propria view como parametro
 		setTitle("Login");
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -119,7 +119,7 @@ public class TelaLogin extends JFrame {
 		lblLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 		lblLogin.setBounds(307, 124, 111, 27);
 		contentPane.add(lblLogin);
-		
+
 		JPictureBox pictureBox = new JPictureBox();
 		pictureBox.setIcon(new ImageIcon(TelaLogin.class.getResource("/icones/wallpaper_login.png")));
 		pictureBox.setBounds(5, 5, 634, 406);
@@ -128,29 +128,37 @@ public class TelaLogin extends JFrame {
 		loginController.verificaConexão();
 
 	}
+
 	public JTextField getTxtUserUsuario() {
 		return txtUserUsuario;
 	}
+
 	public void setTxtUserUsuario(JTextField txtUserUsuario) {
 		this.txtUserUsuario = txtUserUsuario;
 	}
+
 	public JPasswordField getTxtSenhaUsuario() {
 		return txtSenhaUsuario;
 	}
+
 	public void setTxtSenhaUsuario(JPasswordField txtSenhaUsuario) {
 		this.txtSenhaUsuario = txtSenhaUsuario;
 	}
+
 	public JLabel getLblConexao() {
 		return lblConexao;
 	}
+
 	public void setLblConexao(JLabel lblConexao) {
 		this.lblConexao = lblConexao;
 	}
+
 	public JLabel getLblStatus() {
 		return lblStatus;
 	}
+
 	public void setLblStatus(JLabel lblStatus) {
 		this.lblStatus = lblStatus;
-}
 	}
+}
 	

@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -66,46 +67,50 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 	}
+
 	/**
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
-		
+
 		setTitle("Menu");
 		addWindowListener(new WindowAdapter() {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 879, 538);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
-	
+
 		mnMenuCadastro = new JMenu("Cadastro");
 		menuBar.add(mnMenuCadastro);
-		
+
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cliente");
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JInternalFrame[] frames = desktop.getAllFrames();
-                for (JInternalFrame frame1 : frames) {
-                    frame1.dispose();
-                }
-				TelaCliente telaCliente = new TelaCliente();
-				telaCliente.setVisible(true);
-				desktop.add(telaCliente);
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				try {
+					TelaCliente telaCliente = new TelaCliente(null);
+					telaCliente.setVisible(true);
+					desktop.add(telaCliente);
+				} catch (ExceptionDao e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarCliente);
-		
+
 		mntmCadastrarUsuario = new JMenuItem("Usuario");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JInternalFrame[] frames = desktop.getAllFrames();
-                for (JInternalFrame frame1 : frames) {
-                    frame1.dispose();
-                }
-                TelaUsuario telaUsuario;
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaUsuario telaUsuario;
 				try {
 					telaUsuario = new TelaUsuario(null);
 					telaUsuario.setVisible(true);
@@ -113,99 +118,112 @@ public class TelaMenuPrincipal extends JFrame {
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
-				
-				
+
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarUsuario);
-		
+
 		JMenuItem mntmCadastrarServico = new JMenuItem("Servico");
 		mntmCadastrarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JInternalFrame[] frames = desktop.getAllFrames();
-                for (JInternalFrame frame1 : frames) {
-                    frame1.dispose();
-                }
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
 				TelaServico telaServico = new TelaServico();
 				telaServico.setVisible(true);
 				desktop.add(telaServico);
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarServico);
-		
+
 		JMenu mnConsulta = new JMenu("Consulta");
 		menuBar.add(mnConsulta);
-		
+
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JInternalFrame[] frames = desktop.getAllFrames();
-                for (JInternalFrame frame1 : frames) {
-                    frame1.dispose();
-                }
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
 				TelaConsultaUsuario consulta = new TelaConsultaUsuario();
 				consulta.setVisible(true);
 				desktop.add(consulta);
 			}
 		});
 		mnConsulta.add(mntmConsultaUsuario);
-		
+
+		JMenuItem mntmConsultaCliente = new JMenuItem("Cliente");
+		mntmConsultaCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaConsultaCliente consulta = new TelaConsultaCliente();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+			}
+		});
+		mnConsulta.add(mntmConsultaCliente);
+
 		JMenu mnAgendamento = new JMenu("Agendamento");
 		menuBar.add(mnAgendamento);
-		
+
 		mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
-		
+
 		mntmRelatorioAgendamento = new JMenuItem("Mensal");
 		mntmRelatorioAgendamento.setEnabled(false);
 		mnRelatorio.add(mntmRelatorioAgendamento);
-		
+
 		JMenu mnNewMenu = new JMenu("Ajuda");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewSobre = new JMenuItem("Sobre");
 		mntmNewSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TelaSobre
+				// TelaSobre
 				TelaSobre telaSobre = new TelaSobre();
 				telaSobre.setVisible(true);
-				
-				
+
 			}
 		});
 		mnNewMenu.add(mntmNewSobre);
-		
+
 		JMenu mnOpcoes = new JMenu("Opções");
 		menuBar.add(mnOpcoes);
-		
+
 		mntmNewSair = new JMenuItem("Sair");
 		mntmNewSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Caixa de Diálogo (Sim ou não)
-				int sair = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?","Atenção",JOptionPane.YES_NO_OPTION);
-				if(sair == JOptionPane.YES_OPTION) {
+				// Caixa de Diálogo (Sim ou não)
+				int sair = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?", "Atenção",
+						JOptionPane.YES_NO_OPTION);
+				if (sair == JOptionPane.YES_OPTION) {
 					System.exit(0);
 				}
 			}
 		});
 		mnOpcoes.add(mntmNewSair);
 		JPanel contentPane = new JPanel();
-		contentPane.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		contentPane.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.setAlignmentY(Component.TOP_ALIGNMENT);
 		contentPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		contentPane.setPreferredSize(new Dimension(640, 480));
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		setContentPane(contentPane);
-		
+
 		desktop = new JDesktopPane();
 		desktop.setBounds(0, 0, 640, 481);
 		desktop.setPreferredSize(new Dimension(640, 480));
-		
+
 		JLabel lblNomeUser = new JLabel("USER:");
 		lblNomeUser.setBounds(650, 89, 68, 29);
 		lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		
+
 		JLabel lblNomeData = new JLabel("DATA:");
 		lblNomeData.setBounds(650, 159, 69, 29);
 		lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
@@ -214,12 +232,12 @@ public class TelaMenuPrincipal extends JFrame {
 		contentPane.add(desktop);
 		contentPane.add(lblNomeUser);
 		contentPane.add(lblNomeData);
-		
+
 		lblData = new JLabel("----");
 		lblData.setBounds(729, 162, 159, 22);
 		lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.add(lblData);
-		
+
 		lblUser = new JLabel("----");
 		lblUser.setBounds(728, 92, 160, 22);
 		lblUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
@@ -229,53 +247,69 @@ public class TelaMenuPrincipal extends JFrame {
 		pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
 		pbox_iconeJP.setBounds(650, 199, 203, 227);
 		contentPane.add(pbox_iconeJP);
-	
+
 	}
+
 	public JDesktopPane getDesktop() {
 		return desktop;
 	}
+
 	public void setDesktop(JDesktopPane desktop) {
 		this.desktop = desktop;
 	}
+
 	public JMenuItem getMntmNewSair() {
 		return mntmNewSair;
 	}
+
 	public void setMntmNewSair(JMenuItem mntmNewSair) {
 		this.mntmNewSair = mntmNewSair;
 	}
+
 	public JMenuItem getMntmRelatorioAgendamento() {
 		return mntmRelatorioAgendamento;
 	}
+
 	public void setMntmRelatorioAgendamento(JMenuItem mntmRelatorioAgendamento) {
 		this.mntmRelatorioAgendamento = mntmRelatorioAgendamento;
 	}
+
 	public JMenuItem getMntmCadastrarUsuario() {
 		return mntmCadastrarUsuario;
 	}
+
 	public void setMntmCadastrarUsuario(JMenuItem mntmCadastrarUsuario) {
 		this.mntmCadastrarUsuario = mntmCadastrarUsuario;
 	}
+
 	public JMenu getMnRelatorio() {
 		return mnRelatorio;
 	}
+
 	public void setMnRelatorio(JMenu mnRelatorio) {
 		this.mnRelatorio = mnRelatorio;
 	}
+
 	public JMenu getMnMenuCadastro() {
 		return mnMenuCadastro;
 	}
+
 	public void setMnMenuCadastro(JMenu mnMenuCadastro) {
 		this.mnMenuCadastro = mnMenuCadastro;
 	}
+
 	public JLabel getLblData() {
 		return lblData;
 	}
+
 	public void setLblData(JLabel lblData) {
 		this.lblData = lblData;
 	}
+
 	public JLabel getLblUser() {
 		return lblUser;
 	}
+
 	public void setLblUser(JLabel lblUser) {
 		this.lblUser = lblUser;
 	}

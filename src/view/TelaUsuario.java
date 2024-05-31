@@ -47,9 +47,8 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-
+import javax.swing.SwingConstants;
 
 public class TelaUsuario extends JInternalFrame {
 
@@ -67,7 +66,7 @@ public class TelaUsuario extends JInternalFrame {
 	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
 	private JComboBox cbStatusUsuario = new JComboBox();
 	private UsuarioController usuarioController = new UsuarioController();
-
+	private JButton btnDeletarUsuario;
 	/**
 	 * Launch the application.
 	 */
@@ -101,14 +100,12 @@ public class TelaUsuario extends JInternalFrame {
 		lblFormularioUsuario.setForeground(new Color(255, 255, 255));
 		lblFormularioUsuario.setBounds(220, 57, 280, 32);
 		getContentPane().add(lblFormularioUsuario);
-
 		lblFormularioUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 
 		JLabel lblNomeusuario = new JLabel("Nome");
 		lblNomeusuario.setForeground(new Color(255, 255, 255));
 		lblNomeusuario.setBounds(197, 108, 60, 21);
 		getContentPane().add(lblNomeusuario);
-
 		lblNomeusuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtNomeUsuario = new JTextField();
@@ -124,7 +121,6 @@ public class TelaUsuario extends JInternalFrame {
 		lblSalarioUsuario.setForeground(new Color(255, 255, 255));
 		lblSalarioUsuario.setBounds(185, 201, 68, 21);
 		getContentPane().add(lblSalarioUsuario);
-
 		lblSalarioUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtSalarioUsuario = new JTextField();
@@ -140,21 +136,18 @@ public class TelaUsuario extends JInternalFrame {
 		lblDataNascimentoUsuario.setForeground(new Color(255, 255, 255));
 		lblDataNascimentoUsuario.setBounds(121, 171, 136, 21);
 		getContentPane().add(lblDataNascimentoUsuario);
-
 		lblDataNascimentoUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblCpfUsuario = new JLabel("CPF");
 		lblCpfUsuario.setForeground(new Color(255, 255, 255));
 		lblCpfUsuario.setBounds(204, 139, 49, 21);
 		getContentPane().add(lblCpfUsuario);
-
 		lblCpfUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setForeground(new Color(255, 255, 255));
 		lblEmail.setBounds(202, 240, 49, 21);
 		getContentPane().add(lblEmail);
-
 		lblEmail.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtEmailUsuario = new JTextField();
@@ -189,9 +182,8 @@ public class TelaUsuario extends JInternalFrame {
 
 		cbPerfilUsuario.setForeground(new Color(128, 128, 128));
 		cbPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		
-		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
 
+		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
 		getContentPane().add(cbPerfilUsuario);
 
 		MaskFormatter cpfMask = null;
@@ -225,10 +217,8 @@ public class TelaUsuario extends JInternalFrame {
 
 		cbStatusUsuario.setForeground(new Color(128, 128, 128));
 		cbStatusUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		
 		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
 		cbStatusUsuario.setBounds(261, 335, 176, 22);
-
 		getContentPane().add(cbStatusUsuario);
 
 		JButton btnCadastrarUsuario = new JButton(usuarioSelecionado == null ? "Cadastrar" : "Alterar");
@@ -238,6 +228,11 @@ public class TelaUsuario extends JInternalFrame {
 		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
 		btnCadastrarUsuario.setBounds(286, 367, 124, 41);
 		getContentPane().add(btnCadastrarUsuario);
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
+		pictureBox.setBounds(0, 0, 640, 453);
+		getContentPane().add(pictureBox);
+		
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
@@ -262,14 +257,9 @@ public class TelaUsuario extends JInternalFrame {
 		});
 
 		JButton btnConsultarUsuario = new JButton("Consultar");
-		btnConsultarUsuario.setIcon(null);
-		btnConsultarUsuario.setBounds(481, 104, 104, 32);
+		btnConsultarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/findicon.png")));
+		btnConsultarUsuario.setBounds(469, 11, 155, 68);
 		getContentPane().add(btnConsultarUsuario);
-		
-		JPictureBox pictureBox = new JPictureBox();
-		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
-		pictureBox.setBounds(0, 0, 640, 453);
-		getContentPane().add(pictureBox);
 		btnConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
@@ -285,11 +275,16 @@ public class TelaUsuario extends JInternalFrame {
 				listarUsuarios.setVisible(true);
 			}
 		});
+		JButton btnDeletarUsuario = new JButton("Deletar");
+		btnDeletarUsuario.setPreferredSize(new Dimension(80, 80));
+		btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
+		btnDeletarUsuario.setBounds(172, 366, 104, 41);
+		getContentPane().add(btnDeletarUsuario);
+		
 		if (usuarioSelecionado != null) {
-			JButton btnDeletarUsuario = new JButton("Deletar");
+			btnDeletarUsuario.setVisible(true);
 			btnDeletarUsuario.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
 					UsuarioDao usuario = new UsuarioDao();
 					try {
 						usuario.deletarUsuario(usuarioSelecionado.getCodUsuario());
@@ -299,10 +294,9 @@ public class TelaUsuario extends JInternalFrame {
 
 				}
 			});
-			btnDeletarUsuario.setPreferredSize(new Dimension(80, 80));
-			btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
-			btnDeletarUsuario.setBounds(37, 374, 155, 68);
-			getContentPane().add(btnDeletarUsuario);
+			
+		} else {
+			btnDeletarUsuario.setVisible(false);
 		}
 
 		setIconifiable(true);
