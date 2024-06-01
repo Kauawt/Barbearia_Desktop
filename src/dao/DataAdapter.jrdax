@@ -3,7 +3,7 @@
   <name>Data Adapter</name>
   <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
   <username>sa</username>
-  <password>Admin123</password>
+  <password>admin123</password>
   <url>jdbc:sqlserver://localhost:1433;databaseName=dbBarbearia</url>
   <database></database>
   <savePassword>true</savePassword>

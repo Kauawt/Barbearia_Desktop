@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -15,14 +16,22 @@ public class GeraRelatorio {
 	public GeraRelatorio() {
 		Connection conexao = ModuloConexao.conector();
 		
+		File file = new File("GeraRelatorio.java");
+		String pathAbsoluto = file.getAbsolutePath();
+		
+		String pathAbsolutoParcial = pathAbsoluto.substring(0,pathAbsoluto.lastIndexOf('\\'))+"\\relatorios\\Coffee.jrxml";
+		
 		try {
-			JasperReport jasperreport = JasperCompileManager.compileReport("C:\\Users\\antho\\OneDrive - Fatec Centro Paula Souza\\3º Semestre\\BarbeariaJavaDesktop\\Barbearia_Desktop\\Barbearia_Desktop\\relatorios\\Coffee.jrxml");
+			JasperReport jasperreport = JasperCompileManager.compileReport(pathAbsolutoParcial);
 			
 			JasperPrint jasperprint = JasperFillManager.fillReport(jasperreport,new HashMap<>(), conexao);
 			
 			JasperViewer jasperviewer = new JasperViewer(jasperprint, false);
 			
 			jasperviewer.setVisible(true);
+			
+			ModuloConexao.fecharConexao();
+			
 		} catch (JRException e) {
 			e.printStackTrace();
 		}
