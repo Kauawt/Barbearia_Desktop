@@ -131,9 +131,14 @@ public class TelaMenuPrincipal extends JFrame {
 				for (JInternalFrame frame1 : frames) {
 					frame1.dispose();
 				}
-				TelaServico telaServico = new TelaServico();
-				telaServico.setVisible(true);
-				desktop.add(telaServico);
+				TelaServico telaServico;
+				try {
+					telaServico = new TelaServico(null);
+					telaServico.setVisible(true);
+					desktop.add(telaServico);
+				} catch (ExceptionDao e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarServico);
@@ -168,6 +173,22 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 		mnConsulta.add(mntmConsultaCliente);
+		
+		JMenuItem mntmServico = new JMenuItem("Servico");
+		mntmServico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaConsultaServico consulta = new TelaConsultaServico();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+
+			}
+		});
+		mnConsulta.add(mntmServico);
 
 		JMenu mnAgendamento = new JMenu("Agendamento");
 		menuBar.add(mnAgendamento);
