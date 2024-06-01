@@ -24,7 +24,6 @@
 	<classpathentry kind="lib" path="lib/com.google.zxing.core_3.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/com.googlecode.javaewah.JavaEWAH_1.2.3.jar"/>
 	<classpathentry kind="lib" path="lib/com.ibm.icu_73.2.0.jar"/>
-	<classpathentry kind="lib" path="lib/com.jaspersoft.studio_6.21.3.final.jar"/>
 	<classpathentry kind="lib" path="lib/com.jaspersoft.studio.babel.editor_6.21.3.final.jar"/>
 	<classpathentry kind="lib" path="lib/com.jaspersoft.studio.book_6.21.3.final.jar"/>
 	<classpathentry kind="lib" path="lib/com.jaspersoft.studio.bundles.barbecue_1.5.0.beta1_b02.jar"/>
@@ -406,5 +405,6 @@
 	<classpathentry kind="lib" path="lib/slf4j.simple_2.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/spring-beans-6.1.8.jar"/>
 	<classpathentry kind="lib" path="lib/spring-core-6.1.8.jar"/>
+	<classpathentry kind="lib" path="lib/com.jaspersoft.studio_6.21.3.final.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
