@@ -67,7 +67,6 @@ public class TelaUsuario extends JInternalFrame {
 	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
 	private JComboBox cbStatusUsuario = new JComboBox();
 	private UsuarioController usuarioController = new UsuarioController();
-	private JButton btnDeletarUsuario;
 	/**
 	 * Launch the application.
 	 */
@@ -180,10 +179,11 @@ public class TelaUsuario extends JInternalFrame {
 		lblPerfilUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		lblPerfilUsuario.setBounds(202, 305, 49, 21);
 		getContentPane().add(lblPerfilUsuario);
-
+		
+		
 		cbPerfilUsuario.setForeground(new Color(128, 128, 128));
 		cbPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-
+		cbPerfilUsuario.setBounds(261, 305, 176, 22);
 		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
 		getContentPane().add(cbPerfilUsuario);
 
@@ -229,10 +229,6 @@ public class TelaUsuario extends JInternalFrame {
 		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
 		btnCadastrarUsuario.setBounds(286, 367, 124, 41);
 		getContentPane().add(btnCadastrarUsuario);
-		JPictureBox pictureBox = new JPictureBox();
-		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
-		pictureBox.setBounds(0, 0, 640, 453);
-		getContentPane().add(pictureBox);
 		
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -299,6 +295,10 @@ public class TelaUsuario extends JInternalFrame {
 		} else {
 			btnDeletarUsuario.setVisible(false);
 		}
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
+		pictureBox.setBounds(0, 0, 640, 453);
+		getContentPane().add(pictureBox);
 
 		setIconifiable(true);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

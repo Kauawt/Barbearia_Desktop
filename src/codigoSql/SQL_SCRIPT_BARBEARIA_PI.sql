@@ -15,8 +15,8 @@ nomeUsuario varchar(50) not null,
 cpfUsuario varchar(50) not null unique,
 dataNascimentoUsuario date not null,
 salarioUsuario money not null,
-emailUsuario varchar(40) not null unique,
-senhaUsuario varchar(20) not null,
+emailUsuario varchar(64) not null unique,
+senhaUsuario varchar(64) not null,
 perfilUsuario varchar(13) not null,
 statusUsuario varchar(7) not null); 
 
@@ -24,7 +24,7 @@ create table tbServico(
 codServico int identity(1,1) primary key,
 tipoServico varchar(20) not null unique,
 descricaoServico varchar(120) not null,
-precoServico float not null,
+precoServico money not null,
 duracaoServico float not null,
 statusServico varchar(10) not null);
 
@@ -33,7 +33,7 @@ codAgendamento int identity(1,1) primary key,
 codUsuario int not null references tbUsuario,
 codCliente int not null references tbCliente,
 codServico int not null references tbServico,
-precoServico float not null, --tratar no c�digo pra puxar o valor da tabela servi�o
+precoServico money not null, --tratar no c�digo pra puxar o valor da tabela servi�o
 dataAgendamento date not null,
 horaAtendimento time not null);
 
