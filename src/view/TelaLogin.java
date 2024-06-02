@@ -91,7 +91,7 @@ public class TelaLogin extends JFrame {
 		});
 		
 		txtSenhaUsuario = new JPasswordField();
-		txtSenhaUsuario.setText("admin");
+		txtSenhaUsuario.setText("Admin");
 		txtSenhaUsuario.setBounds(316, 205, 117, 20);
 
 		JLabel lblNewLabel = new JLabel("");
