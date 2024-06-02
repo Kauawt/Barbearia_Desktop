@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
+import controller.GeraRelatorio;
 import controller.LoginController;
 import dao.ExceptionDao;
 
@@ -79,7 +80,7 @@ public class TelaMenuPrincipal extends JFrame {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 879, 538);
-
+		//setExtendedState(JFrame.MAXIMIZED_BOTH);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -131,9 +132,14 @@ public class TelaMenuPrincipal extends JFrame {
 				for (JInternalFrame frame1 : frames) {
 					frame1.dispose();
 				}
-				TelaServico telaServico = new TelaServico();
-				telaServico.setVisible(true);
-				desktop.add(telaServico);
+				TelaServico telaServico;
+				try {
+					telaServico = new TelaServico(null);
+					telaServico.setVisible(true);
+					desktop.add(telaServico);
+				} catch (ExceptionDao e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnMenuCadastro.add(mntmCadastrarServico);
@@ -168,6 +174,22 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 		mnConsulta.add(mntmConsultaCliente);
+		
+		JMenuItem mntmServico = new JMenuItem("Servico");
+		mntmServico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaConsultaServico consulta = new TelaConsultaServico();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+
+			}
+		});
+		mnConsulta.add(mntmServico);
 		
 		JMenuItem mntmConsultaAgendamentos = new JMenuItem("Agendamentos");
 		mntmConsultaAgendamentos.addActionListener(new ActionListener() {
@@ -204,7 +226,12 @@ public class TelaMenuPrincipal extends JFrame {
 		mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
 
-		mntmRelatorioAgendamento = new JMenuItem("Mensal");
+		mntmRelatorioAgendamento = new JMenuItem("Agendamento");
+		mntmRelatorioAgendamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new GeraRelatorio();
+			}
+		});
 		mntmRelatorioAgendamento.setEnabled(false);
 		mnRelatorio.add(mntmRelatorioAgendamento);
 

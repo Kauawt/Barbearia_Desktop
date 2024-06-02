@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+  <name>Data Adapter</name>
+  <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+  <username>sa</username>
+  <password>admin123</password>
+  <url>jdbc:sqlserver://localhost:1433;databaseName=dbBarbearia</url>
+  <database></database>
+  <savePassword>true</savePassword>
+  <serverAddress></serverAddress>
+</jdbcDataAdapter>

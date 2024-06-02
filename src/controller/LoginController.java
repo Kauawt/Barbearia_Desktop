@@ -54,19 +54,17 @@ public class LoginController {
 			// preparar banco para consulta em função do que foi digitado nas caixas de
 			// texto.
 			// O ? é substituido pelo conteeúdo das variáveis 
-
+			
+			Criptografia criptografia = new Criptografia(telaLogin.getTxtSenhaUsuario().getText(), Criptografia.MD5);
 			
 			String nome = telaLogin.getTxtUserUsuario().getText();
-			String senha = telaLogin.getTxtSenhaUsuario().getText();
+			//String senha = telaLogin.getTxtSenhaUsuario().getText();
+			String senha = criptografia.criptografar();;
 			String sql = "select * from tbUsuario where emailUsuario=? and senhaUsuario=?";
-			
-		
-			
+			System.out.println(senha);
 			pst = conexao.prepareStatement(sql);
 			pst.setString(1, nome); //o numero é 1 do setString e referente a primeira posição do?
 			pst.setString(2, senha); //o numero é 2 do setString e referente a segunda posição do?
-
-			// executa a Query
 			rs = pst.executeQuery();
 			if (rs.next()) {
 				// verifica o perfil do usuario
@@ -82,6 +80,7 @@ public class LoginController {
 					Date data = new Date();
 					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
 					principal.getLblData().setText(formatador.format(data).toString());
+					telaLogin.dispose();
 					
 				}
 				else {
@@ -93,6 +92,7 @@ public class LoginController {
 					Date data = new Date();
 					DateFormat formatador = DateFormat.getDateInstance(DateFormat.SHORT);
 					principal.getLblData().setText(formatador.format(data).toString());
+					telaLogin.dispose();
 				}
 			}
 			else {
