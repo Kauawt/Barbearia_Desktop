@@ -9,7 +9,7 @@ public class ModuloConexao {
 	public static Connection conector() {
 		Connection conexao = null;
 		String driver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String url="jdbc:sqlserver://localhost:1433;databasename=dbBarbearia";
+		String url="jdbc:sqlserver://localhost:1433;databaseName=dbBarbearia";
 		String user ="sa";
 		String password="admin123";
 		try {

@@ -64,6 +64,11 @@ public class Usuario {
 		this.perfilUsuario = perfilUsuario;
 		this.statusUsuario = statusUsuario;
 	}
+	
+	public Usuario(int codUsuario, String nomeUsuario) {
+	    this.codUsuario = codUsuario;
+	    this.nomeUsuario = nomeUsuario;
+	}
 
 	public int getCodUsuario() {
 		return codUsuario;

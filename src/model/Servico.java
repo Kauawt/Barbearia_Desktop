@@ -1,7 +1,6 @@
 package model;
 
 import javax.swing.JOptionPane;
-
 import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.ServicoDao;

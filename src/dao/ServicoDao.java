@@ -130,4 +130,9 @@ public class ServicoDao {
 		}
 	}
 
+	public ArrayList<Servico> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,8 +1,10 @@
 package view;
 
+import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -10,7 +12,7 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
-public class TelaSobre extends JFrame {
+public class TelaSobre extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -36,7 +38,6 @@ public class TelaSobre extends JFrame {
 	 */
 	public TelaSobre() {
 		setTitle("Sobre Nós");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 655, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,6 +88,12 @@ public class TelaSobre extends JFrame {
 		JPictureBox pictureBox_1 = new JPictureBox();
 		pictureBox_1.setIcon(new ImageIcon(TelaSobre.class.getResource("/icones/fundo_cinza.png")));
 		pictureBox_1.setBounds(0, 0, 639, 411);
+		setIconifiable(true);
+		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		setBorder(null);
+		setMaximizable(true);
+		setClosable(true);
+		setRootPaneCheckingEnabled(false);
 		contentPane.add(pictureBox_1);
 	}
 

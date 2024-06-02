@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.EventQueue;
@@ -189,9 +190,38 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 		mnConsulta.add(mntmServico);
+		
+		JMenuItem mntmConsultaAgendamentos = new JMenuItem("Agendamentos");
+		mntmConsultaAgendamentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaConsultaAgendamento consulta = new TelaConsultaAgendamento();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+			}
+		});
+		mnConsulta.add(mntmConsultaAgendamentos);
 
 		JMenu mnAgendamento = new JMenu("Agendamento");
 		menuBar.add(mnAgendamento);
+		
+		JMenuItem mntmAgenda = new JMenuItem("Agenda");
+		mntmAgenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
+				TelaAgendamento telaagendamento = new TelaAgendamento();	
+				telaagendamento.setVisible(true);
+				desktop.add(telaagendamento);
+			}
+		});
+		mntmAgenda.setHorizontalAlignment(SwingConstants.LEFT);
+		mnAgendamento.add(mntmAgenda);
 
 		mnRelatorio = new JMenu("Relatorio");
 		menuBar.add(mnRelatorio);
@@ -211,10 +241,13 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmNewSobre = new JMenuItem("Sobre");
 		mntmNewSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TelaSobre
+				JInternalFrame[] frames = desktop.getAllFrames();
+				for (JInternalFrame frame1 : frames) {
+					frame1.dispose();
+				}
 				TelaSobre telaSobre = new TelaSobre();
 				telaSobre.setVisible(true);
-
+				desktop.add(telaSobre);
 			}
 		});
 		mnNewMenu.add(mntmNewSobre);
