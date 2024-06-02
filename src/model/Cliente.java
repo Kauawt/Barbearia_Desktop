@@ -30,6 +30,12 @@ public class Cliente {
 		this.cpfCliente = cpfCliente;
 		this.statusCliente = statusCliente;
 	}
+	
+	public Cliente(int codCliente, String nomeCliente, String cpfCliente) {
+	    this.codCliente = codCliente;
+	    this.nomeCliente = nomeCliente;
+	    this.cpfCliente = cpfCliente;
+	}
 
 	public int getCodCliente() {
 		return codCliente;

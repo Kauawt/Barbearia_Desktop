@@ -1,7 +1,6 @@
 package model;
 
 import javax.swing.JOptionPane;
-
 import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.ServicoDao;
@@ -36,6 +35,11 @@ public class Servico {
 	
 	}
 	
+	public Servico(int codServico, String tipoServico, double precoServico) {
+	    this.codServico = codServico;
+	    this.tipoServico = tipoServico;
+	    this.precoServico = precoServico;
+	}
 
 	public int getCodServico() {
 		return codServico;
@@ -99,5 +103,10 @@ public class Servico {
 
 	public void cadastrarServico(Servico servico) throws ExceptionDao {
 		new ServicoDao().cadastrarServico(servico);
+	}
+	
+	@Override
+	public String toString() {
+		return getTipoServico();
 	}
 }

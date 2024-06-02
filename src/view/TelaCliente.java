@@ -192,11 +192,6 @@ public class TelaCliente extends JInternalFrame {
 		txtNomeCliente.setBounds(258, 149, 134, 20);
 		getContentPane().add(txtNomeCliente);
 		txtNomeCliente.setColumns(10);
-
-		JPictureBox pictureBox = new JPictureBox();
-		pictureBox.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/wallpaper_telas.png")));
-		pictureBox.setBounds(0, 0, 655, 423);
-		getContentPane().add(pictureBox);
 		MaskFormatter cpfMask = null;
 		MaskFormatter dataMask = null;
 		MaskFormatter telefoneMask = null;
@@ -210,10 +205,15 @@ public class TelaCliente extends JInternalFrame {
 		}
 
 
-		JButton btnConsultarCliente1 = new JButton("");
-		btnConsultarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/findicon.png")));
-		btnConsultarCliente1.setBounds(513, 47, 117, 68);
+		JButton btnConsultarCliente1 = new JButton("Consultar");
+		btnConsultarCliente1.setIcon(null);
+		btnConsultarCliente1.setBounds(484, 105, 104, 42);
 		getContentPane().add(btnConsultarCliente1);
+		
+				JPictureBox pictureBox = new JPictureBox();
+				pictureBox.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/wallpaper_telas.png")));
+				pictureBox.setBounds(0, 0, 655, 423);
+				getContentPane().add(pictureBox);
 		btnConsultarCliente1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaConsultaCliente listarClientes = new TelaConsultaCliente();
@@ -248,26 +248,6 @@ public class TelaCliente extends JInternalFrame {
 			btnDeletarCliente1.setBounds(37, 374, 155, 68);
 			getContentPane().add(btnDeletarCliente1);
 		}
-		JButton btnCadastrarCliente1 = new JButton();
-		btnCadastrarCliente1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnCadastrarCliente1.setBackground(new Color(240, 240, 240));
-		if (clienteSelecionado == null) {
-			btnCadastrarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/addicon.png")));
-		} else {
-			btnCadastrarCliente1.setIcon(new ImageIcon(TelaCliente.class.getResource("/icones/editicon.png")));
-		}
-		btnCadastrarCliente1.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarCliente1.setBounds(513, 374, 117, 68);
-		getContentPane().add(btnCadastrarCliente1);
-		btnCadastrarCliente1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (clienteSelecionado == null) {
-					clienteController.cadastrarCliente();
-				} else {
-					clienteController.alterarCliente();
-				}
-			}
-		});
 
 		setIconifiable(true);
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);

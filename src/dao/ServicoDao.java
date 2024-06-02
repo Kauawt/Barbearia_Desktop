@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import model.Servico;
 import java.sql.*;
 
@@ -38,6 +40,11 @@ public class ServicoDao {
 				 throw new ExceptionDao ("Erro ao fechar a conexão: "+ e);
 			 }
 				}
+	}
+
+	public ArrayList<Servico> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

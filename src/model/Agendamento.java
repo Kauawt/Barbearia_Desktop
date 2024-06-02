@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,20 +17,20 @@ public class Agendamento {
 	private Servico servico; // Objeto representando o serviço
     private Cliente cliente; // Objeto representando o cliente
     private Usuario usuario; // Objeto representando o usuário
-    private double valorTotal;
+    //private double valorTotal;
     private LocalDate dataAtendimento; // Objeto representando a data do atendimento
     private LocalTime horaAtendimento; // Objeto representando o horário do atendimento
 
-    public Agendamento(int codAtendimento, Servico servico, Cliente cliente, Usuario usuario, double valorTotal,
+    public Agendamento(int codAtendimento, Servico servico, Cliente cliente, Usuario usuario,
                        LocalDate dataAtendimento, LocalTime horaAtendimento) {
         this.codAtendimento = codAtendimento;
         this.servico = servico;
         this.cliente = cliente;
         this.usuario = usuario;
-        this.valorTotal = valorTotal;
+        //this.valorTotal = valorTotal;
         this.dataAtendimento = dataAtendimento;
         this.horaAtendimento = horaAtendimento;
-        JOptionPane.showMessageDialog(null, "Agendamento realizado com Sucesso");
+        //JOptionPane.showMessageDialog(null, "Agendamento realizado com Sucesso");
 	}
 	 
 	public int getCodAtendimento() {
@@ -56,14 +57,22 @@ public class Agendamento {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public double getValorTotal() {
-		return valorTotal;
-	}
-	public void setValorTotal(double valorTotal) {
-		this.valorTotal = valorTotal;
-	}
 	public LocalDate getDataAtendimento() {
 		return dataAtendimento;
+	}
+	public String getDataFormatada() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(dataAtendimento);
+	}
+	public String getHoraFormatada() {
+		return new SimpleDateFormat("HH:mm").format(horaAtendimento);
+	}
+	
+	public String getNomeCliente() {
+		return cliente.getNomeCliente();
+	}
+	
+	public String getCpfCliente() {
+		return cliente.getCpfCliente();
 	}
 
 	public void setDataAtendimento(LocalDate dataAtendimento) {
