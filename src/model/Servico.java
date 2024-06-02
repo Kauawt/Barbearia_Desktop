@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.ServicoDao;
+import dao.UsuarioDao;
 
 public class Servico {
     private int codServico;
@@ -16,7 +17,6 @@ public class Servico {
 
     
 	public Servico(int codServico, String tipoServico, String descricaoServico, double precoServico,double duracaoServico, String statusServico) {
-		if(codServico > 0 && tipoServico != null && descricaoServico != null && descricaoServico.length()>0 && precoServico > 0 && duracaoServico>0 && Validador.validadorStatus(statusServico)){
 			this.codServico = codServico;
 			this.tipoServico = tipoServico;
 			this.descricaoServico = descricaoServico;
@@ -24,18 +24,23 @@ public class Servico {
 			this.duracaoServico = duracaoServico;
 			this.statusServico = statusServico;
 		}
-		else if(codServico<0) {
-			JOptionPane.showMessageDialog(null, "O código não pode ser negativo");
-		}else if(precoServico<0) {
-			JOptionPane.showMessageDialog(null, "O Preço do serviço não pode ser negativo");
-		}else if(duracaoServico<0) {
-			JOptionPane.showMessageDialog(null, "A duração do serviço não pode ser negativa");
-		}else if(Validador.validadorCpf(statusServico) == false) {
-			JOptionPane.showMessageDialog(null, "Durante a criação do Serviço, o status precisa ser ativo");
-		}
 	
+	
+
+	public Servico(String tipoServico, String descricaoServico, double precoServico, double duracaoServico,String statusServico) {
+		this.tipoServico = tipoServico;
+		this.descricaoServico = descricaoServico;
+		this.precoServico = precoServico;
+		this.duracaoServico = duracaoServico;
+		this.statusServico = statusServico;
 	}
-	
+
+
+	public Servico() {
+
+	}
+
+
 
 	public int getCodServico() {
 		return codServico;
@@ -100,4 +105,9 @@ public class Servico {
 	public void cadastrarServico(Servico servico) throws ExceptionDao {
 		new ServicoDao().cadastrarServico(servico);
 	}
+	
+	public void alterarServico(Servico servico) throws ExceptionDao {
+		new ServicoDao().alterarServico(codServico, servico);
+	}
+	
 }
