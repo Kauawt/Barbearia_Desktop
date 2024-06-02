@@ -20,8 +20,6 @@ senhaUsuario varchar(64) not null,
 perfilUsuario varchar(13) not null,
 statusUsuario varchar(7) not null); 
 
-ALTER TABLE tbUsuario ALTER COLUMN senhaUsuario VARCHAR(64);
-
 create table tbServico(
 codServico int identity(1,1) primary key,
 tipoServico varchar(20) not null unique,
