@@ -47,9 +47,15 @@ public class UsuarioDao {
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
-		} finally {
-			ModuloConexao.fecharConexao();
-		}
+		} if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar o PreparedStatement: " + e);
+            }
+        }
+        ModuloConexao.fecharConexao();
+
 	}
 
 	public static ArrayList<Usuario> listarUsuarios() {
@@ -68,8 +74,7 @@ public class UsuarioDao {
 						rs.getString("cpfUsuario"), rs.getString("dataNascimentoUsuario"),
 						rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), rs.getString("perfilUsuario"),
 						rs.getString("statusUsuario")));
-			}
-			;
+			};
 
 		} catch (SQLException e) {
 			e.printStackTrace();

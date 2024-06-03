@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import dao.ExceptionDao;
+import model.Gerente;
 import model.Usuario;
 import model.Validador;
 
@@ -14,7 +15,7 @@ public class UsuarioController {
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
 		
-		Usuario usuario = new Usuario(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
+		Gerente usuario = new Gerente(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.cadastrarUsuario(usuario);
 		System.out.println(usuario);
@@ -26,7 +27,7 @@ public class UsuarioController {
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
 		
-		Usuario usuario = new Usuario(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
+		Gerente usuario = new Gerente(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.alterarUsuario(usuario);
 		System.out.println(usuario);

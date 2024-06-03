@@ -33,6 +33,11 @@ public class Servico {
 		this.duracaoServico = duracaoServico;
 		this.statusServico = statusServico;
 	}
+	public Servico(int codServico, String tipoServico, double precoServico) {
+	    this.codServico = codServico;
+	    this.tipoServico = tipoServico;
+	    this.precoServico = precoServico;
+	}
 
 
 	public Servico() {
@@ -107,6 +112,11 @@ public class Servico {
 	
 	public void alterarServico(Servico servico) throws ExceptionDao {
 		new ServicoDao().alterarServico(codServico, servico);
+	}
+	
+	@Override
+	public String toString() {
+		return getTipoServico();
 	}
 	
 }
