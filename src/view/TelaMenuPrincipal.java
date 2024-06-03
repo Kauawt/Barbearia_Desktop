@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.ClienteController;
-import controller.GeraRelatorio;
 import controller.LoginController;
 import dao.ExceptionDao;
+import model.Gerente;
 
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
@@ -229,7 +229,7 @@ public class TelaMenuPrincipal extends JFrame {
 		mntmRelatorioAgendamento = new JMenuItem("Agendamento");
 		mntmRelatorioAgendamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GeraRelatorio();
+				Gerente.GeraRelatorio();
 			}
 		});
 		mntmRelatorioAgendamento.setEnabled(false);

@@ -95,6 +95,25 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().setSize(new Dimension(450, 480));
 		getContentPane().setPreferredSize(new Dimension(450, 480));
 		getContentPane().setLayout(null);
+		
+				JButton btnConsultarUsuario = new JButton("Consultar");
+				btnConsultarUsuario.setBounds(405, 368, 124, 41);
+				getContentPane().add(btnConsultarUsuario);
+				btnConsultarUsuario.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
+						JDesktopPane desktop = getDesktopPane();
+						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
+						if (frame instanceof TelaMenuPrincipal) {
+							JInternalFrame[] frames = desktop.getAllFrames();
+							for (JInternalFrame frame1 : frames) {
+								frame1.dispose();
+							}
+						}
+						desktop.add(listarUsuarios);
+						listarUsuarios.setVisible(true);
+					}
+				});
 
 		JLabel lblFormularioUsuario = new JLabel("Formulário Usuario");
 		lblFormularioUsuario.setForeground(new Color(255, 255, 255));
@@ -109,10 +128,12 @@ public class TelaUsuario extends JInternalFrame {
 		lblNomeusuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtNomeUsuario = new JTextField();
-		txtNomeUsuario.setText("Nome");
+		if(usuarioSelecionado == null) {
+			txtNomeUsuario = new PlaceholderTextField("NOME");
+		}
 		txtNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNomeUsuario.setForeground(new Color(128, 128, 128));
-		txtNomeUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		txtNomeUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtNomeUsuario.setBounds(261, 110, 176, 20);
 		getContentPane().add(txtNomeUsuario);
 		txtNomeUsuario.setColumns(10);
@@ -125,7 +146,9 @@ public class TelaUsuario extends JInternalFrame {
 
 		txtSalarioUsuario = new JTextField();
 		txtSalarioUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSalarioUsuario.setText("Salário");
+		if(usuarioSelecionado == null) {
+			txtSalarioUsuario = new PlaceholderTextField("SALÁRIO");
+		}
 		txtSalarioUsuario.setForeground(new Color(128, 128, 128));
 		txtSalarioUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		txtSalarioUsuario.setBounds(261, 203, 176, 20);
@@ -152,7 +175,9 @@ public class TelaUsuario extends JInternalFrame {
 
 		txtEmailUsuario = new JTextField();
 		txtEmailUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtEmailUsuario.setText("E-mail");
+		if(usuarioSelecionado == null) {
+			txtEmailUsuario = new PlaceholderTextField("E-MAIL");
+		}
 		txtEmailUsuario.setForeground(new Color(128, 128, 128));
 		txtEmailUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		txtEmailUsuario.setColumns(10);
@@ -167,7 +192,6 @@ public class TelaUsuario extends JInternalFrame {
 
 		txtSenhaUsuario = new JPasswordField();
 		txtSenhaUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		txtSenhaUsuario.setText("Senha");
 		txtSenhaUsuario.setForeground(new Color(128, 128, 128));
 		txtSenhaUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
 		txtSenhaUsuario.setColumns(10);
@@ -182,7 +206,7 @@ public class TelaUsuario extends JInternalFrame {
 		
 		
 		cbPerfilUsuario.setForeground(new Color(128, 128, 128));
-		cbPerfilUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		cbPerfilUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		cbPerfilUsuario.setBounds(261, 305, 176, 22);
 		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
 		getContentPane().add(cbPerfilUsuario);
@@ -198,15 +222,13 @@ public class TelaUsuario extends JInternalFrame {
 		}
 		ftxtCpfUsuario = new JFormattedTextField(cpfMask);
 		ftxtCpfUsuario.setForeground(new Color(128, 128, 128));
-		ftxtCpfUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		ftxtCpfUsuario.setText("CPF");
+		ftxtCpfUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		ftxtCpfUsuario.setBounds(261, 141, 176, 20);
 		getContentPane().add(ftxtCpfUsuario);
 
 		ftxtDataNascimentoUsuario = new JFormattedTextField(dataMask);
 		ftxtDataNascimentoUsuario.setForeground(new Color(128, 128, 128));
-		ftxtDataNascimentoUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
-		ftxtDataNascimentoUsuario.setText("");
+		ftxtDataNascimentoUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		ftxtDataNascimentoUsuario.setBounds(261, 172, 176, 20);
 		getContentPane().add(ftxtDataNascimentoUsuario);
 
@@ -217,7 +239,7 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().add(lblStatusUsuario);
 
 		cbStatusUsuario.setForeground(new Color(128, 128, 128));
-		cbStatusUsuario.setFont(new Font("Arial Black", Font.PLAIN, 11));
+		cbStatusUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
 		cbStatusUsuario.setBounds(261, 335, 176, 22);
 		getContentPane().add(cbStatusUsuario);
@@ -227,7 +249,7 @@ public class TelaUsuario extends JInternalFrame {
 		btnCadastrarUsuario.setBackground(new Color(240, 240, 240));
 		btnCadastrarUsuario.setIcon(null);
 		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
-		btnCadastrarUsuario.setBounds(286, 367, 124, 41);
+		btnCadastrarUsuario.setBounds(261, 367, 124, 41);
 		getContentPane().add(btnCadastrarUsuario);
 		
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
@@ -252,30 +274,10 @@ public class TelaUsuario extends JInternalFrame {
 				}
 			}
 		});
-
-		JButton btnConsultarUsuario = new JButton("Consultar");
-		btnConsultarUsuario.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/findicon.png")));
-		btnConsultarUsuario.setBounds(469, 11, 155, 68);
-		getContentPane().add(btnConsultarUsuario);
-		btnConsultarUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
-				JDesktopPane desktop = getDesktopPane();
-				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
-				if (frame instanceof TelaMenuPrincipal) {
-					JInternalFrame[] frames = desktop.getAllFrames();
-					for (JInternalFrame frame1 : frames) {
-						frame1.dispose();
-					}
-				}
-				desktop.add(listarUsuarios);
-				listarUsuarios.setVisible(true);
-			}
-		});
 		JButton btnDeletarUsuario = new JButton("Deletar");
 		btnDeletarUsuario.setPreferredSize(new Dimension(80, 80));
 		btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
-		btnDeletarUsuario.setBounds(172, 366, 104, 41);
+		btnDeletarUsuario.setBounds(148, 367, 104, 41);
 		getContentPane().add(btnDeletarUsuario);
 		
 		if (usuarioSelecionado != null) {
