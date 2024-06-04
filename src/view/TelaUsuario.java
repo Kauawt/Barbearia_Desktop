@@ -254,6 +254,7 @@ public class TelaUsuario extends JInternalFrame {
 		
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
 				try {
 					if (usuarioSelecionado == null) {
@@ -262,7 +263,7 @@ public class TelaUsuario extends JInternalFrame {
 								txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
 								cbStatusUsuario.getSelectedItem().toString());
 					} else {
-						usuarioController.alterarUsuario(txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
+						usuarioController.alterarUsuario(usuarioSelecionado.getCodUsuario(), txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
 								ftxtDataNascimentoUsuario.getText(), salarioUsuario, txtEmailUsuario.getText(),
 								txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
 								cbStatusUsuario.getSelectedItem().toString());

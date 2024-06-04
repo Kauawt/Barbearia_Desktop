@@ -19,15 +19,13 @@ public class UsuarioController {
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.cadastrarUsuario(usuario);
 		System.out.println(usuario);
-		// SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		// Date data = formato.parse(dataNascimentoUsuario);
 	}
 
-	public void alterarUsuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
+	public void alterarUsuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
 		
-		Gerente usuario = new Gerente(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
+		Gerente usuario = new Gerente(codUsuario, nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.alterarUsuario(usuario);
 		System.out.println(usuario);

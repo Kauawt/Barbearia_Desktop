@@ -125,7 +125,10 @@ public class TelaConsultaUsuario extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==1) {
 					try {
-						Usuario usuarioSelecionado = UsuarioDao.consultarUsuarioByCPF(modeloTabela.getValueAt(table.getSelectedRow(), 2).toString());
+						int selectedRow = table.getSelectedRow();
+		                int modelRow = table.convertRowIndexToModel(selectedRow);
+		                
+						Usuario usuarioSelecionado = UsuarioDao.consultarUsuarioByCPF(modeloTabela.getValueAt(modelRow, 2).toString());
 						
 						TelaUsuario cadastraUsuario = new TelaUsuario(usuarioSelecionado);
 						JDesktopPane desktop = getDesktopPane();
@@ -162,7 +165,6 @@ public class TelaConsultaUsuario extends JInternalFrame {
 		
 		rowSorter = new TableRowSorter<>(modeloTabela);
 		table.setRowSorter(rowSorter);
-		
 	}
 	private void filtrar() {
 		String filtrar = txtFiltrar.getText().trim();
