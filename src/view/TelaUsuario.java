@@ -31,6 +31,7 @@ import dao.ExceptionDao;
 import dao.ModuloConexao;
 import dao.UsuarioDao;
 import model.Usuario;
+import model.Validador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -58,15 +59,16 @@ public class TelaUsuario extends JInternalFrame {
 	public ResultSet rs = null;
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNomeUsuario;
+	public JTextField txtNomeUsuario;
 	private JTextField txtSalarioUsuario;
-	private JTextField txtEmailUsuario;
-	private JPasswordField txtSenhaUsuario;
+	public JTextField txtEmailUsuario;
+	public JPasswordField txtSenhaUsuario;
 	private JComboBox cbPerfilUsuario = new JComboBox();
-	private JFormattedTextField ftxtCpfUsuario = new JFormattedTextField();
-	private JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
+	public JFormattedTextField ftxtCpfUsuario = new JFormattedTextField();
+	public JFormattedTextField ftxtDataNascimentoUsuario = new JFormattedTextField();
 	private JComboBox cbStatusUsuario = new JComboBox();
 	private UsuarioController usuarioController = new UsuarioController();
+
 	/**
 	 * Launch the application.
 	 */
@@ -95,25 +97,25 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().setSize(new Dimension(450, 480));
 		getContentPane().setPreferredSize(new Dimension(450, 480));
 		getContentPane().setLayout(null);
-		
-				JButton btnConsultarUsuario = new JButton("Consultar");
-				btnConsultarUsuario.setBounds(405, 368, 124, 41);
-				getContentPane().add(btnConsultarUsuario);
-				btnConsultarUsuario.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
-						JDesktopPane desktop = getDesktopPane();
-						JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
-						if (frame instanceof TelaMenuPrincipal) {
-							JInternalFrame[] frames = desktop.getAllFrames();
-							for (JInternalFrame frame1 : frames) {
-								frame1.dispose();
-							}
-						}
-						desktop.add(listarUsuarios);
-						listarUsuarios.setVisible(true);
+
+		JButton btnConsultarUsuario = new JButton("Consultar");
+		btnConsultarUsuario.setBounds(405, 368, 124, 41);
+		getContentPane().add(btnConsultarUsuario);
+		btnConsultarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaConsultaUsuario listarUsuarios = new TelaConsultaUsuario();
+				JDesktopPane desktop = getDesktopPane();
+				JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
+				if (frame instanceof TelaMenuPrincipal) {
+					JInternalFrame[] frames = desktop.getAllFrames();
+					for (JInternalFrame frame1 : frames) {
+						frame1.dispose();
 					}
-				});
+				}
+				desktop.add(listarUsuarios);
+				listarUsuarios.setVisible(true);
+			}
+		});
 
 		JLabel lblFormularioUsuario = new JLabel("Formulário Usuario");
 		lblFormularioUsuario.setForeground(new Color(255, 255, 255));
@@ -128,7 +130,7 @@ public class TelaUsuario extends JInternalFrame {
 		lblNomeusuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		txtNomeUsuario = new JTextField();
-		if(usuarioSelecionado == null) {
+		if (usuarioSelecionado == null) {
 			txtNomeUsuario = new PlaceholderTextField("NOME");
 		}
 		txtNomeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
@@ -146,7 +148,7 @@ public class TelaUsuario extends JInternalFrame {
 
 		txtSalarioUsuario = new JTextField();
 		txtSalarioUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		if(usuarioSelecionado == null) {
+		if (usuarioSelecionado == null) {
 			txtSalarioUsuario = new PlaceholderTextField("SALÁRIO");
 		}
 		txtSalarioUsuario.setForeground(new Color(128, 128, 128));
@@ -175,7 +177,7 @@ public class TelaUsuario extends JInternalFrame {
 
 		txtEmailUsuario = new JTextField();
 		txtEmailUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		if(usuarioSelecionado == null) {
+		if (usuarioSelecionado == null) {
 			txtEmailUsuario = new PlaceholderTextField("E-MAIL");
 		}
 		txtEmailUsuario.setForeground(new Color(128, 128, 128));
@@ -203,12 +205,11 @@ public class TelaUsuario extends JInternalFrame {
 		lblPerfilUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		lblPerfilUsuario.setBounds(202, 305, 49, 21);
 		getContentPane().add(lblPerfilUsuario);
-		
-		
+
 		cbPerfilUsuario.setForeground(new Color(128, 128, 128));
 		cbPerfilUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		cbPerfilUsuario.setBounds(261, 305, 176, 22);
-		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Funcionário"}));
+		cbPerfilUsuario.setModel(new DefaultComboBoxModel(new String[] { "Administrador", "Funcionário" }));
 		getContentPane().add(cbPerfilUsuario);
 
 		MaskFormatter cpfMask = null;
@@ -240,7 +241,13 @@ public class TelaUsuario extends JInternalFrame {
 
 		cbStatusUsuario.setForeground(new Color(128, 128, 128));
 		cbStatusUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] {"Ativo", "Inativo"}));
+
+		if (usuarioSelecionado == null) {
+			cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] { "Ativo" }));
+		} else {
+			cbStatusUsuario.setModel(new DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
+		}
+
 		cbStatusUsuario.setBounds(261, 335, 176, 22);
 		getContentPane().add(cbStatusUsuario);
 
@@ -251,23 +258,28 @@ public class TelaUsuario extends JInternalFrame {
 		btnCadastrarUsuario.setPreferredSize(new Dimension(80, 80));
 		btnCadastrarUsuario.setBounds(261, 367, 124, 41);
 		getContentPane().add(btnCadastrarUsuario);
-		
+
 		btnCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
 				try {
-					if (usuarioSelecionado == null) {
-						usuarioController.cadastrarUsuario(txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
-								ftxtDataNascimentoUsuario.getText(), salarioUsuario, txtEmailUsuario.getText(),
-								txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
-								cbStatusUsuario.getSelectedItem().toString());
-					} else {
-						usuarioController.alterarUsuario(usuarioSelecionado.getCodUsuario(), txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
-								ftxtDataNascimentoUsuario.getText(), salarioUsuario, txtEmailUsuario.getText(),
-								txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
-								cbStatusUsuario.getSelectedItem().toString());
+					boolean validaUsuario = usuarioController.validadorCamposTelaUsuario(txtNomeUsuario.getText(),
+							ftxtCpfUsuario.getText(), ftxtDataNascimentoUsuario.getText(), txtSalarioUsuario.getText(),
+							txtEmailUsuario.getText(), txtSenhaUsuario.getText());
+					if (validaUsuario == true) {
+						double salarioUsuario = Double.parseDouble(txtSalarioUsuario.getText());
+						if (usuarioSelecionado == null) {
+							usuarioController.cadastrarUsuario(txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
+									ftxtDataNascimentoUsuario.getText(), salarioUsuario, txtEmailUsuario.getText(),
+									txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
+									cbStatusUsuario.getSelectedItem().toString());
+						} else {
+							usuarioController.alterarUsuario(usuarioSelecionado.getCodUsuario(),
+									txtNomeUsuario.getText(), ftxtCpfUsuario.getText(),
+									ftxtDataNascimentoUsuario.getText(), salarioUsuario, txtEmailUsuario.getText(),
+									txtSenhaUsuario.getText(), cbPerfilUsuario.getSelectedItem().toString(),
+									cbStatusUsuario.getSelectedItem().toString());
 
+						}
 					}
 				} catch (ParseException | ExceptionDao e1) {
 					JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
@@ -280,7 +292,7 @@ public class TelaUsuario extends JInternalFrame {
 		btnDeletarUsuario.setBackground(UIManager.getColor("Button.background"));
 		btnDeletarUsuario.setBounds(148, 367, 104, 41);
 		getContentPane().add(btnDeletarUsuario);
-		
+
 		if (usuarioSelecionado != null) {
 			btnDeletarUsuario.setVisible(true);
 			btnDeletarUsuario.addActionListener(new ActionListener() {
@@ -294,7 +306,7 @@ public class TelaUsuario extends JInternalFrame {
 
 				}
 			});
-			
+
 		} else {
 			btnDeletarUsuario.setVisible(false);
 		}
