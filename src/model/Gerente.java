@@ -15,10 +15,15 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class Gerente extends Usuario{
+	public UsuarioDao usuarioDao = new UsuarioDao();
 	
 	public Gerente(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario, double salarioUsuario,
 			String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario) {
-		super(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, statusUsuario, statusUsuario, statusUsuario, statusUsuario);
+		super(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario, senhaUsuario, perfilUsuario, statusUsuario);
+	}
+	public Gerente(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario, double salarioUsuario,
+			String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario) {
+		super(codUsuario, nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario, senhaUsuario, perfilUsuario, statusUsuario);
 	}
 	
 	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
@@ -26,7 +31,7 @@ public class Gerente extends Usuario{
 	}
 
 	public void alterarUsuario(Usuario usuario) throws ExceptionDao {
-		new UsuarioDao().alterarUsuario(cpfUsuario, usuario);
+		usuarioDao.alterarUsuario(codUsuario, usuario);
 	}
 	
 	public static void GeraRelatorio() {
