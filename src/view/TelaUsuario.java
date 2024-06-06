@@ -51,6 +51,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Rectangle;
+import net.miginfocom.swing.MigLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.border.LineBorder;
+import view.JPictureBox.SizeMode;
 
 public class TelaUsuario extends JInternalFrame {
 
@@ -97,6 +104,28 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().setSize(new Dimension(450, 480));
 		getContentPane().setPreferredSize(new Dimension(450, 480));
 		getContentPane().setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
+		panel_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		panel_1.setBounds(0, 0, 640, 453);
+		getContentPane().add(panel_1);
+		panel_1.setLayout(new MigLayout("insets 0", "[][][][][][]", "[][][][][][][][][][]"));
+		
+		JLabel lblFormularioUsuario_1 = new JLabel("Formulário Usuario");
+		lblFormularioUsuario_1.setForeground(Color.WHITE);
+		lblFormularioUsuario_1.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
+		panel_1.add(lblFormularioUsuario_1, "cell 7 1");
+		
+		JLabel lblNomeusuario_1 = new JLabel("Nome");
+		lblNomeusuario_1.setForeground(Color.WHITE);
+		lblNomeusuario_1.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		panel_1.add(lblNomeusuario_1, "cell 5 3");
+		
+		JButton btnConsultarUsuario_1 = new JButton("Consultar");
+		panel_1.add(btnConsultarUsuario_1, "cell 8 13");
 
 		JButton btnConsultarUsuario = new JButton("Consultar");
 		btnConsultarUsuario.setBounds(405, 368, 124, 41);
@@ -310,17 +339,30 @@ public class TelaUsuario extends JInternalFrame {
 		} else {
 			btnDeletarUsuario.setVisible(false);
 		}
-		JPictureBox pictureBox = new JPictureBox();
-		pictureBox.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
-		pictureBox.setBounds(0, 0, 640, 453);
-		getContentPane().add(pictureBox);
-
-		setIconifiable(true);
+		
+		JPanel panel = new JPanel();
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		panel.setBounds(0, 0, 640, 453);
+		getContentPane().add(panel);
+		panel.setLayout(new MigLayout("insets 0", "[grow,fill]", "[grow,fill]"));
+		getContentPane().addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Dimension newSize = getSize();
+                panel.setSize(newSize);
+                panel.revalidate();
+                panel.repaint();
+			}
+		});
+		JPictureBox pictureBox_1 = new JPictureBox();
+		pictureBox_1.setIcon(new ImageIcon(TelaUsuario.class.getResource("/icones/wallpaper_telas_maior.png")));
+		pictureBox_1.setBounds(0, 0, 640, 453);
+		panel.add(pictureBox_1, "cell 0 0,grow");
 		setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setBorder(null);
 		setPreferredSize(new Dimension(640, 480));
-		setMaximizable(true);
-		setClosable(true);
 		setRootPaneCheckingEnabled(false);
 		setMinimumSize(new Dimension(450, 480));
 		setTitle("Usuario");
