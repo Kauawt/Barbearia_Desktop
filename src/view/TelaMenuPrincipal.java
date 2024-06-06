@@ -41,6 +41,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import view.JPictureBox.SizeMode;
+import java.awt.ComponentOrientation;
 
 public class TelaMenuPrincipal extends JFrame {
 
@@ -74,6 +76,7 @@ public class TelaMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
+		setMinimumSize(new Dimension(840, 600));
 
 		setTitle("Menu");
 		addWindowListener(new WindowAdapter() {
@@ -268,45 +271,38 @@ public class TelaMenuPrincipal extends JFrame {
 		});
 		mnOpcoes.add(mntmNewSair);
 		JPanel contentPane = new JPanel();
+		contentPane.setBorder(null);
 		contentPane.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		contentPane.setAlignmentY(Component.TOP_ALIGNMENT);
-		contentPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		contentPane.setPreferredSize(new Dimension(640, 480));
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		setContentPane(contentPane);
 
 		desktop = new JDesktopPane();
-		desktop.setBounds(0, 0, 640, 481);
-		desktop.setPreferredSize(new Dimension(640, 480));
-
-		JLabel lblNomeUser = new JLabel("USER:");
-		lblNomeUser.setBounds(650, 89, 68, 29);
-		lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-
-		JLabel lblNomeData = new JLabel("DATA:");
-		lblNomeData.setBounds(650, 159, 69, 29);
-		lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		contentPane.setLayout(null);
-		desktop.setLayout(new CardLayout(0, 0));
-		contentPane.add(desktop);
-		contentPane.add(lblNomeUser);
-		contentPane.add(lblNomeData);
-
-		lblData = new JLabel("----");
-		lblData.setBounds(729, 162, 159, 22);
-		lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		contentPane.add(lblData);
+		desktop.setBorder(null);
+		contentPane.setLayout(new MigLayout("insets 0", "[100px:n,grow,fill][200]", "[100px][100px][250][200][grow,fill]"));
+		contentPane.add(desktop, "cell 0 0 1 5,grow");
+		desktop.setLayout(new MigLayout("", "[grow,fill]", "[grow,fill]"));
+		
+				JLabel lblNomeData = new JLabel("DATA:");
+				lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+				contentPane.add(lblNomeData, "flowx,cell 1 1,growx,aligny center");
+		
+				JLabel lblNomeUser = new JLabel("USER:");
+				lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+				contentPane.add(lblNomeUser, "flowx,cell 1 0,growx,aligny center");
 
 		lblUser = new JLabel("----");
-		lblUser.setBounds(728, 92, 160, 22);
 		lblUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		contentPane.add(lblUser);
+		contentPane.add(lblUser, "cell 1 0,growx,aligny center");
 		
-		JPictureBox pbox_iconeJP = new JPictureBox();
-		pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
-		pbox_iconeJP.setBounds(650, 199, 203, 227);
-		contentPane.add(pbox_iconeJP);
+				lblData = new JLabel("----");
+				lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+				contentPane.add(lblData, "cell 1 1,growx,aligny center");
+				
+				JPictureBox pbox_iconeJP = new JPictureBox();
+				pbox_iconeJP.setSizeMode(SizeMode.CENTER);
+				pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
+				contentPane.add(pbox_iconeJP, "cell 1 2,grow");
 
 	}
 
