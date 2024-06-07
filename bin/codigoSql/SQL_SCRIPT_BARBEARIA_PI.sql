@@ -125,35 +125,35 @@ insert into tbCliente values(
 insert into tbServico values(
 'Cabelo',
 'Corte de cabelo simples, utilizando tesoura e navalha',
-45,
+45.00,
 40,
 'Ativo')
 
 insert into tbServico values(
 'Barba',
 'Corte e design da barba',
-30,
+30.00,
 20,
 'Ativo')
 
 insert into tbServico values(
 'Sobrancelha',
 'Remoção do excesso de pelos e design',
-15,
+15.00,
 10,
 'Ativo')
 
 insert into tbServico values(
 'Cabelo + Barba',
 'Combo envolvendo os dois servi�os',
-50,
+50.00,
 60,
 'Ativo')
 
 insert into tbServico values(
 'Nevou',
 'Descoloração do cabelo e aplicação de tintura prateada',
-50,
+50.00,
 120,
 'Ativo')
 

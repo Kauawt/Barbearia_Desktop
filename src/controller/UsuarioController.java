@@ -1,15 +1,21 @@
 package controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import dao.ExceptionDao;
+import dao.UsuarioDao;
 import model.Usuario;
 import model.Validador;
 
 public class UsuarioController {
-
+	
+	private static UsuarioDao usuarioDao;
+	
 	public void cadastrarUsuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
@@ -31,6 +37,14 @@ public class UsuarioController {
 		usuario.alterarUsuario(usuario);
 
 	}
+	
+	public UsuarioController() {
+        this.usuarioDao = new UsuarioDao();
+    }
+	
+	public Usuario buscarUsuarioPorId(int codUsuario) throws ExceptionDao, SQLException {
+	        return usuarioDao.buscarUsuarioPorId(codUsuario);
+	    }
 	
 
 }

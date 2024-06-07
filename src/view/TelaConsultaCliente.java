@@ -36,6 +36,7 @@ import java.util.Date;
 
 import javax.swing.JScrollPane;
 import dao.UsuarioDao;
+import javax.swing.ImageIcon;
 
 public class TelaConsultaCliente extends JInternalFrame {
 
@@ -93,6 +94,11 @@ public class TelaConsultaCliente extends JInternalFrame {
 		table = new JTable();
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
+		
+		JPictureBox pictureBox = new JPictureBox();
+		pictureBox.setIcon(new ImageIcon(TelaConsultaCliente.class.getResource("/icones/fundo_barberia.jpeg")));
+		pictureBox.setBounds(0, 0, 640, 442);
+		contentPane.add(pictureBox);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

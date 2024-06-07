@@ -22,7 +22,9 @@ public class UsuarioDao {
 	private static final String CONSULTAR_USUARIO_BY_CPF = "select * from tbUsuario where cpfUsuario = ?";
 	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where cpfUsuario = ?";
 	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'Inativo' where codUsuario = ?";
-
+	private static final String LISTAR_BARBEIRO = "SELECT codUsuario, nomeUsuario FROM tbUsuario";
+	private final String CONSULTAR_USUARIO_POR_NOME = "SELECT * FROM tbUsuario WHERE nomeUsuario = ?";
+	private final String CONSULTAR_USUARIO_POR_ID = "SELECT * FROM tbUsuario WHERE codUsuario = ?";
 	private Connection conexao = null;
 	private static PreparedStatement preparedStatement = null;
 	private static ResultSet rs = null;
@@ -75,6 +77,27 @@ public class UsuarioDao {
 		}
 		return usuarios;
 	}
+	
+	public ArrayList<Usuario> selectAllUsuarios() throws ExceptionDao {
+        String query = LISTAR_BARBEIRO;
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+
+        try (Connection conexao = ModuloConexao.conector();
+             PreparedStatement pst = conexao.prepareStatement(query);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setCodUsuario(rs.getInt("codUsuario"));
+                usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+                usuarios.add(usuario);
+            }
+        } catch (SQLException e) {
+            throw new ExceptionDao("Erro ao buscar todos os usuários: " + e);
+        }
+        return usuarios;
+    }
+
 
 	public static Usuario consultarUsuarioByCPF(String cpfUsuario) throws ExceptionDao {
 		String query = CONSULTAR_USUARIO_BY_CPF;
@@ -148,4 +171,40 @@ public class UsuarioDao {
 		}
 	}
 
+	public int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
+	    int codigoUsuario = -1; // Valor padrão para indicar que não foi encontrado
+
+	    try (Connection conexao = ModuloConexao.conector();
+	         PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_NOME)) {
+	        preparedStatement.setString(1, nomeUsuario);
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        if (rs.next()) {
+	            codigoUsuario = rs.getInt("codUsuario");
+	        }
+	    } catch (SQLException e) {
+	        throw new SQLException("Erro ao buscar código do usuário por nome: " + e.getMessage());
+	    }
+
+	    return codigoUsuario;
+	}
+
+    
+    public Usuario buscarUsuarioPorId(int codUsuario) throws SQLException {
+        Usuario usuario = null;
+        try (Connection conexao = ModuloConexao.conector();
+             PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_ID)) {
+            preparedStatement.setInt(1, codUsuario);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setCodUsuario(rs.getInt("codUsuario"));
+                usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+                // Preencha outros campos conforme necessário
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao buscar usuário por ID: " + e.getMessage());
+        }
+        return usuario;
+    }
 }

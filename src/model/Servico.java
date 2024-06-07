@@ -40,6 +40,8 @@ public class Servico {
 	    this.tipoServico = tipoServico;
 	    this.precoServico = precoServico;
 	}
+	
+	
 
 	public int getCodServico() {
 		return codServico;

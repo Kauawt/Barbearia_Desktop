@@ -29,7 +29,7 @@ public class ModeloTabelaAgendamento extends AbstractTableModel {
 		
 		Agendamento agendamento = agendamentos.get(rowIndex);
 		if(columnIndex == 0 ) {
-			return agendamento.getCodAtendimento();
+			return agendamento.getCodAgendamento();
 		}else if(columnIndex == 1 ) {
 			return agendamento.getCliente().getNomeCliente();
 		}else if(columnIndex == 2 ) {
