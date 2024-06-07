@@ -35,6 +35,7 @@ public class UsuarioController {
 		Usuario usuario = new Usuario(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.alterarUsuario(usuario);
+		System.out.println(usuario);
 
 	}
 	

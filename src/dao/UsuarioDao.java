@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import controller.Criptografia;
 import model.Cliente;
 import model.Usuario;
 import dao.ExceptionDao;
@@ -34,12 +35,15 @@ public class UsuarioDao {
 			String query = CADASTRAR_USUARIO;
 			conexao = ModuloConexao.conector(); // abre conexao
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
+			Criptografia criptografia = new Criptografia(usuario.getSenhaUsuario(), Criptografia.MD5);
+			System.out.println(criptografia.criptografar());
+			
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
 			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
 			preparedStatement.setDouble(4, usuario.getSalarioUsuario());
 			preparedStatement.setString(5, usuario.getEmailUsuario());
-			preparedStatement.setString(6, usuario.getSenhaUsuario());
+			preparedStatement.setString(6, criptografia.criptografar().toString());
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
@@ -117,7 +121,7 @@ public class UsuarioDao {
 						rs.getString("statusUsuario"));
 			}
 			;
-
+			System.out.println(usuario);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -136,17 +140,19 @@ public class UsuarioDao {
 			String query = ALTERAR_USUARIO;
 			conexao = ModuloConexao.conector(); // abre conexao
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
+			Criptografia criptografia = new Criptografia(usuario.getSenhaUsuario(), Criptografia.MD5);
+			
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
 			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
 			preparedStatement.setDouble(4, usuario.getSalarioUsuario());
 			preparedStatement.setString(5, usuario.getEmailUsuario());
-			preparedStatement.setString(6, usuario.getSenhaUsuario());
+			preparedStatement.setString(6, criptografia.criptografar().toString());
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
 			preparedStatement.setString(9, cpfUsuario);
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
-
+			System.out.println(usuario);
 			JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao alterar o Usuario: " + e);

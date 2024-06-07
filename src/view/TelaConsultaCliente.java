@@ -6,6 +6,8 @@ import java.awt.ComponentOrientation;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -23,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import dao.ClienteDao;
 import dao.ExceptionDao;
@@ -36,6 +39,10 @@ import java.util.Date;
 
 import javax.swing.JScrollPane;
 import dao.UsuarioDao;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.ImageIcon;
 
 public class TelaConsultaCliente extends JInternalFrame {
@@ -46,6 +53,8 @@ public class TelaConsultaCliente extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	private JTextField txtFiltrar;
+	private TableRowSorter<ModeloTabelaCliente> rowSorter;
 	
 	/**
 	 * Launch the application.
@@ -83,6 +92,22 @@ public class TelaConsultaCliente extends JInternalFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel lblFiltrar = new JLabel("Filtrar");
+		lblFiltrar.setBounds(10, 44, 46, 14);
+		contentPane.add(lblFiltrar);
+		
+		txtFiltrar = new JTextField();
+		txtFiltrar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				filtrar();
+			}
+
+		});
+		txtFiltrar.setBounds(77, 31, 539, 20);
+		contentPane.add(txtFiltrar);
+		txtFiltrar.setColumns(10);
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(25, 125, 591, 301);
 		contentPane.add(scrollPane);
@@ -104,7 +129,7 @@ public class TelaConsultaCliente extends JInternalFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(e.getButton()==1) {
 					try {
-						Cliente clienteSelecionado = ClienteDao.consultarClientePorCPF(modeloTabela.getValueAt(table.getSelectedRow(), 4).toString());
+						Cliente clienteSelecionado = ClienteDao.consultarClientePorCPF((modeloTabela.getValueAt(table.getSelectedRow(), 4).toString()));
 						
 						TelaCliente cadastrarCliente = new TelaCliente(clienteSelecionado);
 						JDesktopPane desktop = getDesktopPane();
@@ -135,9 +160,20 @@ public class TelaConsultaCliente extends JInternalFrame {
 		setClosable(true);
 		setRootPaneCheckingEnabled(false);
 		setMinimumSize(new Dimension(450, 480));
-		setTitle("Consulta Usuario");
+		setTitle("Consulta Cliente");
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
+		rowSorter = new TableRowSorter<>(modeloTabela);
+		table.setRowSorter(rowSorter);
 	}
+	private void filtrar() {
+		String filtrar = txtFiltrar.getText().trim();
+		if(filtrar.length()==0) {
+			rowSorter.setRowFilter(null);
+		}else {
+			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)"+filtrar));
+		}
+	}
+	
 }
