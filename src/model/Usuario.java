@@ -13,9 +13,9 @@ import dao.ExceptionDao;
 import dao.UsuarioDao;
 
 public class Usuario {
-	private int codUsuario;
+	protected int codUsuario;
 	private String nomeUsuario;
-	private String cpfUsuario;
+	protected String cpfUsuario;
 	private String dataNascimentoUsuario;
 	private double salarioUsuario;
 	private String emailUsuario;
@@ -146,13 +146,6 @@ public class Usuario {
 		this.statusUsuario = statusUsuario;
 	}
 
-	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
-		new UsuarioDao().cadastrarUsuario(usuario);
-	}
-
-	public void alterarUsuario(Usuario usuario) throws ExceptionDao {
-		new UsuarioDao().alterarUsuario(cpfUsuario, usuario);
-	}
 
 	public String converteDataBancoTela(String dataString) {
 		SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");

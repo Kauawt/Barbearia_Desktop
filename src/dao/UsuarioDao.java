@@ -21,7 +21,7 @@ public class UsuarioDao {
 
 	private static final String LISTAR_USUARIOS = "select * from tbUsuario";
 	private static final String CONSULTAR_USUARIO_BY_CPF = "select * from tbUsuario where cpfUsuario = ?";
-	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where cpfUsuario = ?";
+	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where codUsuario = ?";
 	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'Inativo' where codUsuario = ?";
 	private static final String LISTAR_BARBEIRO = "SELECT codUsuario, nomeUsuario FROM tbUsuario";
 	private final String CONSULTAR_USUARIO_POR_NOME = "SELECT * FROM tbUsuario WHERE nomeUsuario = ?";
@@ -49,9 +49,15 @@ public class UsuarioDao {
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
-		} finally {
-			ModuloConexao.fecharConexao();
-		}
+		} if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar o PreparedStatement: " + e);
+            }
+        }
+        ModuloConexao.fecharConexao();
+
 	}
 
 	public static ArrayList<Usuario> listarUsuarios() {
@@ -70,8 +76,7 @@ public class UsuarioDao {
 						rs.getString("cpfUsuario"), rs.getString("dataNascimentoUsuario"),
 						rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), rs.getString("perfilUsuario"),
 						rs.getString("statusUsuario")));
-			}
-			;
+			};
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,7 +140,7 @@ public class UsuarioDao {
 		return usuario;
 	}
 
-	public void alterarUsuario(String cpfUsuario, Usuario usuario) throws ExceptionDao {
+	public void alterarUsuario(int codUsuario, Usuario usuario) throws ExceptionDao {
 		try {
 			String query = ALTERAR_USUARIO;
 			conexao = ModuloConexao.conector(); // abre conexao
@@ -150,15 +155,22 @@ public class UsuarioDao {
 			preparedStatement.setString(6, criptografia.criptografar().toString());
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
-			preparedStatement.setString(9, cpfUsuario);
+			preparedStatement.setInt(9, usuario.getCodUsuario());
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
 			System.out.println(usuario);
 			JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao alterar o Usuario: " + e);
-		} finally {
-			ModuloConexao.fecharConexao();
+		}finally { 
+	        ModuloConexao.fecharConexao();
 		}
+		if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar o PreparedStatement: " + e);
+            }
+        }
 	}
 
 	public void deletarUsuario(int codUsuario) throws ExceptionDao {
