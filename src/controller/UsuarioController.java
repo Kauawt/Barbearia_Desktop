@@ -1,22 +1,28 @@
 package controller;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 import javax.swing.JOptionPane;
 
 import controller.helper.ValidadorHelper;
+
 import dao.ExceptionDao;
 import model.Cliente;
 import model.Gerente;
+import dao.UsuarioDao;
 import model.Usuario;
 import model.Validador;
 import view.TelaCliente;
 import view.TelaUsuario;
 
 public class UsuarioController {
-
+	
+	private static UsuarioDao usuarioDao;
+	
 	public boolean validadorCamposTelaUsuario(String nomeUsuario, String cpfUsuario, String salarioUsuario , String dataNascimentoUsuario,
 			String emailUsuario, String senhaUsuario) {
 		boolean retorno = false;
@@ -64,5 +70,13 @@ public class UsuarioController {
 		System.out.println(usuario);
 
 	}
+	public UsuarioController() {
+        this.usuarioDao = new UsuarioDao();
+    }
+	
+	public Usuario buscarUsuarioPorId(int codUsuario) throws ExceptionDao, SQLException {
+	        return usuarioDao.buscarUsuarioPorId(codUsuario);
+	    }
+	
 
 }

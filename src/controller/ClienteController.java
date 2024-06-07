@@ -15,7 +15,7 @@ import model.Cliente;
 public class ClienteController {
 	private final TelaCliente telaCliente;
 	private ClienteHelper clienteHelper;
-	private ClienteDao clienteDao;
+	private static ClienteDao clienteDao;
 
 	public ClienteController(TelaCliente telaCliente) {
 		this.telaCliente = telaCliente;
@@ -53,8 +53,14 @@ public class ClienteController {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+	public static int buscarCodigoClientePorCPF(String cpfCliente) throws ExceptionDao {
+	    Cliente cliente = clienteDao.consultarClientePorCPF(cpfCliente);
+	    if (cliente != null) {
+	        return cliente.getCodCliente();
+	    } else {
+	        return -1;
+	    }
 	}
+	
+}
 

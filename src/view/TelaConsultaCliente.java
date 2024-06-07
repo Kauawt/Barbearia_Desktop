@@ -43,6 +43,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.ImageIcon;
 
 public class TelaConsultaCliente extends JInternalFrame {
 
@@ -118,9 +119,10 @@ public class TelaConsultaCliente extends JInternalFrame {
 		table = new JTable();
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
+		
 		JPictureBox pictureBox = new JPictureBox();
 		pictureBox.setIcon(new ImageIcon(TelaConsultaCliente.class.getResource("/icones/fundo_barberia.jpeg")));
-		pictureBox.setBounds(0, 0, 640, 453);
+		pictureBox.setBounds(0, 0, 640, 442);
 		contentPane.add(pictureBox);
 		table.addMouseListener(new MouseAdapter() {
 			@Override

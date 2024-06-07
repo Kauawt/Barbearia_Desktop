@@ -47,6 +47,7 @@ public class TelaConsultaAgendamento extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaConsultaAgendamento() {
+		setTitle("Consulta Agendamentos");
 		setBounds(100, 100, 650, 455);
 		getContentPane().setLayout(null);
 		

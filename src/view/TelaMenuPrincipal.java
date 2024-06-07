@@ -218,7 +218,13 @@ public class TelaMenuPrincipal extends JFrame {
 				for (JInternalFrame frame1 : frames) {
 					frame1.dispose();
 				}
-				TelaAgendamento telaagendamento = new TelaAgendamento();	
+				TelaAgendamento telaagendamento = null;
+				try {
+					telaagendamento = new TelaAgendamento();
+				} catch (ExceptionDao e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
 				telaagendamento.setVisible(true);
 				desktop.add(telaagendamento);
 			}

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,31 +15,86 @@ import dao.ExceptionDao;
 import dao.UsuarioDao;
 
 public class Agendamento {
-	private int codAtendimento;
+	private int codAgendamento;
 	private Servico servico; // Objeto representando o serviço
     private Cliente cliente; // Objeto representando o cliente
     private Usuario usuario; // Objeto representando o usuário
-    //private double valorTotal;
-    private LocalDate dataAtendimento; // Objeto representando a data do atendimento
-    private LocalTime horaAtendimento; // Objeto representando o horário do atendimento
+    private String dataAtendimento; // Objeto representando a data do atendimento
+    private String horaAtendimento; // Objeto representando o horário do atendimento
+	private int codServico;
+	private int codCliente;
+	private int codUsuario;
+	private String precoServico;
 
-    public Agendamento(int codAtendimento, Servico servico, Cliente cliente, Usuario usuario,
-                       LocalDate dataAtendimento, LocalTime horaAtendimento) {
-        this.codAtendimento = codAtendimento;
+	// Construtor vazio (caso necessário)
+	public Agendamento() {}
+
+	// Construtor utilizado no método formatarDadosAgendamento
+	public Agendamento(int codUsuario, int codCliente, int codServico, String precoServico, String dataAtendimento, String horaAtendimento) {
+	    this.codUsuario = codUsuario;
+	    this.codCliente = codCliente;
+	    this.codServico = codServico;
+	    this.precoServico = precoServico;
+	    this.dataAtendimento = dataAtendimento;
+	    this.horaAtendimento = horaAtendimento;
+	}
+    
+	// Construtor completo (caso necessário)
+    public Agendamento(int codAgendamento, Servico servico, Cliente cliente, Usuario usuario, String dataAtendimento, String horaAtendimento) {
+        this.codAgendamento = codAgendamento;
+    	this.servico = servico;
+        this.cliente = cliente;
+        this.usuario = usuario;
+        this.dataAtendimento = dataAtendimento;
+        this.horaAtendimento = horaAtendimento;
+	}
+
+    public Agendamento(int codAgendamento, Servico servico, Cliente cliente, Usuario usuario, LocalDate dataAtendimento, LocalTime horaAtendimento) {
+        this.codAgendamento = codAgendamento;
         this.servico = servico;
         this.cliente = cliente;
         this.usuario = usuario;
-        //this.valorTotal = valorTotal;
-        this.dataAtendimento = dataAtendimento;
-        this.horaAtendimento = horaAtendimento;
-        //JOptionPane.showMessageDialog(null, "Agendamento realizado com Sucesso");
+        this.dataAtendimento = dataAtendimento.toString(); // Convertendo LocalDate para String
+        this.horaAtendimento = horaAtendimento.toString(); // Convertendo LocalTime para String
+    }
+   
+	public String getPrecoServico() {
+		return precoServico;
 	}
-	 
-	public int getCodAtendimento() {
-		return codAtendimento;
+
+	public void setPrecoServico(String precoServico) {
+		this.precoServico = precoServico;
 	}
-	public void setCodAtendimento(int codAtendimento) {
-		this.codAtendimento = codAtendimento;
+	
+	public int getCodServico() {
+		return codServico;
+	}
+
+	public void setCodServico(int codServico) {
+		this.codServico = codServico;
+	}
+
+	public int getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(int codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public int getCodUsuario() {
+		return codUsuario;
+	}
+
+	public void setCodUsuario(int codUsuario) {
+		this.codUsuario = codUsuario;
+	}
+
+	public int getCodAgendamento() {
+		return codAgendamento;
+	}
+	public void setCodAgendamento(int codAgendamento) {
+		this.codAgendamento = codAgendamento;
 	}
 	public Servico getServico() {
 		return servico;
@@ -57,15 +114,7 @@ public class Agendamento {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public LocalDate getDataAtendimento() {
-		return dataAtendimento;
-	}
-	public String getDataFormatada() {
-		return new SimpleDateFormat("dd/MM/yyyy").format(dataAtendimento);
-	}
-	public String getHoraFormatada() {
-		return new SimpleDateFormat("HH:mm").format(horaAtendimento);
-	}
+	
 	
 	public String getNomeCliente() {
 		return cliente.getNomeCliente();
@@ -74,21 +123,25 @@ public class Agendamento {
 	public String getCpfCliente() {
 		return cliente.getCpfCliente();
 	}
-
-	public void setDataAtendimento(LocalDate dataAtendimento) {
-		this.dataAtendimento = dataAtendimento;
-	}
-
-	public LocalTime getHoraAtendimento() {
+	
+	public String getNomeUsuario() {
+        return usuario.getNomeUsuario(); 
+    }
+	public String getHoraAtendimento() {
 		return horaAtendimento;
 	}
-
-	public void setHoraAtendimento(LocalTime horaAtendimento) {
+	public void setDataAtendimento(String dataAgendamento) {
+		this.horaAtendimento = horaAtendimento;
+		
+	}
+	public String getDataAtendimento() {
+		return dataAtendimento;
+	}
+	public void setHoraAtendimento(String horaAtendimento) {
 		this.horaAtendimento = horaAtendimento;
 	}
 
-	public void cadastrarAgendamento(Agendamento agendamento) throws ExceptionDao {
-		new AgendaDao().cadastrarAgendamento(agendamento);
-	}
+
+
 
 }

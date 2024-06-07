@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.text.DefaultFormatterFactory;
+
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -39,4 +41,13 @@ public class PlaceholderTextField extends JTextField implements FocusListener {
     public String getText() {
         return showingPlaceholder ? "" : super.getText();
     }
+
+	public boolean isShowingPlaceholder() {
+		return showingPlaceholder;
+	}
+
+	public void setFormatterFactory(DefaultFormatterFactory formatterFactory) {
+		// TODO Auto-generated method stub
+		
+	}
 }

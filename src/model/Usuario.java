@@ -70,6 +70,10 @@ public class Usuario {
 	    this.nomeUsuario = nomeUsuario;
 	}
 
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getCodUsuario() {
 		return codUsuario;
 	}
@@ -170,11 +174,12 @@ public class Usuario {
 		return formatoDesejado.format(data);
 	}
 
+	
+	@Override
 	public String toString() {
-		return "Usuario [codUsuario=" + codUsuario + ", nomeUsuario=" + nomeUsuario + ", cpfUsuario=" + cpfUsuario
-				+ ", dataNascimentoUsuario=" + dataNascimentoUsuario + ", salarioUsuario=" + salarioUsuario
-				+ ", emailUsuario=" + emailUsuario + ", senhaUsuario=" + senhaUsuario + ", perfilUsuario="
-				+ perfilUsuario + ", statusUsuario=" + statusUsuario + "]";
+	    return getNomeUsuario();
 	}
-
+	
 }
+
+

@@ -2,7 +2,10 @@ package controller;
 
 import java.text.ParseException;
 
+import java.sql.SQLException;
+
 import dao.ExceptionDao;
+import dao.ServicoDao;
 import model.Servico;
 import model.Usuario;
 
@@ -18,4 +21,9 @@ public class ServicoController {
 		Servico servico = new Servico(codServico,tipoServico, descricaoServico, precoServico, duracaoServico, statusServico);
 		servico.alterarServico(servico);
 	}
+	
+	public int buscarCodigoServicoPorNome(String tipoServico) throws ExceptionDao {
+        return ServicoDao.buscarCodigoServicoPorNome(tipoServico);
+    }
+
 }
