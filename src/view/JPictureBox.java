@@ -55,6 +55,8 @@ public class JPictureBox extends JComponent {
         image = ii.getImage();
         originalHeight = ii.getIconHeight();
         originalWidth = ii.getIconWidth();
+        revalidate();
+        repaint();
     }
 
     public SizeMode getSizeMode() {
