@@ -2,19 +2,11 @@ package view;
 
 import java.awt.EventQueue;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JRadioButton;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.SpringLayout;
-import javax.swing.SwingUtilities;
 
-import java.awt.Point;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,16 +14,12 @@ import java.text.ParseException;
 
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-import controller.ClienteController;
 import controller.UsuarioController;
 import dao.ExceptionDao;
-import dao.ModuloConexao;
 import dao.UsuarioDao;
 import model.Usuario;
-import model.Validador;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,8 +27,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.JDesktopPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -48,20 +34,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.SwingConstants;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Rectangle;
+import javax.swing.SwingUtilities;
+
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.border.LineBorder;
-import view.JPictureBox.SizeMode;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.MatteBorder;
 
 public class TelaUsuarioPanel extends JPanel {
 
@@ -125,33 +104,8 @@ public class TelaUsuarioPanel extends JPanel {
 		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.setBounds(0, 0, 640, 480);
 		add(panel_1);
-		panel_1.setLayout(new MigLayout("insets 0", "[200,grow][300,grow][200,grow]", "[grow,fill][grow,fill][grow,fill][grow][grow,fill]"));
-		if (usuarioSelecionado == null) {
-			txtNomeUsuarioPanel = new PlaceholderTextField("NOME");
-		}
-		if (usuarioSelecionado == null) {
-			txtSalarioUsuarioPanel = new PlaceholderTextField("SALÁRIO");
-		}
-		if (usuarioSelecionado == null) {
-			txtEmailUsuarioPanel = new PlaceholderTextField("E-MAIL");
-		}
-
-		MaskFormatter cpfMask = null;
-		MaskFormatter dataMask = null;
-
-		try {
-			cpfMask = new MaskFormatter("###.###.###-##");
-			dataMask = new MaskFormatter("##/##/####");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		if (usuarioSelecionado == null) {
-			cbStatusUsuarioPanel.setModel(new DefaultComboBoxModel(new String[] { "Ativo" }));
-		} else {
-			cbStatusUsuarioPanel.setModel(new DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
-		}
-
+		panel_1.setLayout(new MigLayout("insets 0", "[200,grow][::300,grow][200,grow]", "[grow,fill][grow,fill][grow,fill][grow][grow,fill]"));
+	
 		MaskFormatter cpfMaskPanel = null;
 		MaskFormatter dataMaskPanel = null;
 
@@ -208,6 +162,7 @@ public class TelaUsuarioPanel extends JPanel {
 		lblSalarioUsuarioPanel.setBounds(185, 201, 68, 21);
 		panel_1.add(lblSalarioUsuarioPanel, "cell 0 2,alignx right");
 		lblSalarioUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		
 		JLabel lblEmailPanel = new JLabel("Email");
 		lblEmailPanel.setForeground(new Color(255, 255, 255));
 		lblEmailPanel.setBounds(202, 240, 49, 21);
@@ -229,17 +184,17 @@ public class TelaUsuarioPanel extends JPanel {
 		panel_1.add(txtNomeUsuarioPanel, "gap bottom 10, flowy,cell 1 2,growx");
 		txtNomeUsuarioPanel.setColumns(10);
 		
-		JFormattedTextField ftxtCpfUsuarioPanel_1 = new JFormattedTextField(cpfMaskPanel);
-		ftxtCpfUsuarioPanel_1.setForeground(new Color(128, 128, 128));
-		ftxtCpfUsuarioPanel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		ftxtCpfUsuarioPanel_1.setBounds(261, 141, 176, 20);
-		panel_1.add(ftxtCpfUsuarioPanel_1, "gap bottom 10, cell 1 2,growx");
+		ftxtCpfUsuarioPanel = new JFormattedTextField(cpfMaskPanel);
+		ftxtCpfUsuarioPanel.setForeground(new Color(128, 128, 128));
+		ftxtCpfUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		ftxtCpfUsuarioPanel.setBounds(261, 141, 176, 20);
+		panel_1.add(ftxtCpfUsuarioPanel, "gap bottom 10, cell 1 2,growx");
 
-		JFormattedTextField ftxtDataNascimentoUsuarioPanel_1 = new JFormattedTextField(dataMaskPanel);
-		ftxtDataNascimentoUsuarioPanel_1.setForeground(new Color(128, 128, 128));
-		ftxtDataNascimentoUsuarioPanel_1.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		ftxtDataNascimentoUsuarioPanel_1.setBounds(261, 172, 176, 20);
-		panel_1.add(ftxtDataNascimentoUsuarioPanel_1, "gap bottom 10, cell 1 2,growx");
+		ftxtDataNascimentoUsuarioPanel = new JFormattedTextField(dataMaskPanel);
+		ftxtDataNascimentoUsuarioPanel.setForeground(new Color(128, 128, 128));
+		ftxtDataNascimentoUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		ftxtDataNascimentoUsuarioPanel.setBounds(261, 172, 176, 20);
+		panel_1.add(ftxtDataNascimentoUsuarioPanel, "gap bottom 10, cell 1 2,growx");
 
 		txtSalarioUsuarioPanel.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSalarioUsuarioPanel.setForeground(new Color(128, 128, 128));
@@ -262,11 +217,6 @@ public class TelaUsuarioPanel extends JPanel {
 		txtSenhaUsuarioPanel.setBounds(261, 274, 176, 20);
 		panel_1.add(txtSenhaUsuarioPanel, "gap bottom 10, cell 1 2,growx");
 
-		if (usuarioSelecionado == null) {
-			cbStatusUsuarioPanel.setModel(new DefaultComboBoxModel(new String[] { "Ativo" }));
-		} else {
-			cbStatusUsuarioPanel.setModel(new DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
-		}
 
 		JButton btnDeletarUsuarioPanel = new JButton("Deletar");
 		btnDeletarUsuarioPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -304,21 +254,21 @@ public class TelaUsuarioPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					boolean validaUsuario = usuarioController.validadorCamposTelaUsuario(txtNomeUsuarioPanel.getText(),
-							ftxtCpfUsuarioPanel_1.getText(), ftxtDataNascimentoUsuarioPanel_1.getText(),
+							ftxtCpfUsuarioPanel.getText(), ftxtDataNascimentoUsuarioPanel.getText(),
 							txtSalarioUsuarioPanel.getText(), txtEmailUsuarioPanel.getText(),
 							txtSenhaUsuarioPanel.getText());
 					if (validaUsuario == true) {
 						double salarioUsuario = Double.parseDouble(txtSalarioUsuarioPanel.getText());
 						if (usuarioSelecionado == null) {
 							usuarioController.cadastrarUsuario(txtNomeUsuarioPanel.getText(),
-									ftxtCpfUsuarioPanel_1.getText(), ftxtDataNascimentoUsuarioPanel_1.getText(),
+									ftxtCpfUsuarioPanel.getText(), ftxtDataNascimentoUsuarioPanel.getText(),
 									salarioUsuario, txtEmailUsuarioPanel.getText(), txtSenhaUsuarioPanel.getText(),
 									cbPerfilUsuarioPanel.getSelectedItem().toString(),
 									cbStatusUsuarioPanel.getSelectedItem().toString());
 						} else {
 							usuarioController.alterarUsuario(usuarioSelecionado.getCodUsuario(),
-									txtNomeUsuarioPanel.getText(), ftxtCpfUsuarioPanel_1.getText(),
-									ftxtDataNascimentoUsuarioPanel_1.getText(), salarioUsuario,
+									txtNomeUsuarioPanel.getText(), ftxtCpfUsuarioPanel.getText(),
+									ftxtDataNascimentoUsuarioPanel.getText(), salarioUsuario,
 									txtEmailUsuarioPanel.getText(), txtSenhaUsuarioPanel.getText(),
 									cbPerfilUsuarioPanel.getSelectedItem().toString(),
 									cbStatusUsuarioPanel.getSelectedItem().toString());
@@ -362,16 +312,17 @@ public class TelaUsuarioPanel extends JPanel {
 		btnConsultarUsuarioPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		btnConsultarUsuarioPanel.setBackground(new Color(240, 240, 240));
 		btnConsultarUsuarioPanel.setIcon(null);
-		
 		btnConsultarUsuarioPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+						.getWindowAncestor(TelaUsuarioPanel.this);
+				JPanel desktop = mainFrame.getDesktop();
+				desktop.removeAll();
 				TelaConsultaUsuario consulta = new TelaConsultaUsuario();
-				panel_1.add(consulta);
-				panel_1.removeAll();
 				consulta.setVisible(true);
-				panel_1.add(consulta);
-				panel_1.revalidate();
-				panel_1.repaint();
+				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 

@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import controller.helper.ClienteHelper;
 import view.TelaCliente;
+import view.TelaClientePanel;
 import model.Cliente;
 import model.Usuario;
 import dao.ClienteDao;
@@ -13,16 +14,16 @@ import dao.ExceptionDao;
 import model.Cliente;
 
 public class ClienteController {
-	private final TelaCliente telaCliente;
+	private final TelaClientePanel telaClientePanel;
 	private ClienteHelper clienteHelper;
 	private static ClienteDao clienteDao;
 
-	public ClienteController(TelaCliente telaCliente) {
-		this.telaCliente = telaCliente;
-		this.clienteHelper = new ClienteHelper(telaCliente);
+	public ClienteController(TelaClientePanel telaClientePanel) {
+		this.telaClientePanel = telaClientePanel;
+		this.clienteHelper = new ClienteHelper(telaClientePanel);
 	}
 
-	/*
+	/**
 	 * Utiliza o Helper para construir um objeto a partir das informações dos campos
 	 * da TelaCliente, instância esse objeto em um variavel(cliente), posteriormente
 	 * passa este objeto como parâmetro para o método cadastrarCliente da ClasseDao
@@ -38,7 +39,7 @@ public class ClienteController {
 		}
 	}
 
-	/*
+	/**
 	 * Utiliza o Helper para construir um objeto a partir das informações dos campos
 	 * da TelaCliente, instância esse objeto em um variavel(cliente), posteriormente
 	 * passa este objeto como parâmetro para o método alterarCliente da ClasseDao

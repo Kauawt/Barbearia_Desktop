@@ -49,6 +49,8 @@ import java.awt.ComponentOrientation;
 public class TelaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
 	private JPanel desktop;
 	private JMenuItem mntmNewSair;
 	private JMenuItem mntmRelatorioAgendamento;
@@ -78,24 +80,25 @@ public class TelaMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
-		JPanel contentPane = new JPanel();
+		contentPane = new JPanel();
 		contentPane.setBorder(null);
 		contentPane.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.setPreferredSize(new Dimension(640, 480));
-		
-		JPanel desktop = new JPanel();
+
+		desktop = new JPanel();
 		desktop.setBorder(null);
 		contentPane.setLayout(
 				new MigLayout("insets 0", "[100px:n,grow,fill][200]", "[100px][100px][250][200][grow,fill]"));
 		contentPane.add(desktop, "cell 0 0 1 5,grow");
 		desktop.setLayout(new MigLayout("insets 0", "[grow,fill]", "[grow,fill]"));
+
 		JPictureBox pictureBox_1 = new JPictureBox();
-		pictureBox_1.setIcon(new ImageIcon(TelaUsuarioPanel.class.getResource("/icones/vintage-chairs-barbershop.png")));
+		pictureBox_1
+				.setIcon(new ImageIcon(TelaUsuarioPanel.class.getResource("/icones/vintage-chairs-barbershop.png")));
 		pictureBox_1.setBounds(0, 0, 640, 453);
 		desktop.add(pictureBox_1, "cell 0 0,grow");
-		
-		setMinimumSize(new Dimension(840, 600));
 
+		setMinimumSize(new Dimension(840, 600));
 		setTitle("Menu");
 		addWindowListener(new WindowAdapter() {
 		});
@@ -112,9 +115,12 @@ public class TelaMenuPrincipal extends JFrame {
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					TelaCliente telaCliente = new TelaCliente(null);
+					desktop.removeAll();
+					TelaClientePanel telaCliente = new TelaClientePanel(null);
 					telaCliente.setVisible(true);
 					desktop.add(telaCliente);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
@@ -143,11 +149,13 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmCadastrarServico = new JMenuItem("Servico");
 		mntmCadastrarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaServico telaServico;
 				try {
-					telaServico = new TelaServico(null);
+					desktop.removeAll();
+					TelaServicoPanel telaServico = new TelaServicoPanel(null);
 					telaServico.setVisible(true);
 					desktop.add(telaServico);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
@@ -161,11 +169,15 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				desktop.removeAll();
 				TelaConsultaUsuario consulta = new TelaConsultaUsuario();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
+
 		mnConsulta.add(mntmConsultaUsuario);
 
 		JMenuItem mntmConsultaCliente = new JMenuItem("Cliente");
@@ -261,7 +273,6 @@ public class TelaMenuPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 
-
 		JLabel lblNomeData = new JLabel("DATA:");
 		lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.add(lblNomeData, "flowx,cell 1 1,growx,aligny center");
@@ -282,7 +293,7 @@ public class TelaMenuPrincipal extends JFrame {
 		pbox_iconeJP.setSizeMode(SizeMode.CENTER);
 		pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
 		contentPane.add(pbox_iconeJP, "cell 1 2,grow");
-		
+
 	}
 
 	public JPanel getDesktop() {
