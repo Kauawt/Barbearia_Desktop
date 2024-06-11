@@ -265,13 +265,15 @@ public class TelaServicoPanel extends JPanel {
 		btnConsultarServico.setIcon(null);
 		btnConsultarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaConsultaServico listarServico = new TelaConsultaServico();
-				panel_1.add(listarServico);
-				panel_1.removeAll();
-				listarServico.setVisible(true);
-				panel_1.add(listarServico);
-				panel_1.revalidate();
-				panel_1.repaint();
+				TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+						.getWindowAncestor(TelaServicoPanel.this);
+				JPanel desktop = mainFrame.getDesktop();
+				desktop.removeAll();
+				TelaConsultaServico consulta = new TelaConsultaServico();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 

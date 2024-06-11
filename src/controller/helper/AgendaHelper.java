@@ -7,12 +7,13 @@ import javax.swing.DefaultComboBoxModel;
 
 import model.Servico;
 import view.TelaAgendamento;
+import view.TelaAgendamentoPanel;
 
 public class AgendaHelper {
-	private final TelaAgendamento view;
+	private final TelaAgendamentoPanel view;
 
-	public AgendaHelper(TelaAgendamento view) {
-		this.view = view;
+	public AgendaHelper(TelaAgendamentoPanel telaAgendamentoPanel) {
+		this.view = telaAgendamentoPanel;
 	}
 	
 	/**

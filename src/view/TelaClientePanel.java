@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.text.MaskFormatter;
 
 import controller.ClienteController;
@@ -230,13 +231,15 @@ public class TelaClientePanel extends JPanel {
 		btnConsultarCliente.setIcon(null);
 		btnConsultarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaConsultaCliente listarClientes = new TelaConsultaCliente();
-				panel_1.add(listarClientes);
-				panel_1.removeAll();
-				listarClientes.setVisible(true);
-				panel_1.add(listarClientes);
-				panel_1.revalidate();
-				panel_1.repaint();
+				TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+						.getWindowAncestor(TelaClientePanel.this);
+				JPanel desktop = mainFrame.getDesktop();
+				desktop.removeAll();
+				TelaConsultaCliente consulta = new TelaConsultaCliente();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		

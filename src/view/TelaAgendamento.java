@@ -144,8 +144,8 @@ public class TelaAgendamento extends JInternalFrame {
                 try {  
                     controller.cadastrarAgendamento(servico, cpfCliente, nomeUsuario,
                             txtDataAgenda.getText(), txtHoraAgenda.getText(), precoServico);
-                    AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-                    agendaHelper.limparAgendamentoConcluido();
+                    //AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
+                    //agendaHelper.limparAgendamentoConcluido();
                 } catch (ParseException | ExceptionDao | SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao agendar: " + ex.getMessage());
@@ -166,8 +166,8 @@ public class TelaAgendamento extends JInternalFrame {
                 String precoServico = txtValor.getText(); 
                 try {
                     controller.atualizarAgendamento(servico, cpfCliente, nomeUsuario, txtDataAgenda.getText(), txtHoraAgenda.getText(), precoServico);
-                    AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-                    agendaHelper.limparAgendamentoConcluido();
+                    //AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
+                    //agendaHelper.limparAgendamentoConcluido();
                 } catch (ParseException | ExceptionDao | SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao atualizar o agendamento: " + ex.getMessage());
@@ -218,7 +218,7 @@ public class TelaAgendamento extends JInternalFrame {
         jboxServico.setEditable(true);
         jboxServico.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                controller = new AgendamentoController(TelaAgendamento.this);
+                //controller = new AgendamentoController(TelaAgendamento.this);
                 controller.atualizaValor();
             }
         });
@@ -240,8 +240,8 @@ public class TelaAgendamento extends JInternalFrame {
 
         btnPesquisar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-				agendaHelper.limparTelaAgendamento();
+            	//AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
+				//agendaHelper.limparTelaAgendamento();
                 String cpf = txtCpfCliente.getText();
                 try {
                     Cliente cliente = ClienteDao.consultarClientePorCPF(cpf); 
@@ -299,7 +299,7 @@ public class TelaAgendamento extends JInternalFrame {
     }
     
     private void iniciar() throws ExceptionDao {
-        controller = new AgendamentoController(this);
+        //controller = new AgendamentoController(this);
         controller.atualizaServico();
         controller.atualizaValor();
     }

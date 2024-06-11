@@ -183,9 +183,12 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaCliente = new JMenuItem("Cliente");
 		mntmConsultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				desktop.removeAll();
 				TelaConsultaCliente consulta = new TelaConsultaCliente();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		mnConsulta.add(mntmConsultaCliente);
@@ -193,9 +196,12 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmServico = new JMenuItem("Servico");
 		mntmServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				desktop.removeAll();
 				TelaConsultaServico consulta = new TelaConsultaServico();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 
 			}
 		});
@@ -204,9 +210,12 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaAgendamentos = new JMenuItem("Agendamentos");
 		mntmConsultaAgendamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				desktop.removeAll();
 				TelaConsultaAgendamento consulta = new TelaConsultaAgendamento();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		mnConsulta.add(mntmConsultaAgendamentos);

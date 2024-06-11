@@ -19,17 +19,18 @@ import dao.UsuarioDao;
 import model.Agendamento;
 import model.Servico;
 import view.TelaAgendamento;
+import view.TelaAgendamentoPanel;
 
 public class AgendamentoController {
 	private final AgendaHelper helper;
-	private TelaAgendamento view;
+	private TelaAgendamentoPanel view;
 	private AgendaDao agendaDao;
 	private UsuarioDao usuarioDao;
 	
 
-	public AgendamentoController(TelaAgendamento view) {
-	    this.view = view;
-	    this.helper = new AgendaHelper(view);
+	public AgendamentoController(TelaAgendamentoPanel telaAgendamentoPanel) {
+	    this.view = telaAgendamentoPanel;
+	    this.helper = new AgendaHelper(telaAgendamentoPanel);
 	    this.agendaDao = new AgendaDao();
 	    this.usuarioDao = new UsuarioDao();
 	}
