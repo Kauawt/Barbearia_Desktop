@@ -101,14 +101,15 @@ public class TelaConsultaUsuario extends JPanel {
 		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.setBounds(0, 0, 640, 480);
 		add(panel_1);
-		panel_1.setLayout(new MigLayout("insets 0", "[100,grow][::600,grow][100,grow]", "[grow,fill][grow 50,fill][][::300,grow,fill][grow][grow,fill]"));
-		
+		panel_1.setLayout(new MigLayout("insets 0", "[100,grow][::600,grow][100,grow]",
+				"[grow,fill][grow 50,fill][][::300,grow,fill][grow][grow,fill]"));
+
 		JLabel lblConsultarUsuario = new JLabel("Consultar Usuário");
 		lblConsultarUsuario.setForeground(new Color(255, 255, 255));
 		lblConsultarUsuario.setBounds(220, 57, 280, 32);
 		panel_1.add(lblConsultarUsuario, "cell 1 1,alignx center");
 		lblConsultarUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-		
+
 		JLabel lblFiltrar = new JLabel("Filtrar");
 		lblFiltrar.setForeground(new Color(255, 255, 255));
 		lblFiltrar.setBounds(197, 108, 60, 21);
@@ -118,23 +119,23 @@ public class TelaConsultaUsuario extends JPanel {
 		ModeloTabelaUsuario modeloTabela = new ModeloTabelaUsuario(UsuarioDao.listarUsuarios());
 
 		rowSorter = new TableRowSorter<>(modeloTabela);
-		
-				txtFiltrar = new JTextField();
-				txtFiltrar.setMaximumSize(new Dimension(180, 2147483647));
-				txtFiltrar.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent e) {
-						filtrar();
-					}
-				});
-				txtFiltrar.setBorder(null);
-				txtFiltrar.setAlignmentX(Component.LEFT_ALIGNMENT);
-				txtFiltrar.setHorizontalAlignment(SwingConstants.CENTER);
-				txtFiltrar.setForeground(new Color(128, 128, 128));
-				txtFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-				txtFiltrar.setBounds(261, 110, 176, 20);
-				panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
-				txtFiltrar.setColumns(10);
+
+		txtFiltrar = new JTextField();
+		txtFiltrar.setMaximumSize(new Dimension(180, 2147483647));
+		txtFiltrar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				filtrar();
+			}
+		});
+		txtFiltrar.setBorder(null);
+		txtFiltrar.setAlignmentX(Component.LEFT_ALIGNMENT);
+		txtFiltrar.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFiltrar.setForeground(new Color(128, 128, 128));
+		txtFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		txtFiltrar.setBounds(261, 110, 176, 20);
+		panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
+		txtFiltrar.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
@@ -153,11 +154,11 @@ public class TelaConsultaUsuario extends JPanel {
 
 						Usuario usuarioSelecionado = UsuarioDao
 								.consultarUsuarioByCPF(modeloTabela.getValueAt(modelRow, 2).toString());
-						
+
 						TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
 								.getWindowAncestor(TelaConsultaUsuario.this);
 						JPanel desktop = mainFrame.getDesktop();
-						
+
 						desktop.removeAll();
 						TelaUsuarioPanel cadastraUsuario = new TelaUsuarioPanel(usuarioSelecionado);
 						cadastraUsuario.setVisible(true);
