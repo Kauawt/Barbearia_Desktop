@@ -71,7 +71,7 @@ public class TelaAgendamento extends JInternalFrame {
         MaskFormatter dataMask = null;
 		MaskFormatter horaMask = null;
 		MaskFormatter precoMask = null;
-		controller = new AgendamentoController(this);
+		//controller = new AgendamentoController(this);
 		try {
 			horaMask = new MaskFormatter("##:##");
 			dataMask = new MaskFormatter("##/##/####");
@@ -366,9 +366,9 @@ public class TelaAgendamento extends JInternalFrame {
     private void iniciar() throws ExceptionDao, SQLException {
     	getJboxBarbeiro().setSelectedItem("");
     	getJboxServico().setSelectedItem(null);
-        controller = new AgendamentoController(this);
-        controller.atualizaServico();
-        controller.atualizaValor();
+        //controller = new AgendamentoController(this);
+        //controller.atualizaServico();
+        //controller.atualizaValor();
     }
     
     public JComboBox<Object> getJboxServico() {

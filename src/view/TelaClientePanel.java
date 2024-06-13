@@ -87,7 +87,8 @@ public class TelaClientePanel extends JPanel {
 		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.setBounds(0, 0, 640, 480);
 		add(panel_1);
-		panel_1.setLayout(new MigLayout("insets 0", "[200,grow][::300,grow][180,grow]", "[grow,fill][grow,fill][::250,grow,fill][grow][grow,fill]"));
+		panel_1.setLayout(new MigLayout("insets 0", "[200,grow][::300,grow][180,grow]",
+				"[grow,fill][grow,fill][::250,grow,fill][grow][grow,fill]"));
 
 		JLabel lblFormularioCliente = new JLabel("Formulário Cliente");
 		lblFormularioCliente.setForeground(new Color(255, 255, 255));
@@ -210,18 +211,15 @@ public class TelaClientePanel extends JPanel {
 		btnCadastrarCliente.setPreferredSize(new Dimension(100, 40));
 		btnCadastrarCliente.setVisible(true);
 		panel_1.add(btnCadastrarCliente, "cell 1 3");
-		
-		if (clienteSelecionado == null) {
-			btnCadastrarCliente.setVisible(true);
-			btnCadastrarCliente.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+		btnCadastrarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (clienteSelecionado == null) {
 					clienteController.cadastrarCliente();
+				} else {
+					clienteController.alterarCliente();
 				}
-			});
-		} else {
-			clienteController.alterarCliente();
-		}
-		
+			}
+		});
 		JButton btnConsultarCliente = new JButton("Consultar");
 		btnConsultarCliente.setBounds(405, 368, 124, 41);
 		panel_1.add(btnConsultarCliente, "cell 1 3,alignx right");
@@ -242,7 +240,7 @@ public class TelaClientePanel extends JPanel {
 				desktop.repaint();
 			}
 		});
-		
+
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(Component.TOP_ALIGNMENT);

@@ -98,6 +98,7 @@ public class Validador {
     }
 	public static boolean isNumero(String str) {
 	    try {
+	    	System.out.println(str);
 	        Double.parseDouble(str);
 	        return true;
 	    } catch (NumberFormatException e) {

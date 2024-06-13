@@ -154,7 +154,6 @@ public class TelaConsultaUsuario extends JPanel {
 
 						Usuario usuarioSelecionado = UsuarioDao
 								.consultarUsuarioByCPF(modeloTabela.getValueAt(modelRow, 2).toString());
-
 						TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
 								.getWindowAncestor(TelaConsultaUsuario.this);
 						JPanel desktop = mainFrame.getDesktop();

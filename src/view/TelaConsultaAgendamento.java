@@ -49,14 +49,13 @@ import model.ModeloTabelaAgendamento;
 import model.ModeloTabelaCliente;
 import model.ModeloTabelaUsuario;
 import net.miginfocom.swing.MigLayout;
+
 public class TelaConsultaAgendamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private TableRowSorter<ModeloTabelaAgendamento> rowSorter;
 	private JTable table;
 	private JTextField txtFiltrar;
-
-
 
 	/**
 	 * Launch the application.
@@ -102,23 +101,23 @@ public class TelaConsultaAgendamento extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(new MigLayout("insets 0", "[100,grow][::600,grow][100,grow]",
 				"[grow,fill][grow 50,fill][][::300,grow,fill][grow][grow,fill]"));
-		
+
 		JLabel lblConsultarAgendamento = new JLabel("Consultar Agendamento");
 		lblConsultarAgendamento.setForeground(new Color(255, 255, 255));
 		lblConsultarAgendamento.setBounds(220, 57, 280, 32);
 		panel_1.add(lblConsultarAgendamento, "cell 1 1,alignx center");
 		lblConsultarAgendamento.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-		
+
 		JLabel lblFiltrar = new JLabel("Filtrar");
 		lblFiltrar.setForeground(new Color(255, 255, 255));
 		lblFiltrar.setBounds(197, 108, 60, 21);
 		panel_1.add(lblFiltrar, "flowy,cell 0 2,alignx right,aligny center");
 		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-				
+
 		ModeloTabelaAgendamento modeloTabela = new ModeloTabelaAgendamento(AgendaDao.listarAgendamentos());
-		
+
 		rowSorter = new TableRowSorter<>(modeloTabela);
-		
+
 		txtFiltrar = new JTextField();
 		txtFiltrar.setMaximumSize(new Dimension(180, 2147483647));
 		txtFiltrar.addKeyListener(new KeyAdapter() {
@@ -135,7 +134,7 @@ public class TelaConsultaAgendamento extends JPanel {
 		txtFiltrar.setBounds(261, 110, 176, 20);
 		panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
 		txtFiltrar.setColumns(10);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(25, 99, 591, 301);
@@ -144,34 +143,47 @@ public class TelaConsultaAgendamento extends JPanel {
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
 		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getButton() == 1) {
-					try {
-						int selectedRow = table.getSelectedRow();
-						int modelRow = table.convertRowIndexToModel(selectedRow);
-
-						Agendamento agendamentoSelecionado = AgendaDao.consultarAgendamentoByID(
-								(modeloTabela.getValueAt(modelRow, 1).toString()));
-
-						TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
-								.getWindowAncestor(TelaConsultaAgendamento.this);
-						JPanel desktop = mainFrame.getDesktop();
-
-						desktop.removeAll();
-						TelaAgendamentoPanel cadastraAgendamento = new TelaAgendamentoPanel(agendamentoSelecionado);
-						cadastraAgendamento.setVisible(true);
-						desktop.add(cadastraAgendamento);
-						desktop.revalidate();
-						desktop.repaint();
-
-					} catch (ExceptionDao e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getButton() == MouseEvent.BUTTON1) { 
+		            try {
+		                int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada na tabela
+		                String codAgendamentoStr = modeloTabela.getValueAt(selectedRow, 0).toString();
+		                String nomeUsuario = modeloTabela.getValueAt(selectedRow, 7).toString();
+		                String dataAtendimentoStr = modeloTabela.getValueAt(selectedRow, 5).toString();
+		                int codAgendamento = Integer.parseInt(codAgendamentoStr);
+		                String dataAtendimentoFormatada = DataUtil.formatarData(dataAtendimentoStr); // Formatar a data
+		                int codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
+		                Agendamento agendamentoSelecionado = AgendaDao.consultarAgendamentoPorId(codAgendamento);
+		                if (agendamentoSelecionado != null) {
+		                    agendamentoSelecionado.setCodUsuario(codUsuario); // Atualiza o agendamento com os valores obtidos da tabela (caso necessário)
+		                    agendamentoSelecionado.setDataAtendimento(dataAtendimentoFormatada);
+		                    TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+									.getWindowAncestor(TelaConsultaAgendamento.this);
+							JPanel desktop = mainFrame.getDesktop();
+							desktop.removeAll();
+							TelaAgendamentoPanel cadastraAgendamento = new TelaAgendamentoPanel(agendamentoSelecionado);
+							cadastraAgendamento.setVisible(true);
+							desktop.add(cadastraAgendamento);
+							desktop.revalidate();
+							desktop.repaint();
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Agendamento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+		                }
+		            } catch (NumberFormatException ex) {
+		                ex.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Erro ao converter ID do agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		            } catch (ExceptionDao | SQLException ex) {
+		                ex.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Erro ao buscar agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		            } catch (ParseException e1) {
+		                e1.printStackTrace();
+		                JOptionPane.showMessageDialog(null, "Erro ao formatar data: " + e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		            }
+		        }
+		    }
 		});
+		
 		table.setRowSorter(rowSorter);
 
 		JPanel panel = new JPanel();
@@ -203,66 +215,16 @@ public class TelaConsultaAgendamento extends JPanel {
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
-		
-		
-		table.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        if (e.getButton() == MouseEvent.BUTTON1) { 
-		            try {
-		                int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada na tabela
-		                String codAgendamentoStr = modeloTabela.getValueAt(selectedRow, 0).toString();
-		                String nomeUsuario = modeloTabela.getValueAt(selectedRow, 7).toString();
-		                String dataAtendimentoStr = modeloTabela.getValueAt(selectedRow, 5).toString();
-		                int codAgendamento = Integer.parseInt(codAgendamentoStr);
-		                String dataAtendimentoFormatada = DataUtil.formatarData(dataAtendimentoStr); // Formatar a data
-		                int codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
-		                Agendamento agendamentoSelecionado = AgendaDao.consultarAgendamentoPorId(codAgendamento);
-		                if (agendamentoSelecionado != null) {
-		                    agendamentoSelecionado.setCodUsuario(codUsuario); // Atualiza o agendamento com os valores obtidos da tabela (caso necessário)
-		                    agendamentoSelecionado.setDataAtendimento(dataAtendimentoFormatada);
-		                    TelaAgendamento cadastrarAgendamento = new TelaAgendamento(agendamentoSelecionado);
-		                    JDesktopPane desktop = getDesktopPane();
-		                    JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(desktop);
-		                    if (frame instanceof TelaMenuPrincipal) {
-		                        JInternalFrame[] frames = desktop.getAllFrames();
-		                        for (JInternalFrame frame1 : frames) {
-		                            frame1.dispose();
-		                        }
-		                    }
-		                    desktop.add(cadastrarAgendamento);
-		                    cadastrarAgendamento.setVisible(true);
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Agendamento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-		                }
-		            } catch (NumberFormatException ex) {
-		                ex.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao converter ID do agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            } catch (ExceptionDao | SQLException ex) {
-		                ex.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao buscar agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            } catch (ParseException e1) {
-		                e1.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao formatar data: " + e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            }
-		        }
-		    }
-		});
-
-
-
 	}
-	
+
 	public class DataUtil {
-	    public static String formatarData(String dataOriginal) throws ParseException {
-	        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
-	        SimpleDateFormat formatoDesejado = new SimpleDateFormat("dd/MM/yyyy");
-	        Date data = formatoBanco.parse(dataOriginal);
-	        return formatoDesejado.format(data);
-	    }
+		public static String formatarData(String dataOriginal) throws ParseException {
+			SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat formatoDesejado = new SimpleDateFormat("dd/MM/yyyy");
+			Date data = formatoBanco.parse(dataOriginal);
+			return formatoDesejado.format(data);
+		}
 	}
-
-	
 
 	public JTable getTable() {
 		return table;
@@ -271,13 +233,13 @@ public class TelaConsultaAgendamento extends JPanel {
 	public void setTable(JTable table) {
 		this.table = table;
 	}
-	
+
 	private void filtrar() {
 		String filtrar = txtFiltrar.getText().trim();
-		if(filtrar.length()==0) {
+		if (filtrar.length() == 0) {
 			rowSorter.setRowFilter(null);
-		}else {
-			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)"+filtrar));
+		} else {
+			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + filtrar));
 		}
 	}
 }
