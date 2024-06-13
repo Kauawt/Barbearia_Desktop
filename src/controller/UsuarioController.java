@@ -36,28 +36,32 @@ public class UsuarioController {
 	 */
 	public boolean validadorCamposTelaUsuario(String nomeUsuario, String cpfUsuario, String salarioUsuario , String dataNascimentoUsuario,
 			String emailUsuario, String senhaUsuario) {
-		boolean retorno = false;
 		if (nomeUsuario.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "O campo nome precisa estar preenchido");
+			return false;
 		}
 		if (Validador.validadorCpf(cpfUsuario) == false || cpfUsuario == null) {
 			JOptionPane.showMessageDialog(null, "CPF Inválido, por favor, insira um cpf válido");
+			return false;
 		}
 		if (Validador.isNumero(salarioUsuario) == false || salarioUsuario.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Insira um valor de salário válido");
+			return false;
 		}
 		if (Validador.validadorDataNascimento(dataNascimentoUsuario) == false || dataNascimentoUsuario == null) {
 			JOptionPane.showMessageDialog(null, "Insira uma data válida");
+			return false;
 		}
 		if (Validador.validadorEmail(emailUsuario) == false || emailUsuario == null) {
 			JOptionPane.showMessageDialog(null, "Insira um email válido");
+			return false;
 		}
 		if (senhaUsuario.isEmpty() || senhaUsuario.length() < 5) {
 			JOptionPane.showMessageDialog(null, "A senha precisa ser preenchida e ter mais de 5 caracteres");
+			return false;
 		}else {
-			retorno = true;
+			return true;
 		}
-		return retorno;
 	}
 
 	/**

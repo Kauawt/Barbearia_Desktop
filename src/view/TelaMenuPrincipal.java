@@ -26,6 +26,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SpringLayout;
@@ -47,7 +49,9 @@ import java.awt.ComponentOrientation;
 public class TelaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JDesktopPane desktop;
+	private JPanel contentPane;
+
+	private JPanel desktop;
 	private JMenuItem mntmNewSair;
 	private JMenuItem mntmRelatorioAgendamento;
 	private JMenuItem mntmCadastrarUsuario;
@@ -76,14 +80,31 @@ public class TelaMenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaMenuPrincipal() {
-		setMinimumSize(new Dimension(840, 600));
+		contentPane = new JPanel();
+		contentPane.setBorder(null);
+		contentPane.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		contentPane.setPreferredSize(new Dimension(640, 480));
 
+		desktop = new JPanel();
+		desktop.setBorder(null);
+		contentPane.setLayout(
+				new MigLayout("insets 0", "[100px:n,grow,fill][200]", "[100px][100px][250][200][grow,fill]"));
+		contentPane.add(desktop, "cell 0 0 1 5,grow");
+		desktop.setLayout(new MigLayout("insets 0", "[grow,fill]", "[grow,fill]"));
+
+		JPictureBox pictureBox_1 = new JPictureBox();
+		pictureBox_1
+				.setIcon(new ImageIcon(TelaUsuarioPanel.class.getResource("/icones/vintage-chairs-barbershop.png")));
+		pictureBox_1.setBounds(0, 0, 640, 453);
+		desktop.add(pictureBox_1, "cell 0 0,grow");
+
+		setMinimumSize(new Dimension(840, 600));
 		setTitle("Menu");
 		addWindowListener(new WindowAdapter() {
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 879, 538);
-		//setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -93,14 +114,13 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmCadastrarCliente = new JMenuItem("Cliente");
 		mntmCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
 				try {
-					TelaCliente telaCliente = new TelaCliente(null);
+					desktop.removeAll();
+					TelaClientePanel telaCliente = new TelaClientePanel(null);
 					telaCliente.setVisible(true);
 					desktop.add(telaCliente);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
@@ -111,15 +131,13 @@ public class TelaMenuPrincipal extends JFrame {
 		mntmCadastrarUsuario = new JMenuItem("Usuario");
 		mntmCadastrarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
-				TelaUsuario telaUsuario;
 				try {
-					telaUsuario = new TelaUsuario(null);
+					desktop.removeAll();
+					TelaUsuarioPanel telaUsuario = new TelaUsuarioPanel(null);
 					telaUsuario.setVisible(true);
 					desktop.add(telaUsuario);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
@@ -131,15 +149,13 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmCadastrarServico = new JMenuItem("Servico");
 		mntmCadastrarServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
-				TelaServico telaServico;
 				try {
-					telaServico = new TelaServico(null);
+					desktop.removeAll();
+					TelaServicoPanel telaServico = new TelaServicoPanel(null);
 					telaServico.setVisible(true);
 					desktop.add(telaServico);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				}
@@ -153,71 +169,63 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
+				desktop.removeAll();
 				TelaConsultaUsuario consulta = new TelaConsultaUsuario();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
+
 		mnConsulta.add(mntmConsultaUsuario);
 
 		JMenuItem mntmConsultaCliente = new JMenuItem("Cliente");
 		mntmConsultaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
+				desktop.removeAll();
 				TelaConsultaCliente consulta = new TelaConsultaCliente();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		mnConsulta.add(mntmConsultaCliente);
-		
+
 		JMenuItem mntmServico = new JMenuItem("Servico");
 		mntmServico.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
+				desktop.removeAll();
 				TelaConsultaServico consulta = new TelaConsultaServico();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 
 			}
 		});
 		mnConsulta.add(mntmServico);
-		
+
 		JMenuItem mntmConsultaAgendamentos = new JMenuItem("Agendamentos");
 		mntmConsultaAgendamentos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
+				desktop.removeAll();
 				TelaConsultaAgendamento consulta = new TelaConsultaAgendamento();
 				consulta.setVisible(true);
 				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		mnConsulta.add(mntmConsultaAgendamentos);
 
 		JMenu mnAgendamento = new JMenu("Agendamento");
 		menuBar.add(mnAgendamento);
-		
+
 		JMenuItem mntmAgenda = new JMenuItem("Agenda");
 		mntmAgenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
 				TelaAgendamento telaagendamento = null;
 				try {
 					telaagendamento = new TelaAgendamento(null);
@@ -225,9 +233,8 @@ public class TelaMenuPrincipal extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}	
+				}
 				telaagendamento.setVisible(true);
 				desktop.add(telaagendamento);
 			}
@@ -253,10 +260,6 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmNewSobre = new JMenuItem("Sobre");
 		mntmNewSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JInternalFrame[] frames = desktop.getAllFrames();
-				for (JInternalFrame frame1 : frames) {
-					frame1.dispose();
-				}
 				TelaSobre telaSobre = new TelaSobre();
 				telaSobre.setVisible(true);
 				desktop.add(telaSobre);
@@ -279,47 +282,37 @@ public class TelaMenuPrincipal extends JFrame {
 			}
 		});
 		mnOpcoes.add(mntmNewSair);
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(null);
-		contentPane.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-		contentPane.setPreferredSize(new Dimension(640, 480));
 
 		setContentPane(contentPane);
 
-		desktop = new JDesktopPane();
-		desktop.setBorder(null);
-		contentPane.setLayout(new MigLayout("insets 0", "[100px:n,grow,fill][200]", "[100px][100px][250][200][grow,fill]"));
-		contentPane.add(desktop, "cell 0 0 1 5,grow");
-		desktop.setLayout(new MigLayout("", "[grow,fill]", "[grow,fill]"));
-		
-				JLabel lblNomeData = new JLabel("DATA:");
-				lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-				contentPane.add(lblNomeData, "flowx,cell 1 1,growx,aligny center");
-		
-				JLabel lblNomeUser = new JLabel("USER:");
-				lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-				contentPane.add(lblNomeUser, "flowx,cell 1 0,growx,aligny center");
+		JLabel lblNomeData = new JLabel("DATA:");
+		lblNomeData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		contentPane.add(lblNomeData, "flowx,cell 1 1,growx,aligny center");
+
+		JLabel lblNomeUser = new JLabel("USER:");
+		lblNomeUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		contentPane.add(lblNomeUser, "flowx,cell 1 0,growx,aligny center");
 
 		lblUser = new JLabel("----");
 		lblUser.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 		contentPane.add(lblUser, "cell 1 0,growx,aligny center");
-		
-				lblData = new JLabel("----");
-				lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-				contentPane.add(lblData, "cell 1 1,growx,aligny center");
-				
-				JPictureBox pbox_iconeJP = new JPictureBox();
-				pbox_iconeJP.setSizeMode(SizeMode.CENTER);
-				pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
-				contentPane.add(pbox_iconeJP, "cell 1 2,grow");
+
+		lblData = new JLabel("----");
+		lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+		contentPane.add(lblData, "cell 1 1,growx,aligny center");
+
+		JPictureBox pbox_iconeJP = new JPictureBox();
+		pbox_iconeJP.setSizeMode(SizeMode.CENTER);
+		pbox_iconeJP.setIcon(new ImageIcon(TelaMenuPrincipal.class.getResource("/icones/logo3.png")));
+		contentPane.add(pbox_iconeJP, "cell 1 2,grow");
 
 	}
 
-	public JDesktopPane getDesktop() {
+	public JPanel getDesktop() {
 		return desktop;
 	}
 
-	public void setDesktop(JDesktopPane desktop) {
+	public void setDesktop(JPanel desktop) {
 		this.desktop = desktop;
 	}
 

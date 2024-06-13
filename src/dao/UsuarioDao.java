@@ -43,7 +43,7 @@ public class UsuarioDao {
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			Criptografia criptografia = new Criptografia(usuario.getSenhaUsuario(), Criptografia.MD5);
 			System.out.println(criptografia.criptografar());
-			
+
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
 			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
@@ -55,14 +55,15 @@ public class UsuarioDao {
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
-		} if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar o PreparedStatement: " + e);
-            }
-        }
-        ModuloConexao.fecharConexao();
+		}
+		if (preparedStatement != null) {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				System.err.println("Erro ao fechar o PreparedStatement: " + e);
+			}
+		}
+		ModuloConexao.fecharConexao();
 
 	}
 	/**
@@ -86,12 +87,13 @@ public class UsuarioDao {
 						rs.getString("cpfUsuario"), rs.getString("dataNascimentoUsuario"),
 						rs.getDouble("salarioUsuario"), rs.getString("emailUsuario"), rs.getString("perfilUsuario"),
 						rs.getString("statusUsuario")));
-			};
+			}
+			;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			usuarios = null;
-		}finally {
+		} finally {
 			ModuloConexao.fecharConexao();
 		}
 		return usuarios;
@@ -102,26 +104,26 @@ public class UsuarioDao {
      * @return Uma lista de objetos Usuario contendo todos os usuários cadastrados.
      * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
      */
-	
+
 	public ArrayList<Usuario> selectAllUsuarios() throws ExceptionDao {
-        String query = LISTAR_BARBEIRO;
-        ArrayList<Usuario> usuarios = new ArrayList<>();
+		String query = LISTAR_BARBEIRO;
+		ArrayList<Usuario> usuarios = new ArrayList<>();
 
-        try (Connection conexao = ModuloConexao.conector();
-             PreparedStatement pst = conexao.prepareStatement(query);
-             ResultSet rs = pst.executeQuery()) {
+		try (Connection conexao = ModuloConexao.conector();
+				PreparedStatement pst = conexao.prepareStatement(query);
+				ResultSet rs = pst.executeQuery()) {
 
-            while (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setCodUsuario(rs.getInt("codUsuario"));
-                usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-                usuarios.add(usuario);
-            }
-        } catch (SQLException e) {
-            throw new ExceptionDao("Erro ao buscar todos os usuários: " + e);
-        }
-        return usuarios;
-    }
+			while (rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setCodUsuario(rs.getInt("codUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				usuarios.add(usuario);
+			}
+		} catch (SQLException e) {
+			throw new ExceptionDao("Erro ao buscar todos os usuários: " + e);
+		}
+		return usuarios;
+	}
 	/**
      * Método para consultar um usuário pelo CPF.
      * 
@@ -129,7 +131,6 @@ public class UsuarioDao {
      * @return O objeto Usuario correspondente ao CPF fornecido.
      * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de consulta.
      */
-
 	public static Usuario consultarUsuarioByCPF(String cpfUsuario) throws ExceptionDao {
 		String query = CONSULTAR_USUARIO_BY_CPF;
 		Connection conexao = ModuloConexao.conector();
@@ -157,7 +158,7 @@ public class UsuarioDao {
 		if (usuario == null) {
 			JOptionPane.showMessageDialog(null, "Não foi possível encontrar este usuário ", "",
 					JOptionPane.WARNING_MESSAGE);
-			throw new ExceptionDao("Não foi possivel localizar o cliente selecionado");
+			throw new ExceptionDao("Não foi possivel localizar o usuário selecionado");
 		}
 		return usuario;
 	}
@@ -174,7 +175,7 @@ public class UsuarioDao {
 			conexao = ModuloConexao.conector(); // abre conexao
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			Criptografia criptografia = new Criptografia(usuario.getSenhaUsuario(), Criptografia.MD5);
-			
+
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());
 			preparedStatement.setString(3, usuario.converteDataTelaBanco(usuario.getDataNascimentoUsuario()));
@@ -189,16 +190,16 @@ public class UsuarioDao {
 			JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao alterar o Usuario: " + e);
-		}finally { 
-	        ModuloConexao.fecharConexao();
+		} finally {
+			ModuloConexao.fecharConexao();
 		}
 		if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                System.err.println("Erro ao fechar o PreparedStatement: " + e);
-            }
-        }
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				System.err.println("Erro ao fechar o PreparedStatement: " + e);
+			}
+		}
 	}
 	   /**
      * Método para deletar um usuário da base de dados.
@@ -232,43 +233,42 @@ public class UsuarioDao {
 	public static int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
 	    int codigoUsuario = -1; // Valor padrão para indicar que não foi encontrado
 
-	    try (Connection conexao = ModuloConexao.conector();
-	         PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_NOME)) {
-	        preparedStatement.setString(1, nomeUsuario);
-	        ResultSet rs = preparedStatement.executeQuery();
+		try (Connection conexao = ModuloConexao.conector();
+				PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_NOME)) {
+			preparedStatement.setString(1, nomeUsuario);
+			ResultSet rs = preparedStatement.executeQuery();
 
-	        if (rs.next()) {
-	            codigoUsuario = rs.getInt("codUsuario");
-	        }
-	    } catch (SQLException e) {
-	        throw new SQLException("Erro ao buscar código do usuário por nome: " + e.getMessage());
-	    }
+			if (rs.next()) {
+				codigoUsuario = rs.getInt("codUsuario");
+			}
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao buscar código do usuário por nome: " + e.getMessage());
+		}
 
-	    return codigoUsuario;
+		return codigoUsuario;
 	}
-
 	   /**
      * Método para buscar um usuário pelo seu ID.
      * 
      * @param codUsuario O ID do usuário a ser buscado.
      * @return O objeto Usuario correspondente ao ID fornecido.
      * @throws SQLException Se ocorrer um erro durante a execução da operação de busca.
-     */
-    public static Usuario buscarUsuarioPorId(int codUsuario) throws SQLException {
-        Usuario usuario = null;
-        try (Connection conexao = ModuloConexao.conector();
-             PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_ID)) {
-            preparedStatement.setInt(1, codUsuario);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                usuario = new Usuario();
-                usuario.setCodUsuario(rs.getInt("codUsuario"));
-                usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-                // Preencha outros campos conforme necessário
-            }
-        } catch (SQLException e) {
-            throw new SQLException("Erro ao buscar usuário por ID: " + e.getMessage());
-        }
-        return usuario;
-    }
+ */
+	public static Usuario buscarUsuarioPorId(int codUsuario) throws SQLException {
+		Usuario usuario = null;
+		try (Connection conexao = ModuloConexao.conector();
+				PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_ID)) {
+			preparedStatement.setInt(1, codUsuario);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				usuario = new Usuario();
+				usuario.setCodUsuario(rs.getInt("codUsuario"));
+				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+				// Preencha outros campos conforme necessário
+			}
+		} catch (SQLException e) {
+			throw new SQLException("Erro ao buscar usuário por ID: " + e.getMessage());
+		}
+		return usuario;
+	}
 }

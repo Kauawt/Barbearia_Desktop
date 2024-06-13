@@ -58,7 +58,6 @@ public class TelaCliente extends JInternalFrame {
 	private JTextField txtTelefoneCliente;
 	private JTextField txtNomeCliente;
 	private JFormattedTextField ftxtTelefoneCliente;
-	private ClienteController clientecontroller = new ClienteController(null);
 
 	
 
@@ -83,8 +82,7 @@ public class TelaCliente extends JInternalFrame {
 	 */
 	public TelaCliente(Cliente clienteSelecionado) throws ExceptionDao {
 
-		ClienteController clienteController = new ClienteController(this);
-		ClienteHelper clienteHelper = new ClienteHelper(this);
+		//ClienteController clienteController = new ClienteController(this);
 		getContentPane().setBackground(new Color(232, 227, 225));
 
 		setResizable(true);
@@ -210,7 +208,7 @@ public class TelaCliente extends JInternalFrame {
 			
 			btnAlterarCliente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-						clienteController.alterarCliente();
+						//clienteController.alterarCliente();
 				}
 			});
 			
@@ -230,7 +228,7 @@ public class TelaCliente extends JInternalFrame {
 		getContentPane().add(btnCadastrarCliente);
 		btnCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					clienteController.cadastrarCliente();
+					//clienteController.cadastrarCliente();
 			}
 		});
 		}

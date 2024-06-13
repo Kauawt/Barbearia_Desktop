@@ -2,14 +2,15 @@ package controller.helper;
 
 import model.Cliente;
 import view.TelaCliente;
+import view.TelaClientePanel;
 
 import javax.swing.JOptionPane;
 
 public class ClienteHelper {
-	private TelaCliente telaCliente;
+	private TelaClientePanel telaClientePanel;
 
-	public ClienteHelper(TelaCliente telaCliente) {
-		this.telaCliente = telaCliente;
+	public ClienteHelper(TelaClientePanel telaClientePanel) {
+		this.telaClientePanel = telaClientePanel;
 	}
 
 	/*
@@ -21,11 +22,11 @@ public class ClienteHelper {
 
 	public Cliente validadorCamposTelaCliente() {
 
-		String nomeCliente = telaCliente.getTxtNomeCliente().getText();
-		String enderecoCliente = telaCliente.getTxtEnderecoCliente().getText();
-		String telefoneCliente = telaCliente.getFtxtCpfCliente().getText();
-		String cpfCliente = telaCliente.getFtxtCpfCliente().getText();
-		String statusCliente = telaCliente.getCbStatusCliente().getSelectedItem().toString();
+		String nomeCliente = telaClientePanel.getTxtNomeCliente().getText();
+		String enderecoCliente = telaClientePanel.getTxtEnderecoCliente().getText();
+		String telefoneCliente = telaClientePanel.getFtxtCpfCliente().getText();
+		String cpfCliente = telaClientePanel.getFtxtCpfCliente().getText();
+		String statusCliente = telaClientePanel.getCbStatusCliente().getSelectedItem().toString();
 
 		if (nomeCliente != null && enderecoCliente != null && ValidadorHelper.validadorCpf(cpfCliente)) {
 			Cliente cliente = new Cliente(nomeCliente, enderecoCliente, telefoneCliente, cpfCliente, statusCliente);
@@ -42,10 +43,10 @@ public class ClienteHelper {
 
 	public void limparTelaCliente() {
 	
-		telaCliente.getTxtNomeCliente().setText("");
-		telaCliente.getTxtEnderecoCliente().setText("");
-		telaCliente.getFtxtTelefoneCliente().setText("");
-		telaCliente.getFtxtCpfCliente().setText("");
-		telaCliente.getCbStatusCliente().setSelectedItem("");
+		telaClientePanel.getTxtNomeCliente().setText("");
+		telaClientePanel.getTxtEnderecoCliente().setText("");
+		telaClientePanel.getFtxtTelefoneCliente().setText("");
+		telaClientePanel.getFtxtCpfCliente().setText("");
+		telaClientePanel.getCbStatusCliente().setSelectedItem("");
 	}
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /controller/
 /dao/
 /view/
@@ -9,3 +10,8 @@
 /logo_JPCortes.png
 /model/
 /org/
+=======
+/view/
+/controller/
+/dao/
+>>>>>>> f876a6f37170a4a3efea6f80d2e5a1e6b00e3adb
