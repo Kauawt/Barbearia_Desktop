@@ -121,9 +121,9 @@ public class TelaConsultaCliente extends JPanel {
 		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		ModeloTabelaCliente modeloTabela = new ModeloTabelaCliente(ClienteDao.listarClientes());
-		
+
 		rowSorter = new TableRowSorter<>(modeloTabela);
-		
+
 		txtFiltrar = new JTextField();
 		txtFiltrar.setMaximumSize(new Dimension(180, 2147483647));
 		txtFiltrar.addKeyListener(new KeyAdapter() {
@@ -140,7 +140,7 @@ public class TelaConsultaCliente extends JPanel {
 		txtFiltrar.setBounds(261, 110, 176, 20);
 		panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
 		txtFiltrar.setColumns(10);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(25, 99, 591, 301);
@@ -156,17 +156,16 @@ public class TelaConsultaCliente extends JPanel {
 						int selectedRow = table.getSelectedRow();
 						int modelRow = table.convertRowIndexToModel(selectedRow);
 
-						Cliente clienteSelecionado = ClienteDao.consultarClientePorCPF(
-								(modeloTabela.getValueAt(modelRow, 4).toString()));
-
+						Cliente clienteSelecionado = ClienteDao
+								.consultarClientePorCPF(modeloTabela.getValueAt(modelRow, 4).toString());
 						TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
 								.getWindowAncestor(TelaConsultaCliente.this);
 						JPanel desktop = mainFrame.getDesktop();
 
 						desktop.removeAll();
-						TelaClientePanel cadastrarCliente = new TelaClientePanel(clienteSelecionado);
-						cadastrarCliente.setVisible(true);
-						desktop.add(cadastrarCliente);
+						TelaClientePanel cadastraCliente = new TelaClientePanel(clienteSelecionado);
+						cadastraCliente.setVisible(true);
+						desktop.add(cadastraCliente);
 						desktop.revalidate();
 						desktop.repaint();
 
@@ -177,9 +176,9 @@ public class TelaConsultaCliente extends JPanel {
 			}
 
 		});
-		
+
 		table.setRowSorter(rowSorter);
-		
+
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(Component.TOP_ALIGNMENT);

@@ -53,6 +53,7 @@ public class UsuarioDao {
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
 			preparedStatement.executeUpdate(); // atualiza o banco de dados
+			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
 		}

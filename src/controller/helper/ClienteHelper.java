@@ -24,7 +24,7 @@ public class ClienteHelper {
 
 		String nomeCliente = telaClientePanel.getTxtNomeCliente().getText();
 		String enderecoCliente = telaClientePanel.getTxtEnderecoCliente().getText();
-		String telefoneCliente = telaClientePanel.getFtxtCpfCliente().getText();
+		String telefoneCliente = telaClientePanel.getFtxtTelefoneCliente().getText();
 		String cpfCliente = telaClientePanel.getFtxtCpfCliente().getText();
 		String statusCliente = telaClientePanel.getCbStatusCliente().getSelectedItem().toString();
 

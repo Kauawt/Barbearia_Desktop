@@ -34,7 +34,7 @@ public class UsuarioController {
 	 * @param senhaUsuario A senha do usuário.
 	 * @return true se todos os campos forem válidos, false caso contrário.
 	 */
-	public boolean validadorCamposTelaUsuario(String nomeUsuario, String cpfUsuario, String salarioUsuario , String dataNascimentoUsuario,
+	public boolean validadorCamposTelaUsuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario, String salarioUsuario,
 			String emailUsuario, String senhaUsuario) {
 		if (nomeUsuario.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "O campo nome precisa estar preenchido");
