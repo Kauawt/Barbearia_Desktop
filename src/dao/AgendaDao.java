@@ -24,10 +24,18 @@ public class AgendaDao {
 
 	private final String CADASTRAR_AGENDAMENTO = "insert into tbAgendamento(codUsuario,codCliente,codServico,precoServico,dataAgendamento,horaAtendimento) values (?,?,?,?,?,?)";
 	private static final String ALTERAR_AGENDAMENTO = "UPDATE tbAgendamento SET codServico = ?, precoServico = ?, dataAgendamento = ?, horaAtendimento = ? WHERE codCliente = ?";
-	private static final String DELETAR_AGENDAMENTO = "DELETE FROM tbAgendamento WHERE cpfCliente = ? AND dataAgendamento = ?";
-	private static final String LISTAR_AGENDAMENTOS = "select * from tbAgendamento";
-    private final String BUSCAR_AGENDAMENTO_POR_ID = "select * from tbAgendamento where codAgendamento = ?";
-    private static final String CONSULTAR_HORARIOS_MARCADOS = "SELECT horaAtendimento FROM tbAgendamento WHERE dataAgendamento = ?";
+	private static final String DELETAR_AGENDAMENTO = "DELETE FROM tbAgendamento WHERE codCliente = ? AND dataAgendamento = ?";	
+    private static final String LISTAR_AGENDAMENTOS = "SELECT a.codAgendamento, a.dataAgendamento, a.horaAtendimento, " +
+											            "c.codCliente, c.nomeCliente, c.cpfCliente, " +
+											            "u.codUsuario, u.nomeUsuario, " +
+											            "s.codServico, s.tipoServico, s.precoServico " +
+											            "FROM tbAgendamento a " +
+											            "INNER JOIN tbCliente c ON a.codCliente = c.codCliente " +
+											            "INNER JOIN tbUsuario u ON a.codUsuario = u.codUsuario " +
+											            "INNER JOIN tbServico s ON a.codServico = s.codServico";
+    private static final String LISTAR_SERVICOS = "SELECT DISTINCT codServico, tipoServico, precoServico FROM tbServico";
+    private static final String BUSCAR_AGENDAMENTO_POR_ID = LISTAR_AGENDAMENTOS + " WHERE a.codAgendamento = ?";
+    private static final String CONSULTAR_HORARIOS = "SELECT horaAtendimento FROM tbAgendamento WHERE codUsuario = ? AND dataAgendamento = ?";
 	private Connection conexao = null;
 	private static PreparedStatement preparedStatement = null;
 	private static ResultSet rs = null;
@@ -65,14 +73,7 @@ public class AgendaDao {
      * @return Uma lista de agendamentos.
      */
 	public static ArrayList<Agendamento> listarAgendamentos() {
-	    String query = "SELECT a.codAgendamento, a.dataAgendamento, a.horaAtendimento, " +
-	               "c.codCliente, c.nomeCliente, c.cpfCliente, " +
-	               "u.codUsuario, u.nomeUsuario, " +
-	               "s.codServico, s.tipoServico, s.precoServico " +
-	               "FROM tbAgendamento a " +
-	               "INNER JOIN tbCliente c ON a.codCliente = c.codCliente " +
-	               "INNER JOIN tbUsuario u ON a.codUsuario = u.codUsuario " +
-	               "INNER JOIN tbServico s ON a.codServico = s.codServico";
+	    String query = LISTAR_AGENDAMENTOS;
 	    Connection conexao = ModuloConexao.conector();
 	    ArrayList<Agendamento> agendamentos = new ArrayList<>();
 	    try {
@@ -129,7 +130,7 @@ public class AgendaDao {
 
 	public void deletarAgendamento(int codCliente, String dataAgendamento) throws ExceptionDao {
 	    try {
-	        String query = "DELETE FROM tbAgendamento WHERE codCliente = ? AND dataAgendamento = ?";
+	        String query = DELETAR_AGENDAMENTO;
 	        conexao = ModuloConexao.conector();
 	        preparedStatement = conexao.prepareStatement(query);
 	        preparedStatement.setInt(1, codCliente);
@@ -147,7 +148,7 @@ public class AgendaDao {
      * @return Uma lista de serviços.
      */
 	public static ArrayList<Servico> listarServicos() {
-	    String query = "SELECT DISTINCT codServico, tipoServico, precoServico FROM tbServico";
+	    String query = LISTAR_SERVICOS;
 	    Connection conexao = ModuloConexao.conector();
 	    ArrayList<Servico> servicos = new ArrayList<>();
 	    
@@ -173,4 +174,73 @@ public class AgendaDao {
 	    return servicos;
 	}
 	
+	/**
+     * Consulta um agendamento por ID.
+     * @param idAgendamento O ID do agendamento a ser consultado.
+     * @return O agendamento encontrado ou null se não encontrado.
+     * @throws SQLException Se ocorrer algum erro durante a consulta.
+     */
+    public static Agendamento consultarAgendamentoPorId(int codAgendamento) throws SQLException {
+        String query = BUSCAR_AGENDAMENTO_POR_ID;
+        Connection conexao = ModuloConexao.conector();
+        Agendamento agendamento = null;
+
+        try {
+            PreparedStatement pst = conexao.prepareStatement(query);
+            pst.setInt(1, codAgendamento);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int codAtendimento = rs.getInt("codAgendamento");
+                Cliente cliente = new Cliente(rs.getInt("codCliente"), rs.getString("nomeCliente"), rs.getString("cpfCliente"));
+                Servico servico = new Servico(rs.getInt("codServico"), rs.getString("tipoServico"), rs.getDouble("precoServico"));
+                Usuario usuario = new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"));
+                LocalDate dataAtendimento = rs.getDate("dataAgendamento").toLocalDate();
+                LocalTime horaAtendimento = rs.getTime("horaAtendimento").toLocalTime();
+                agendamento = new Agendamento(codAtendimento, servico, cliente, usuario, dataAtendimento, horaAtendimento);
+            }
+            rs.close();
+            pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao consultar o agendamento por ID: " + e.getMessage());
+        } finally {
+            ModuloConexao.fecharConexao();
+        }
+
+        return agendamento;
+    }
+    
+    /**
+     * Consulta os horários marcados para um determinado barbeiro em uma data específica.
+     * @param codBarbeiro O código do barbeiro.
+     * @param dataAgendamento A data dos agendamentos.
+     * @return Uma lista de horários marcados para o barbeiro na data especificada.
+     * @throws SQLException Se ocorrer algum erro durante a consulta ao banco de dados.
+     */
+    public ArrayList<LocalTime> consultarHorariosMarcados(int codBarbeiro, String dataAgendamento) throws SQLException {
+        ArrayList<LocalTime> horariosMarcados = new ArrayList<>();
+        Connection conexao = ModuloConexao.conector();
+        
+        try {
+            PreparedStatement pst = conexao.prepareStatement(CONSULTAR_HORARIOS);
+            pst.setInt(1, codBarbeiro);
+            pst.setString(2, dataAgendamento);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                LocalTime horaAtendimento = rs.getTime("horaAtendimento").toLocalTime();
+                horariosMarcados.add(horaAtendimento);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao consultar os horários marcados para o barbeiro: " + e.getMessage());
+        } finally {
+            ModuloConexao.fecharConexao();
+        }
+        
+        return horariosMarcados;
+    }
+
+    
+    
 }

@@ -2,17 +2,32 @@ package model;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import java.sql.Time;
+import java.util.Date;
+import java.util.List;
 
 public class ModeloTabelaAgendamento extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final String[] colunas = {"ID", "Nome", "CPF", "Servico", "Valor","Data","Horario","Barbeiro"};
 	
 	private ArrayList<Agendamento> agendamentos;
+	private List<Time> horariosDisponiveis;
 	
 	public ModeloTabelaAgendamento(ArrayList<Agendamento> agendamentos) {
 		super();
 		this.agendamentos = agendamentos;
 	}
+	 // Método para definir os horários disponíveis
+    public void setHorariosDisponiveis(List<Time> horariosDisponiveis) {
+        this.horariosDisponiveis = horariosDisponiveis;
+        fireTableDataChanged(); // Notifica a tabela que os dados mudaram
+        System.out.println("Horários disponíveis definidos no modelo: " + horariosDisponiveis);
+    }
 	@Override
 	public int getRowCount() {
 		return agendamentos.size();

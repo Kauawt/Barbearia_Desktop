@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dao.AgendaDao;
+import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.UsuarioDao;
 
@@ -86,8 +87,8 @@ public class Agendamento {
 		return codUsuario;
 	}
 
-	public void setCodUsuario(int codUsuario) {
-		this.codUsuario = codUsuario;
+	public void setCodUsuario(int codUsuario2) {
+		this.codUsuario = codUsuario2;
 	}
 
 	public int getCodAgendamento() {
@@ -130,8 +131,8 @@ public class Agendamento {
 	public String getHoraAtendimento() {
 		return horaAtendimento;
 	}
-	public void setDataAtendimento(String dataAgendamento) {
-		this.horaAtendimento = horaAtendimento;
+	public void setDataAtendimento(String dataAtendimento) {
+		this.dataAtendimento = dataAtendimento;
 		
 	}
 	public String getDataAtendimento() {
@@ -139,6 +140,11 @@ public class Agendamento {
 	}
 	public void setHoraAtendimento(String horaAtendimento) {
 		this.horaAtendimento = horaAtendimento;
+	}
+	
+	public void cadastrarAgendamento(Agendamento agendamento) throws ExceptionDao {
+		
+		new AgendaDao().cadastrarAgendamento(agendamento);
 	}
 
 

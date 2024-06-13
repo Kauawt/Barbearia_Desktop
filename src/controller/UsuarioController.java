@@ -23,6 +23,17 @@ public class UsuarioController {
 	
 	private static UsuarioDao usuarioDao;
 	
+	/**
+	 * Valida os campos fornecidos na tela de cadastro de usuários.
+	 * 
+	 * @param nomeUsuario O nome do usuário.
+	 * @param cpfUsuario O CPF do usuário.
+	 * @param salarioUsuario O salário do usuário.
+	 * @param dataNascimentoUsuario A data de nascimento do usuário.
+	 * @param emailUsuario O email do usuário.
+	 * @param senhaUsuario A senha do usuário.
+	 * @return true se todos os campos forem válidos, false caso contrário.
+	 */
 	public boolean validadorCamposTelaUsuario(String nomeUsuario, String cpfUsuario, String salarioUsuario , String dataNascimentoUsuario,
 			String emailUsuario, String senhaUsuario) {
 		boolean retorno = false;
@@ -49,6 +60,20 @@ public class UsuarioController {
 		return retorno;
 	}
 
+	/**
+	 * Cadastra um novo usuário com as informações fornecidas.
+	 * 
+	 * @param nomeUsuario O nome do usuário.
+	 * @param cpfUsuario O CPF do usuário.
+	 * @param dataNascimentoUsuario A data de nascimento do usuário.
+	 * @param salarioUsuario O salário do usuário.
+	 * @param emailUsuario O email do usuário.
+	 * @param senhaUsuario A senha do usuário.
+	 * @param perfilUsuario O perfil do usuário.
+	 * @param statusUsuario O status do usuário.
+	 * @throws ParseException Se ocorrer um erro ao analisar as informações.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+	 */
 	public void cadastrarUsuario(String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
@@ -59,7 +84,21 @@ public class UsuarioController {
 		System.out.println(usuario);
 
 	}
-
+	/**
+	 * Altera um usuário existente com as informações fornecidas.
+	 * 
+	 * @param codUsuario O código do usuário a ser alterado.
+	 * @param nomeUsuario O novo nome do usuário.
+	 * @param cpfUsuario O novo CPF do usuário.
+	 * @param dataNascimentoUsuario A nova data de nascimento do usuário.
+	 * @param salarioUsuario O novo salário do usuário.
+	 * @param emailUsuario O novo email do usuário.
+	 * @param senhaUsuario A nova senha do usuário.
+	 * @param perfilUsuario O novo perfil do usuário.
+	 * @param statusUsuario O novo status do usuário.
+	 * @throws ParseException Se ocorrer um erro ao analisar as informações.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+	 */
 	public void alterarUsuario(int codUsuario, String nomeUsuario, String cpfUsuario, String dataNascimentoUsuario,
 			double salarioUsuario, String emailUsuario, String senhaUsuario, String perfilUsuario, String statusUsuario)
 			throws ParseException, ExceptionDao {
@@ -73,7 +112,14 @@ public class UsuarioController {
 	public UsuarioController() {
         this.usuarioDao = new UsuarioDao();
     }
-	
+	/**
+	 * Busca um usuário pelo seu código.
+	 * 
+	 * @param codUsuario O código do usuário a ser buscado.
+	 * @return O usuário encontrado.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+	 * @throws SQLException Se ocorrer um erro de SQL.
+	 */
 	public Usuario buscarUsuarioPorId(int codUsuario) throws ExceptionDao, SQLException {
 	        return usuarioDao.buscarUsuarioPorId(codUsuario);
 	    }

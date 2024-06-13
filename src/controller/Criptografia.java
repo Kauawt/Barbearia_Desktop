@@ -35,6 +35,11 @@ public class Criptografia {
 		this.padrao = padrao;
 	}
 	
+	/**
+	 * Criptografa a informação utilizando o algoritmo e padrão especificados.
+	 * 
+	 * @return A informação criptografada.
+	 */
 	public String criptografar() {
 		String informacao = getInformacao();
 
@@ -58,6 +63,11 @@ public class Criptografia {
 		
 		return hexString.toString().toUpperCase();
 	}
+	
+	/**
+	 * Método principal para testar a funcionalidade da classe.
+	 * @param args Os argumentos da linha de comando.
+	 */
 	
 	public static void main(String[] args) {
 		

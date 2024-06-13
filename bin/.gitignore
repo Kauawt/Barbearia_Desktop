@@ -1,7 +1,11 @@
-/codigoSql/
 /controller/
 /dao/
-/icones/
-/model/
 /view/
+/.gitignore
+/Coffee.jrxml
+/coffee.jpg
+/icones/
+/coffee_stain.png
+/logo_JPCortes.png
+/model/
 /org/

@@ -5,7 +5,11 @@ import java.sql.*;
 public class ModuloConexao {
 	
 	private static Connection conexao = null;
-	
+	/**
+	 * Método para obter uma conexão com o banco de dados.
+	 * 
+	 * @return A conexão com o banco de dados, ou null se ocorrer algum erro.
+	 */
 	public static Connection conector() {
 		Connection conexao = null;
 		String driver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -20,6 +24,9 @@ public class ModuloConexao {
 			return null;
 		}
 	}
+	/**
+	 * Método para fechar a conexão com o banco de dados.
+	 */
 	public static void fecharConexao() {
 		
 		try {

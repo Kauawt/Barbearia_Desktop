@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
@@ -25,6 +27,7 @@ public class AgendamentoController {
 	private TelaAgendamento view;
 	private AgendaDao agendaDao;
 	private UsuarioDao usuarioDao;
+	 private final int TEMPO_PADRAO_CORTE = 30;
 	
 
 	public AgendamentoController(TelaAgendamento view) {
@@ -51,6 +54,8 @@ public class AgendamentoController {
 		Servico servico = helper.obterServico();
 		helper.setarValor(servico.getPrecoServico());
 	}
+	
+	
 	
 	/**
      * Cancela um agendamento, chamando o AgendaDao.
@@ -154,6 +159,56 @@ public class AgendamentoController {
 	    // Chame o método atualizarAgendamento do AgendamentoDao
 	    agendaDao.atualizarAgendamento(agendamento);
 	}
+	
+	/**
+     * Retorna a carga horária disponível para um determinado barbeiro.
+     * @param codBarbeiro O código do barbeiro.
+     * @return Uma lista de horários disponíveis para o barbeiro.
+     */
+	private ArrayList<LocalTime> cargaHorariaBarbeiro() {
+        ArrayList<LocalTime> cargaHoraria = new ArrayList<>();
+        LocalTime horarioInicio = LocalTime.of(8, 0); // Horário de início da jornada
+        LocalTime horarioFim = LocalTime.of(17, 0); // Horário de término da jornada
+
+        while (horarioInicio.isBefore(horarioFim)) {
+            cargaHoraria.add(horarioInicio);
+            horarioInicio = horarioInicio.plusMinutes(30); // 30 minutos é o tempo padrão do corte
+        }
+
+        return cargaHoraria;
+    }
+
+	/*
+	 * Este método é responsável por obter os horários disponíveis para agendamento
+	 * com base no código do barbeiro e na data de agendamento fornecidos.
+	 * Ele primeiro imprime os parâmetros de entrada para fins de depuração.
+	 * Em seguida, chama o método consultarHorariosMarcados() do DAO para obter os horários já agendados.
+	 * Em seguida, obtém a carga horária do barbeiro através do método cargaHorariaBarbeiro().
+	 * Em seguida, itera sobre a carga horária e verifica se cada horário não está contido nos horários marcados.
+	 * Os horários disponíveis são armazenados em uma lista e retornados.
+	 * Se ocorrer uma exceção SQLException, imprime o stack trace e retorna uma lista vazia.
+	 */
+	 public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
+	        try {
+	        	System.out.println("Método obterHorariosDisponiveis chamado com codBarbeiro: " + codBarbeiro + " e dataAgendamento: " + dataAgendamento);
+	            ArrayList<LocalTime> horariosMarcados = agendaDao.consultarHorariosMarcados(codBarbeiro, dataAgendamento);
+	            ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro();
+
+	            Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
+	            ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
+
+	            for (LocalTime horario : cargaHoraria) {
+	                if (!horariosMarcadosSet.contains(horario)) {
+	                    horariosDisponiveis.add(horario);
+	                }
+	            }
+	            System.out.println("Horários disponíveis: " + horariosDisponiveis);
+	            return horariosDisponiveis;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return new ArrayList<>();
+	        }
+	    }
 
 
 }
