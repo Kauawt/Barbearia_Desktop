@@ -24,12 +24,18 @@ public class UsuarioDao {
 	private static final String ALTERAR_USUARIO = "UPDATE tbUsuario set nomeUsuario = ?, cpfUsuario = ?, dataNascimentoUsuario = ?, salarioUsuario = ?, emailUsuario = ?, senhaUsuario = ?, perfilUsuario = ?, statusUsuario = ? where codUsuario = ?";
 	private static final String DELETAR_USUARIO = "UPDATE tbUsuario set statusUsuario = 'Inativo' where codUsuario = ?";
 	private static final String LISTAR_BARBEIRO = "SELECT codUsuario, nomeUsuario FROM tbUsuario";
-	private final String CONSULTAR_USUARIO_POR_NOME = "SELECT * FROM tbUsuario WHERE nomeUsuario = ?";
-	private final String CONSULTAR_USUARIO_POR_ID = "SELECT * FROM tbUsuario WHERE codUsuario = ?";
+	private final static String CONSULTAR_USUARIO_POR_NOME = "SELECT * FROM tbUsuario WHERE nomeUsuario = ?";
+	private final static String CONSULTAR_USUARIO_POR_ID = "SELECT * FROM tbUsuario WHERE codUsuario = ?";
 	private Connection conexao = null;
 	private static PreparedStatement preparedStatement = null;
 	private static ResultSet rs = null;
 
+	/**
+     * Método para cadastrar um usuário na base de dados.
+     * 
+     * @param usuario O objeto Usuario a ser cadastrado.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de cadastro.
+     */
 	public void cadastrarUsuario(Usuario usuario) throws ExceptionDao {
 		try {
 			String query = CADASTRAR_USUARIO;
@@ -60,7 +66,11 @@ public class UsuarioDao {
 		ModuloConexao.fecharConexao();
 
 	}
-
+	/**
+     * Método para listar todos os usuários cadastrados no sistema.
+     * 
+     * @return Uma lista contendo todos os usuários cadastrados.
+     */
 	public static ArrayList<Usuario> listarUsuarios() {
 		String query = LISTAR_USUARIOS;
 		Connection conexao = ModuloConexao.conector();
@@ -88,6 +98,12 @@ public class UsuarioDao {
 		}
 		return usuarios;
 	}
+	/**
+     * Método para buscar todos os usuários do sistema.
+     * 
+     * @return Uma lista de objetos Usuario contendo todos os usuários cadastrados.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
+     */
 
 	public ArrayList<Usuario> selectAllUsuarios() throws ExceptionDao {
 		String query = LISTAR_BARBEIRO;
@@ -108,7 +124,13 @@ public class UsuarioDao {
 		}
 		return usuarios;
 	}
-
+	/**
+     * Método para consultar um usuário pelo CPF.
+     * 
+     * @param cpfUsuario O CPF do usuário a ser consultado.
+     * @return O objeto Usuario correspondente ao CPF fornecido.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de consulta.
+     */
 	public static Usuario consultarUsuarioByCPF(String cpfUsuario) throws ExceptionDao {
 		String query = CONSULTAR_USUARIO_BY_CPF;
 		Connection conexao = ModuloConexao.conector();
@@ -140,7 +162,13 @@ public class UsuarioDao {
 		}
 		return usuario;
 	}
-
+	/**
+     * Método para alterar um usuário na base de dados.
+     * 
+     * @param codUsuario O código do usuário a ser alterado.
+     * @param usuario O objeto Usuario com os novos dados a serem atualizados.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de alteração.
+     */
 	public void alterarUsuario(int codUsuario, Usuario usuario) throws ExceptionDao {
 		try {
 			String query = ALTERAR_USUARIO;
@@ -173,7 +201,12 @@ public class UsuarioDao {
 			}
 		}
 	}
-
+	   /**
+     * Método para deletar um usuário da base de dados.
+     * 
+     * @param codUsuario O código do usuário a ser deletado.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de exclusão.
+     */
 	public void deletarUsuario(int codUsuario) throws ExceptionDao {
 		try {
 			String query = DELETAR_USUARIO;
@@ -188,10 +221,17 @@ public class UsuarioDao {
 		} finally {
 			ModuloConexao.fecharConexao();
 		}
-	}
+	} 
+	/**
+     * Método para buscar o código de um usuário pelo seu nome.
+     * 
+     * @param nomeUsuario O nome do usuário a ser buscado.
+     * @return O código do usuário, ou -1 se não for encontrado.
+     * @throws SQLException Se ocorrer um erro durante a execução da operação de busca.
+     */
 
-	public int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
-		int codigoUsuario = -1; // Valor padrão para indicar que não foi encontrado
+	public static int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
+	    int codigoUsuario = -1; // Valor padrão para indicar que não foi encontrado
 
 		try (Connection conexao = ModuloConexao.conector();
 				PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_NOME)) {
@@ -207,8 +247,14 @@ public class UsuarioDao {
 
 		return codigoUsuario;
 	}
-
-	public Usuario buscarUsuarioPorId(int codUsuario) throws SQLException {
+	   /**
+     * Método para buscar um usuário pelo seu ID.
+     * 
+     * @param codUsuario O ID do usuário a ser buscado.
+     * @return O objeto Usuario correspondente ao ID fornecido.
+     * @throws SQLException Se ocorrer um erro durante a execução da operação de busca.
+ */
+	public static Usuario buscarUsuarioPorId(int codUsuario) throws SQLException {
 		Usuario usuario = null;
 		try (Connection conexao = ModuloConexao.conector();
 				PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_ID)) {

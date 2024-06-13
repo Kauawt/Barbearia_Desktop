@@ -58,10 +58,11 @@ public class AgendaHelper {
      * Limpa os campos após um agendamento ser concluído.
      */
 	public void limparAgendamentoConcluido() {
-		view.getJboxBarbeiro().setToolTipText("");
+		
+		view.getJboxBarbeiro().setSelectedItem("");
 		view.getTxtCpfCliente().setText("");
 		view.getTxtNomeCliente().setText("");
-		view.getJboxServico().setToolTipText("");
+		view.getJboxServico().setSelectedItem(null);
 		view.getTxtValor().setText("");
 		view.getTxtDataAgenda().setText("");
 		view.getTxtHoraAgenda().setToolTipText("");

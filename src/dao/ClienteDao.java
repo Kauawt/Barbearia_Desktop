@@ -114,6 +114,13 @@ public class ClienteDao {
 		}
 		return cliente;
 	}
+	/**
+	 * Altera as informações de um cliente no banco de dados.
+	 * 
+	 * @param cpfCliente O CPF do cliente a ser alterado.
+	 * @param cliente O objeto cliente contendo as novas informações.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+	 */
 	public void alterarCliente(String cpfCliente, Cliente cliente) throws ExceptionDao {
 		try {
 			String query = ALTERAR_CLIENTE;
@@ -134,7 +141,12 @@ public class ClienteDao {
 			ModuloConexao.fecharConexao();
 		}
 	}
-	
+	/**
+	 * Exclui um cliente do banco de dados.
+	 * 
+	 * @param codCliente O código do cliente a ser excluído.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+	 */
 	
 	public void deletarCliente(int codCliente) throws ExceptionDao {
 		try {

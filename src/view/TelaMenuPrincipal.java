@@ -228,8 +228,11 @@ public class TelaMenuPrincipal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				TelaAgendamento telaagendamento = null;
 				try {
-					telaagendamento = new TelaAgendamento();
+					telaagendamento = new TelaAgendamento(null);
 				} catch (ExceptionDao e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 				telaagendamento.setVisible(true);

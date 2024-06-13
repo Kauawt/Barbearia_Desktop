@@ -24,6 +24,12 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 	private static ResultSet rs = null;
 	private static final String CONSULTAR_SERVICO_POR_NOME = "select codServico from tbServico where tipoServico = ?";
 	
+	 /**
+     * Método para cadastrar um novo serviço no banco de dados.
+     * 
+     * @param servico O objeto Servico contendo os dados do serviço a ser cadastrado.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de cadastro.
+     */
 	public void cadastrarServico(Servico servico) throws ExceptionDao {
 		try {
 			String query = CADASTRAR_SERVICO;
@@ -41,6 +47,11 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 			ModuloConexao.fecharConexao();
 		}
 	}
+	 /**
+     * Método para listar todos os serviços cadastrados no banco de dados.
+     * 
+     * @return Uma lista contendo todos os serviços cadastrados.
+     */
 
 	public static ArrayList<Servico> listarServicos() {
 		String query = LISTAR_SERVICOS;
@@ -68,6 +79,13 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 		return servicos;
 	}
 
+	/**
+     * Método para consultar um serviço no banco de dados pelo seu código.
+     * 
+     * @param codServico O código do serviço a ser consultado.
+     * @return O objeto Servico correspondente ao código fornecido, ou null se não for encontrado.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de consulta.
+     */
 	public static Servico consultarServicoPorCOD(int codServico) throws ExceptionDao {
 		String query = CONSULTAR_SERVICOS_POR_COD;
 		Connection conexao = ModuloConexao.conector();
@@ -93,7 +111,13 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 		}
 		return servico;
 	}
-
+	 /**
+     * Método para alterar os dados de um serviço no banco de dados.
+     * 
+     * @param codServico O código do serviço a ser alterado.
+     * @param servico O objeto Servico contendo os novos dados do serviço.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de alteração.
+     */
 	public void alterarServico(int codServico, Servico servico) throws ExceptionDao {
 		try {
 			String query = ALTERAR_SERVICO;
@@ -113,7 +137,12 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 			ModuloConexao.fecharConexao();
 		}
 	}
-
+	/**
+     * Método para deletar um serviço do banco de dados.
+     * 
+     * @param codServico O código do serviço a ser deletado.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de exclusão.
+     */
 	public void deletarServico(int codServico) throws ExceptionDao {
 		try {
 			String query = DELETAR_SERVICO;
@@ -129,7 +158,12 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 			ModuloConexao.fecharConexao();
 		}
 	}
-
+	  /**
+     * Método para buscar todos os serviços cadastrados no banco de dados.
+     * 
+     * @return Uma lista contendo todos os serviços cadastrados.
+     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
+     */
 	 public ArrayList<Servico> selectAll() throws ExceptionDao {
 	        String sql = "SELECT codServico, tipoServico, precoServico FROM tbServico";
 	        ArrayList<Servico> servicos = new ArrayList<>();
@@ -151,6 +185,13 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 	        }
 	        return servicos;
 	    }
+	 /**
+	     * Método para buscar o código de um serviço pelo seu nome.
+	     * 
+	     * @param nomeServico O nome do serviço a ser buscado.
+	     * @return O código do serviço, ou -1 se não for encontrado.
+	     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
+	     */
 	 public static int buscarCodigoServicoPorNome(String nomeServico) throws ExceptionDao {
 	        int codServico = -1; // Valor padrão para indicar que não foi encontrado
 	        String query = CONSULTAR_SERVICO_POR_NOME;
