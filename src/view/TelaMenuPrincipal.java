@@ -226,16 +226,18 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmAgenda = new JMenuItem("Agenda");
 		mntmAgenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaAgendamento telaagendamento = null;
 				try {
-					telaagendamento = new TelaAgendamento(null);
+					desktop.removeAll();
+					TelaAgendamentoPanel telaAgendamento = new TelaAgendamentoPanel(null);
+					telaAgendamento.setVisible(true);
+					desktop.add(telaAgendamento);
+					desktop.revalidate();
+					desktop.repaint();
 				} catch (ExceptionDao e1) {
 					e1.printStackTrace();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				telaagendamento.setVisible(true);
-				desktop.add(telaagendamento);
 			}
 		});
 		mntmAgenda.setHorizontalAlignment(SwingConstants.LEFT);
