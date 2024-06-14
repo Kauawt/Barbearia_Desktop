@@ -65,7 +65,7 @@ public class AgendaHelper {
 		view.getJboxServico().setSelectedItem(null);
 		view.getTxtValor().setText("");
 		view.getTxtDataAgenda().setText("");
-		view.getTxtHoraAgenda().setToolTipText("");
+		view.getJboxHora().setToolTipText("");
 	}
 	
 }

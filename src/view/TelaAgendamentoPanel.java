@@ -45,13 +45,12 @@ public class TelaAgendamentoPanel extends JInternalFrame {
     private JTextField txtCpfCliente;
     private JFormattedTextField txtValor;
     private JFormattedTextField txtDataAgenda;
-    private JComboBox<String> jboxHoraAgenda; // Alterar para JComboBox
     private PlaceholderTextField txtObs;
     private JComboBox<Object> jboxServico;
     private JComboBox<Usuario> jboxBarbeiro;
     private AgendamentoController controller;
     private JComboBox<LocalTime> jboxHora;
-    private JTextField txtHoraAgenda;
+    //private JTextField txtHoraAgenda;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -69,15 +68,17 @@ public class TelaAgendamentoPanel extends JInternalFrame {
     public TelaAgendamentoPanel(Agendamento agendamentoSelecionado) throws ExceptionDao, SQLException {
         setBounds(100, 100, 655, 450);
         MaskFormatter dataMask = null;
-		MaskFormatter horaMask = null;
+		//MaskFormatter horaMask = null;
 		MaskFormatter precoMask = null;
 		controller = new AgendamentoController(this);
 		try {
-			horaMask = new MaskFormatter("##:##");
+			//horaMask = new MaskFormatter("##:##");
 			dataMask = new MaskFormatter("##/##/####");
 			precoMask = new MaskFormatter("##.##");
 		} catch (ParseException e) {
-		
+		}
+		if (agendamentoSelecionado == null) {
+			txtNomeCliente = new PlaceholderTextField("Nome");
 		}
 		jboxBarbeiro = new JComboBox<>();
         contentPane = new JPanel();
@@ -143,17 +144,15 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         JButton btnAgendar = new JButton("Agendar");
         btnAgendar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Obter os dados da tela
             	Servico servico = (Servico) jboxServico.getSelectedItem();
                 String cpfCliente = txtCpfCliente.getText();
                 String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
-                String precoServico = txtValor.getText(); // String para consistência
+                String precoServico = txtValor.getText();
 
                 try {  
                     controller.cadastrarAgendamento(servico, cpfCliente, nomeUsuario,
-                            txtDataAgenda.getText(), txtHoraAgenda.getText(), precoServico);
-                    //AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-                    //agendaHelper.limparAgendamentoConcluido();
+                            txtDataAgenda.getText(), jboxHora.getToolTipText(), precoServico);
+
                 } catch (ParseException | ExceptionDao | SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao agendar: " + ex.getMessage());
@@ -173,9 +172,7 @@ public class TelaAgendamentoPanel extends JInternalFrame {
                 String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
                 String precoServico = txtValor.getText(); 
                 try {
-                    controller.atualizarAgendamento(servico, cpfCliente, nomeUsuario, txtDataAgenda.getText(), txtHoraAgenda.getText(), precoServico);
-                    //AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-                    //agendaHelper.limparAgendamentoConcluido();
+                    controller.atualizarAgendamento(servico, cpfCliente, nomeUsuario, txtDataAgenda.getText(), jboxHora.getToolTipText(), precoServico);
                 } catch (ParseException | ExceptionDao | SQLException ex) {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao atualizar o agendamento: " + ex.getMessage());
@@ -192,13 +189,10 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         	public void actionPerformed(ActionEvent e) {
         		String cpfCliente = txtCpfCliente.getText();
                 String dataAgendamento = txtDataAgenda.getText();
-
-                // Converter CPF para código de cliente usando o ClienteController
                 int codCliente = -1;
                 try {
                     codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
                 } catch (ExceptionDao e1) {
-                    // Lida com a exceção aqui
                     e1.printStackTrace();
                 }
                 
@@ -211,8 +205,6 @@ public class TelaAgendamentoPanel extends JInternalFrame {
 						e1.printStackTrace();
 					}
                 } else {
-                    // Lidar com o caso em que o cliente não foi encontrado
-                    System.out.println("Cliente não encontrado.");
                 }
             }	
         	
@@ -233,30 +225,6 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         setClosable(true);
         setRootPaneCheckingEnabled(false);
         contentPane.add(jboxServico);
-
-        JButton btnPesquisar = new JButton("Pesquisar");
-        btnPesquisar.setPreferredSize(new Dimension(80, 80));
-        btnPesquisar.setBackground(UIManager.getColor("Button.background"));
-        btnPesquisar.setBounds(330, 323, 104, 27);
-        contentPane.add(btnPesquisar);
-
-        btnPesquisar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	//AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-				//agendaHelper.limparTelaAgendamento();
-                String cpf = txtCpfCliente.getText();
-                try {
-                    Cliente cliente = ClienteDao.consultarClientePorCPF(cpf); 
-                    if (cliente != null) {
-                        //preencherCampos(cliente);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
-                    }
-                } catch (ExceptionDao ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
         
         jboxBarbeiro.setForeground(new Color(128, 128, 128));
         jboxBarbeiro.setFont(new Font("Arial Black", Font.PLAIN, 12));
@@ -280,19 +248,19 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         jboxBarbeiro.setBounds(74, 80, 134, 22);
         contentPane.add(jboxBarbeiro);
         
-        txtHoraAgenda = new JFormattedTextField(horaMask);
+        /*txtHoraAgenda = new JFormattedTextField(horaMask);
         txtHoraAgenda.setText("Hora");
         txtHoraAgenda.setHorizontalAlignment(SwingConstants.CENTER);
         txtHoraAgenda.setForeground(new Color(128, 128, 128));
         txtHoraAgenda.setFont(new Font("Arial Black", Font.PLAIN, 12));
         txtHoraAgenda.setText("Hora");
-        txtHoraAgenda.setBounds(74, 277, 134, 20);
+        txtHoraAgenda.setBounds(401, 69, 134, 20);
         contentPane.add(txtHoraAgenda);
-        txtHoraAgenda.setColumns(10);
+        txtHoraAgenda.setColumns(10);*/
         
         jboxHora = new JComboBox();
         jboxHora.setEditable(true);
-        jboxHora.setBounds(417, 69, 121, 22);
+        jboxHora.setBounds(74, 277, 134, 22);
         contentPane.add(jboxHora);
         
         JPictureBox pictureBox = new JPictureBox();
@@ -318,8 +286,8 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         txtValor.setText(String.valueOf(agendamentoSelecionado.getPrecoServico()));
         String dataAgenda = agendamentoSelecionado.getDataAtendimento();
         txtDataAgenda.setText(dataAgenda);
-        String horaAgenda = agendamentoSelecionado.getHoraAtendimento();
-        txtHoraAgenda.setText(horaAgenda);
+        //String horaAgenda = agendamentoSelecionado.getHoraAtendimento();
+        jboxHora.setSelectedItem(agendamentoSelecionado.getHoraAtendimento());
         int codUsuario = agendamentoSelecionado.getCodUsuario();
         Usuario barbeiro = null;
 		barbeiro = UsuarioDao.buscarUsuarioPorId(codUsuario);
@@ -369,6 +337,7 @@ public class TelaAgendamentoPanel extends JInternalFrame {
         controller = new AgendamentoController(this);
         controller.atualizaServico();
         controller.atualizaValor();
+        atualizarHorariosDisponiveis();
     }
     
     public JComboBox<Object> getJboxServico() {
@@ -405,12 +374,20 @@ public class TelaAgendamentoPanel extends JInternalFrame {
 		this.txtCpfCliente = txtCpfCliente;
 	}
 
-	public JTextField getTxtHoraAgenda() {
+	/*public JTextField getTxtHoraAgenda() {
 		return txtHoraAgenda;
 	}
 
 	public void setTxtHoraAgenda(JTextField txtHoraAgenda) {
 		this.txtHoraAgenda = txtHoraAgenda;
+	}*/
+
+	public JComboBox<LocalTime> getJboxHora() {
+		return jboxHora;
+	}
+
+	public void setJboxHora(JComboBox<LocalTime> jboxHora) {
+		this.jboxHora = jboxHora;
 	}
 
 	public JFormattedTextField getTxtDataAgenda() {
