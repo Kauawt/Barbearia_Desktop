@@ -230,7 +230,6 @@ public class TelaMenuPrincipal extends JFrame {
 				try {
 					telaagendamento = new TelaAgendamento(null);
 				} catch (ExceptionDao e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
