@@ -59,6 +59,7 @@ public class TelaMenuPrincipal extends JFrame {
 	private JMenu mnMenuCadastro;
 	private JLabel lblData;
 	private JLabel lblUser;
+	JMenuItem mntmConsultaUsuario;
 
 	/**
 	 * Launch the application.
@@ -166,7 +167,7 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenu mnConsulta = new JMenu("Consulta");
 		menuBar.add(mnConsulta);
 
-		JMenuItem mntmConsultaUsuario = new JMenuItem("Usuario");
+		mntmConsultaUsuario = new JMenuItem("Usuario");
 		mntmConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				desktop.removeAll();
@@ -261,9 +262,12 @@ public class TelaMenuPrincipal extends JFrame {
 		JMenuItem mntmNewSobre = new JMenuItem("Sobre");
 		mntmNewSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaSobre telaSobre = new TelaSobre();
+				desktop.removeAll();
+				TelaSobrePanel telaSobre = new TelaSobrePanel();
 				telaSobre.setVisible(true);
 				desktop.add(telaSobre);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
 		mnNewMenu.add(mntmNewSobre);
@@ -331,6 +335,10 @@ public class TelaMenuPrincipal extends JFrame {
 
 	public void setMntmRelatorioAgendamento(JMenuItem mntmRelatorioAgendamento) {
 		this.mntmRelatorioAgendamento = mntmRelatorioAgendamento;
+	}
+	
+	public JMenuItem getMntmConsultaUsuario() {
+		return mntmConsultaUsuario;
 	}
 
 	public JMenuItem getMntmCadastrarUsuario() {
