@@ -1,14 +1,23 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -37,6 +46,30 @@ public class TelaSobre extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public TelaSobre() {
+		setBackground(new Color(232, 227, 225));
+
+		setSize(new Dimension(640, 480));
+		setPreferredSize(new Dimension(640, 480));
+		setLayout(null);
+
+		JPanel panel_1 = new JPanel();
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				Dimension newSize = getSize();
+				panel_1.setSize(newSize);
+				panel_1.revalidate();
+				panel_1.repaint();
+			}
+		});
+		panel_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		panel_1.setOpaque(false);
+		panel_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
+		panel_1.setBounds(0, 0, 640, 480);
+		add(panel_1);
+		panel_1.setLayout(new MigLayout("insets 0", "[200,grow][::300,grow][200,grow]", "[grow,fill][grow,fill][grow,fill][grow][grow,fill]"));
+	
 		setTitle("Sobre Nós");
 		setBounds(100, 100, 655, 450);
 		contentPane = new JPanel();

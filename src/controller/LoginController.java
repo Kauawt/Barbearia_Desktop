@@ -86,6 +86,8 @@ public class LoginController {
 				else {
 					TelaMenuPrincipal principal = new TelaMenuPrincipal();
 					principal.setVisible(true);
+					principal.getMntmCadastrarUsuario().setEnabled(false);
+					principal.getMntmConsultaUsuario().setEnabled(false);
 					principal.setLocationRelativeTo(principal);
 					principal.getLblUser().setText(rs.getString(6));
 					//formatar a data do sistema de dia e hora para apenas dia
