@@ -49,7 +49,7 @@ public class ServicoController {
 	 * @return O código do serviço encontrado.
 	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
 	 */
-	public int buscarCodigoServicoPorNome(String tipoServico) throws ExceptionDao {
+	public static int buscarCodigoServicoPorNome(String tipoServico) throws ExceptionDao {
 		return ServicoDao.buscarCodigoServicoPorNome(tipoServico);
 	}
 }

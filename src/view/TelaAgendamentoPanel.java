@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,13 +50,11 @@ public class TelaAgendamentoPanel extends JPanel {
 	private JTextField txtCpfCliente;
 	private JFormattedTextField txtValor;
 	private JFormattedTextField txtDataAgenda;
-	// private PlaceholderTextField txtObs;
 	JTextField txtObs = new JTextField();
 	private JComboBox<Object> jboxServico;
 	private JComboBox<Usuario> jboxBarbeiro;
 	private AgendamentoController controller;
 	private JComboBox<LocalTime> jboxHora;
-	// private JTextField txtHoraAgenda;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,7 +70,9 @@ public class TelaAgendamentoPanel extends JPanel {
 	}
 
 	public TelaAgendamentoPanel(Agendamento agendamentoSelecionado) throws ExceptionDao, SQLException {
-
+		
+		
+		AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamentoPanel.this);
 		setBackground(new Color(232, 227, 225));
 
 		setSize(new Dimension(640, 480));
@@ -96,18 +98,21 @@ public class TelaAgendamentoPanel extends JPanel {
 		panel_1.setLayout(new MigLayout("insets 0", "[100,grow][::80,grow][:80:200,grow][100px:100px,grow,fill][120,grow]", "[grow,fill][grow 50,fill][grow 50,fill][grow 50][grow,fill]"));
 
 		MaskFormatter dataMask = null;
-		// MaskFormatter horaMask = null;
 		MaskFormatter precoMask = null;
+		MaskFormatter cpfMask = null;
 		controller = new AgendamentoController(this);
 
 		try {
-			// horaMask = new MaskFormatter("##:##");
 			dataMask = new MaskFormatter("##/##/####");
 			precoMask = new MaskFormatter("##.##");
+			cpfMask = new MaskFormatter("###.###.###-##");
 		} catch (ParseException e) {
 		}
 		if (agendamentoSelecionado == null) {
 			txtNomeCliente = new PlaceholderTextField("Nome");
+		}
+		if (agendamentoSelecionado == null) {
+			txtCpfCliente = new PlaceholderTextField("CPF");
 		}
 
 		JLabel lblAgenda = new JLabel("Agenda");
@@ -116,11 +121,11 @@ public class TelaAgendamentoPanel extends JPanel {
 		panel_1.add(lblAgenda, "cell 1 1 3 1,alignx center,aligny center");
 		lblAgenda.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
 
-		JLabel lblNomeusuarioPanel = new JLabel("Nome");
-		lblNomeusuarioPanel.setForeground(new Color(255, 255, 255));
-		lblNomeusuarioPanel.setBounds(197, 108, 60, 21);
-		panel_1.add(lblNomeusuarioPanel, "flowy,cell 1 2,alignx right,aligny center, gapbottom 15");
-		lblNomeusuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		JLabel lblBarbeiro = new JLabel("Barbeiro");
+		lblBarbeiro.setForeground(new Color(255, 255, 255));
+		lblBarbeiro.setBounds(197, 108, 60, 21);
+		panel_1.add(lblBarbeiro, "flowy,cell 1 2,alignx right,aligny center, gapbottom 15");
+		lblBarbeiro.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
 		JLabel lblCpfUsuarioPanel = new JLabel("CPF");
 		lblCpfUsuarioPanel.setForeground(new Color(255, 255, 255));
@@ -128,44 +133,37 @@ public class TelaAgendamentoPanel extends JPanel {
 		panel_1.add(lblCpfUsuarioPanel, "cell 1 2,alignx right,aligny center, gapbottom 15");
 		lblCpfUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-		JLabel lblDataNascimentoUsuarioPanel = new JLabel("Data Nascimento");
-		lblDataNascimentoUsuarioPanel.setForeground(new Color(255, 255, 255));
-		lblDataNascimentoUsuarioPanel.setBounds(121, 171, 136, 21);
-		panel_1.add(lblDataNascimentoUsuarioPanel, "cell 1 2,alignx right, gapbottom 15");
-		lblDataNascimentoUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		JLabel lblNomeCliente = new JLabel("Nome");
+		lblNomeCliente.setForeground(new Color(255, 255, 255));
+		lblNomeCliente.setBounds(121, 171, 136, 21);
+		panel_1.add(lblNomeCliente, "cell 1 2,alignx right, gapbottom 15");
+		lblNomeCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-		JLabel lblSalarioUsuarioPanel = new JLabel("Salario");
-		lblSalarioUsuarioPanel.setForeground(new Color(255, 255, 255));
-		lblSalarioUsuarioPanel.setBounds(185, 201, 68, 21);
-		panel_1.add(lblSalarioUsuarioPanel, "cell 1 2,alignx right, gapbottom 15");
-		lblSalarioUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		JLabel lblServico = new JLabel("Serviço");
+		lblServico.setForeground(new Color(255, 255, 255));
+		lblServico.setBounds(185, 201, 68, 21);
+		panel_1.add(lblServico, "cell 1 2,alignx right, gapbottom 15");
+		lblServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-		JLabel lblEmailPanel = new JLabel("Email");
-		lblEmailPanel.setForeground(new Color(255, 255, 255));
-		lblEmailPanel.setBounds(202, 240, 49, 21);
-		panel_1.add(lblEmailPanel, "cell 1 2,alignx right, gapbottom 15");
-		lblEmailPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		JLabel lblValor = new JLabel("Valor R$");
+		lblValor.setForeground(new Color(255, 255, 255));
+		lblValor.setBounds(202, 240, 49, 21);
+		panel_1.add(lblValor, "cell 1 2,alignx right, gapbottom 15");
+		lblValor.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-		JLabel lblSenhaUsuarioPanel = new JLabel("Senha");
-		lblSenhaUsuarioPanel.setForeground(new Color(255, 255, 255));
-		lblSenhaUsuarioPanel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		lblSenhaUsuarioPanel.setBounds(202, 272, 49, 21);
-		panel_1.add(lblSenhaUsuarioPanel, "cell 1 2,alignx right, gapbottom 15");
+		JLabel lblData = new JLabel("Data");
+		lblData.setForeground(new Color(255, 255, 255));
+		lblData.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblData.setBounds(202, 272, 49, 21);
+		panel_1.add(lblData, "cell 1 2,alignx right, gapbottom 15");
 
-		JLabel lblSenhaUsuarioPanel2 = new JLabel("Senha");
-		lblSenhaUsuarioPanel2.setForeground(new Color(255, 255, 255));
-		lblSenhaUsuarioPanel2.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		lblSenhaUsuarioPanel2.setBounds(202, 272, 49, 21);
-		panel_1.add(lblSenhaUsuarioPanel2, "cell 1 2,alignx right, gapbottom 15");
+		JLabel lblHora = new JLabel("Hora");
+		lblHora.setForeground(new Color(255, 255, 255));
+		lblHora.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		lblHora.setBounds(202, 272, 49, 21);
+		panel_1.add(lblHora, "cell 1 2,alignx right, gapbottom 15");
 
 		jboxBarbeiro = new JComboBox<>();
-
-		jboxBarbeiro.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				atualizarHorariosDisponiveis();
-			}
-		});
 
 		jboxBarbeiro.setToolTipText("");
 		jboxBarbeiro.setName("");
@@ -178,11 +176,29 @@ public class TelaAgendamentoPanel extends JPanel {
 				"Anthony Oliveira", "Sergio Ramos" }));
 		panel_1.add(jboxBarbeiro, "flowy,cell 2 2,growx,gapbottom 10");
 
-		txtCpfCliente = new JTextField("CPF");
+		txtCpfCliente = new JFormattedTextField(cpfMask);
 		txtCpfCliente.setForeground(new Color(128, 128, 128));
 		txtCpfCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtCpfCliente.setBounds(261, 141, 176, 20);
 		panel_1.add(txtCpfCliente, "cell 2 2,growx,gapbottom 10");
+		
+		txtNomeCliente.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        String cpf = txtCpfCliente.getText();
+		        try {
+		            String nomeCliente = ClienteController.consultarNomeCliente(cpf);
+		            if (nomeCliente != null) {
+		                txtNomeCliente.setText(nomeCliente);
+		            } else {
+		                txtNomeCliente.setText(""); // Limpa o campo se o nome do cliente não for encontrado
+		            }
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Erro ao buscar nome do cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		});
 
 		txtNomeCliente.setBorder(null);
 		txtNomeCliente.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -200,6 +216,12 @@ public class TelaAgendamentoPanel extends JPanel {
 		jboxServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		jboxServico.setBounds(261, 305, 176, 22);
 		panel_1.add(jboxServico, "cell 2 2,growx,gapbottom 10");
+		jboxServico.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		    	controller.atualizaValor();
+		    }
+		});
 
 		txtValor = new JFormattedTextField(precoMask);
 		txtValor.setForeground(new Color(128, 128, 128));
@@ -219,78 +241,83 @@ public class TelaAgendamentoPanel extends JPanel {
 		txtDataAgenda.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtDataAgenda.setBounds(261, 172, 176, 20);
 		panel_1.add(txtDataAgenda, "cell 2 2,growx,gapbottom 10");
+		txtDataAgenda.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusLost(FocusEvent e) {
+		        String dataTexto = txtDataAgenda.getText();
+		        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		        try {
+		            LocalDate dataAgendamento = LocalDate.parse(dataTexto, formatter);
+		            LocalDate hoje = LocalDate.now();
+		            LocalDate dataMaxima = hoje.plusDays(45);
+		            if (dataAgendamento.isAfter(hoje.minusDays(1)) && dataAgendamento.isBefore(dataMaxima.plusDays(1))) {
+		                atualizarHorariosDisponiveis();
+		            } else {
+		                JOptionPane.showMessageDialog(null, "A data de agendamento deve ser até 45 dias a partir de hoje.");
+		            }
+		        } catch (DateTimeParseException ex) {
+		            JOptionPane.showMessageDialog(null, "Formato de data inválido. Por favor, use o formato dd/MM/yyyy.");
+		        }}
+		});
 
 		txtObs = new PlaceholderTextField("Observações:");
 		txtObs.setForeground(new Color(128, 128, 128));
 		txtObs.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtObs.setBounds(261, 172, 176, 20);
 		panel_1.add(txtObs, "cell 3 2,gapbottom 10,grow");
-
-		/*
-		 * txtHoraAgenda = new JFormattedTextField(horaMask);
-		 * txtHoraAgenda.setText("Hora");
-		 * txtHoraAgenda.setHorizontalAlignment(SwingConstants.CENTER);
-		 * txtHoraAgenda.setForeground(new Color(128, 128, 128));
-		 * txtHoraAgenda.setFont(new Font("Arial Black", Font.PLAIN, 12));
-		 * txtHoraAgenda.setText("Hora"); txtHoraAgenda.setBounds(401, 69, 134, 20);
-		 * contentPane.add(txtHoraAgenda); txtHoraAgenda.setColumns(10);
-		 */
-
-		jboxHora = new JComboBox();
+		
+		jboxHora = new JComboBox<LocalTime>();
 		jboxHora.setForeground(new Color(128, 128, 128));
 		jboxHora.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		jboxHora.setBounds(261, 305, 176, 22);
 		jboxHora.setEditable(true);
 		panel_1.add(jboxHora, "cell 2 2,growx,gapbottom 10");
 
-		JButton btnAgendar = new JButton("Agendar");
-		btnAgendar.addActionListener(new ActionListener() {
+		JButton btnCadastrarAgendaPanel = new JButton(agendamentoSelecionado == null ? "Agendar" : "Reagendar");
+		btnCadastrarAgendaPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		btnCadastrarAgendaPanel.setBackground(new Color(240, 240, 240));
+		btnCadastrarAgendaPanel.setBounds(261, 367, 104, 41);
+		btnCadastrarAgendaPanel.setPreferredSize(new Dimension(100, 40));
+		panel_1.add(btnCadastrarAgendaPanel, "cell 2 3,growx");
+		btnCadastrarAgendaPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Servico servico = (Servico) jboxServico.getSelectedItem();
-				String cpfCliente = txtCpfCliente.getText();
-				String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
-				String precoServico = txtValor.getText();
-
 				try {
-					controller.cadastrarAgendamento(servico, cpfCliente, nomeUsuario, txtDataAgenda.getText(),
-							jboxHora.getToolTipText(), precoServico);
+		            Object[] dadosFormatados = formatarDados();
+		            if (dadosFormatados == null || dadosFormatados.length != 6) {
+		                JOptionPane.showMessageDialog(null, "Dados formatados estão incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
+		                return;
+		            }
+		            int codUsuario = (int) dadosFormatados[0];
+		            int codCliente = (int) dadosFormatados[1];
+		            int codServico = (int) dadosFormatados[2];
+		            Double precoServico = (Double) dadosFormatados[3];
+		            String dataAtendimento = (String) dadosFormatados[4];
+		            LocalTime horaAtendimento = (LocalTime) dadosFormatados[5];
 
-				} catch (ParseException | ExceptionDao | SQLException ex) {
-					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Erro ao agendar: " + ex.getMessage());
-				}
-			}
+		            AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamentoPanel.this);
+		            boolean validaAgendamento = agendaHelper.validadorCamposTelaAgendamento(codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento);
+
+		            if (validaAgendamento) {
+		                if (agendamentoSelecionado == null) {
+		                    controller.cadastrarAgendamento(codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento.toString());
+		                    agendaHelper.limparAgendamentoConcluido();
+		                } else {
+		                    int codAgendamento = agendamentoSelecionado.getCodAgendamento();
+		                    controller.atualizarAgendamento(codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento.toString(), codAgendamento);
+		                    agendaHelper.limparAgendamentoConcluido();
+		                }
+		            } else {
+		                JOptionPane.showMessageDialog(null, "Validação dos dados falhou.", "Erro", JOptionPane.ERROR_MESSAGE);
+		            }
+		        } catch (NumberFormatException | ExceptionDao | SQLException ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Erro ao reagendar: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		        } catch (Exception ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		        }}
 		});
-
-		btnAgendar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		btnAgendar.setPreferredSize(new Dimension(100, 40));
-		btnAgendar.setBackground(new Color(240, 240, 240));
-		btnAgendar.setBounds(148, 367, 104, 41);
-		panel_1.add(btnAgendar, "flowx,cell 2 3,growx");
-
-		JButton btnReagendar = new JButton("Reagendar");
-		btnReagendar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Servico servico = (Servico) jboxServico.getSelectedItem();
-				String cpfCliente = txtCpfCliente.getText();
-				String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
-				String precoServico = txtValor.getText();
-				try {
-					controller.atualizarAgendamento(servico, cpfCliente, nomeUsuario, txtDataAgenda.getText(),
-							jboxHora.getToolTipText(), precoServico);
-				} catch (ParseException | ExceptionDao | SQLException ex) {
-					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Erro ao atualizar o agendamento: " + ex.getMessage());
-				}
-			}
-		});
-
-		btnReagendar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		btnReagendar.setBackground(new Color(240, 240, 240));
-		btnReagendar.setBounds(261, 367, 104, 41);
-		btnReagendar.setPreferredSize(new Dimension(100, 40));
-		panel_1.add(btnReagendar, "cell 2 3,growx");
-
+		       
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		btnConsultar.setPreferredSize(new Dimension(100, 40));
@@ -300,46 +327,29 @@ public class TelaAgendamentoPanel extends JPanel {
 
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
-				// agendaHelper.limparTelaAgendamento();
-				String cpf = txtCpfCliente.getText();
-				try {
-					Cliente cliente = ClienteDao.consultarClientePorCPF(cpf);
-					if (cliente != null) {
-						// preencherCampos(cliente);
-					} else {
-						JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
-					}
-				} catch (ExceptionDao ex) {
-					ex.printStackTrace();
-				}
+				TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+						.getWindowAncestor(TelaAgendamentoPanel.this);
+				JPanel desktop = mainFrame.getDesktop();
+				desktop.removeAll();
+				TelaConsultaAgendamento consulta = new TelaConsultaAgendamento();
+				consulta.setVisible(true);
+				desktop.add(consulta);
+				desktop.revalidate();
+				desktop.repaint();
 			}
 		});
-
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String cpfCliente = txtCpfCliente.getText();
-				String dataAgendamento = txtDataAgenda.getText();
-				int codCliente = -1;
-				try {
-					codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
-				} catch (ExceptionDao e1) {
-					e1.printStackTrace();
-				}
-
-				if (codCliente != -1) {
-					// Chama o método do controlador para cancelar o agendamento
-					try {
-						controller.cancelarAgendamento(codCliente, dataAgendamento);
-					} catch (ExceptionDao e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				} else {
-				}
-			}
-
+		        try {
+		            int codAgendamento = agendamentoSelecionado.getCodAgendamento();
+		            controller.cancelarAgendamento(codAgendamento);
+		            AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamentoPanel.this);
+		            agendaHelper.limparAgendamentoConcluido();
+		        } catch (NumberFormatException | ExceptionDao ex) {
+		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Erro ao cancelar: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		        }}
 		});
 
 		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -351,9 +361,13 @@ public class TelaAgendamentoPanel extends JPanel {
 
 		if (agendamentoSelecionado != null) {
 			preencherInfos(agendamentoSelecionado);
+			controller.atualizaServico();
+			jboxServico.setSelectedItem(agendamentoSelecionado.getServico());
 		}
-		iniciar();
-
+		if (agendamentoSelecionado == null) {
+			iniciar();
+		}
+		
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -385,12 +399,6 @@ public class TelaAgendamentoPanel extends JPanel {
 		setBounds(100, 100, 640, 480);
 
 	}
-
-	private void preencherCampos(Cliente clienteSelecionado) throws ExceptionDao {
-		txtNomeCliente.setText(clienteSelecionado.getNomeCliente());
-		txtCpfCliente.setText(clienteSelecionado.getCpfCliente());
-	}
-
 	private void preencherInfos(Agendamento agendamentoSelecionado) throws SQLException {
 		txtCpfCliente.setText(agendamentoSelecionado.getCliente().getCpfCliente());
 		txtNomeCliente.setText(agendamentoSelecionado.getCliente().getNomeCliente());
@@ -398,7 +406,6 @@ public class TelaAgendamentoPanel extends JPanel {
 		txtValor.setText(String.valueOf(agendamentoSelecionado.getPrecoServico()));
 		String dataAgenda = agendamentoSelecionado.getDataAtendimento();
 		txtDataAgenda.setText(dataAgenda);
-		// String horaAgenda = agendamentoSelecionado.getHoraAtendimento();
 		jboxHora.setSelectedItem(agendamentoSelecionado.getHoraAtendimento());
 		int codUsuario = agendamentoSelecionado.getCodUsuario();
 		Usuario barbeiro = null;
@@ -408,55 +415,81 @@ public class TelaAgendamentoPanel extends JPanel {
 		} else {
 		}
 	}
-
+	
 	private void atualizarHorariosDisponiveis() {
-		String nomeUsuarioSelecionado = (String) jboxBarbeiro.getSelectedItem();
-		String dataAgendamento = txtDataAgenda.getText();
+	    String nomeUsuarioSelecionado = (String) jboxBarbeiro.getSelectedItem();
+	    String dataAgendamento = txtDataAgenda.getText(); 
 
-		if (dataAgendamento == null || dataAgendamento.isEmpty()) {
-			System.out.println("Data de agendamento não fornecida.");
-			return;
-		}
-		if (nomeUsuarioSelecionado != null && !nomeUsuarioSelecionado.isEmpty() && dataAgendamento != null
-				&& !dataAgendamento.isEmpty()) {
-			int codUsuario = -1;
+	    if (dataAgendamento.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Por favor, forneça a data de agendamento (formato: dd/MM/yyyy):");
+	        return;
+	    }
 
-			try {
-				codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuarioSelecionado);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	    if (nomeUsuarioSelecionado == null || nomeUsuarioSelecionado.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Por favor, selecione um barbeiro.");
+	        return;
+	    }
 
-			if (codUsuario != -1) {
-				ArrayList<LocalTime> horariosDisponiveis = controller.obterHorariosDisponiveis(codUsuario,
-						dataAgendamento);
+	    int codUsuario = -1;
+	    try {
+	        codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuarioSelecionado);
+	    } catch (SQLException e) {
+	        JOptionPane.showMessageDialog(null, "Erro ao buscar código do usuário.");
+	        e.printStackTrace();
+	        return;
+	    }
 
-				// Atualizar a JComboBox com os horários disponíveis
-				jboxHora.removeAllItems();
-				for (LocalTime horario : horariosDisponiveis) {
-					jboxHora.addItem(horario);
-				}
-			} else {
-				System.out.println("Código do usuário não encontrado.");
-			}
-		} else {
-			System.out.println("Nome do usuário ou data de agendamento não fornecidos.");
-		}
+	    if (codUsuario != -1) {
+	        ArrayList<LocalTime> horariosDisponiveis = controller.obterHorariosDisponiveis(codUsuario, dataAgendamento);
+	        jboxHora.removeAllItems();
+	        for (LocalTime horario : horariosDisponiveis) {
+	            jboxHora.addItem(horario);
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Código do usuário não encontrado para o barbeiro selecionado.");
+	    }
 	}
+
 
 	private void iniciar() throws ExceptionDao, SQLException {
 		getJboxBarbeiro().setSelectedItem("");
-		getJboxServico().setSelectedItem(null);
 		controller = new AgendamentoController(this);
 		controller.atualizaServico();
 		controller.atualizaValor();
-		atualizarHorariosDisponiveis();
 	}
+	
+	private Object[] formatarDados() throws ParseException, ExceptionDao, SQLException {
+	    String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
+	    String cpfCliente = txtCpfCliente.getText();
+	    Servico servico = (Servico) jboxServico.getSelectedItem();
+	    double precoServico = Double.parseDouble(txtValor.getText());
+	    String dataAtendimento = txtDataAgenda.getText();
+	    LocalTime horaAtendimento = (LocalTime) jboxHora.getSelectedItem();
 
+	    int codUsuario = UsuarioController.buscarCodigoUsuarioPorNome(nomeUsuario);
+	    if (codUsuario == -1) {
+	        JOptionPane.showMessageDialog(null, "O código do usuário não pôde ser encontrado para o nome de usuário fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	        return null;
+	    }
+
+	    int codServico = ServicoController.buscarCodigoServicoPorNome(servico.getTipoServico());
+	    if (codServico == -1) {
+	        JOptionPane.showMessageDialog(null, "O código do serviço não pôde ser encontrado para o tipo de serviço fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	        return null;
+	    }
+
+	    int codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
+	    if (codCliente == -1) {
+	        JOptionPane.showMessageDialog(null, "O código do cliente não pôde ser encontrado para o CPF fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	        return null;
+	    }
+	    return new Object[]{codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento};
+	}
+	
 	public JComboBox<Object> getJboxServico() {
 		return jboxServico;
 	}
-
+	
 	public JComboBox<Usuario> getJboxBarbeiro() {
 		return jboxBarbeiro;
 	}
@@ -488,14 +521,6 @@ public class TelaAgendamentoPanel extends JPanel {
 	public void setTxtCpfCliente(JTextField txtCpfCliente) {
 		this.txtCpfCliente = txtCpfCliente;
 	}
-
-	/*
-	 * public JTextField getTxtHoraAgenda() { return txtHoraAgenda; }
-	 * 
-	 * public void setTxtHoraAgenda(JTextField txtHoraAgenda) { this.txtHoraAgenda =
-	 * txtHoraAgenda; }
-	 */
-
 	public JComboBox<LocalTime> getJboxHora() {
 		return jboxHora;
 	}
