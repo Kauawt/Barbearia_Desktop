@@ -108,6 +108,7 @@ public class TelaUsuario extends JInternalFrame {
 		getContentPane().setLayout(null);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setOpaque(false);
 		getContentPane().addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -118,7 +119,6 @@ public class TelaUsuario extends JInternalFrame {
 			}
 		});
 		panel_1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		panel_1.setOpaque(false);
 		panel_1.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel_1.setAlignmentY(Component.TOP_ALIGNMENT);
 		panel_1.setBounds(0, 0, 640, 453);
