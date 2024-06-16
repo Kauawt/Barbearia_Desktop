@@ -54,6 +54,12 @@ public class ClienteController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Busca o código do cliente no banco de dados a partir do CPF fornecido.
+	 * @param cpfCliente CPF do cliente a ser consultado.
+	 * @return O código do cliente correspondente ao CPF, ou -1 se o cliente não for encontrado.
+	 * @throws ExceptionDao Se ocorrer algum erro durante a busca no banco de dados.
+	 */
 	public static int buscarCodigoClientePorCPF(String cpfCliente) throws ExceptionDao {
 	    Cliente cliente = clienteDao.consultarClientePorCPF(cpfCliente);
 	    if (cliente != null) {
@@ -62,6 +68,20 @@ public class ClienteController {
 	        return -1;
 	    }
 	}
+	/**
+	 * Consulta o nome do cliente no banco de dados a partir do CPF fornecido.
+	 * @param cpfCliente CPF do cliente a ser consultado.
+	 * @return O nome do cliente correspondente ao CPF, ou null se o cliente não for encontrado.
+	 * @throws ExceptionDao Se ocorrer algum erro durante a consulta ao banco de dados.
+	 */
+	public static String consultarNomeCliente(String cpfCliente) throws ExceptionDao {
+	    try {
+	        return clienteDao.consultarNomeClientePorCPF(cpfCliente);
+	    } catch (ExceptionDao ex) {
+	        throw new ExceptionDao("Erro ao consultar nome do cliente por CPF: " + ex.getMessage());
+	    }
+	}
+
 	
 }
 

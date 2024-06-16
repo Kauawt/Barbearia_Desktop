@@ -4,6 +4,7 @@ import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,121 +47,72 @@ public class AgendamentoController {
 	    ServicoDao servicoDao = new ServicoDao();
 	    ArrayList<Servico> servicos = servicoDao.selectAll();
 	    helper.preencherServicos(servicos);
-	}
+	    }
 	
 	/**
      * Atualiza o valor do serviço selecionado na view, tornando mais prático a seleção.
      */
 	public void atualizaValor() {
-		Servico servico = helper.obterServico();
-		helper.setarValor(servico.getPrecoServico());
+	    Servico servico = helper.obterServico();
+	    if (servico == null) {
+	        System.out.println("Serviço não selecionado."); // Apenas para depuração
+	    } else {
+	        helper.setarValor(servico.getPrecoServico());
+	    }
 	}
 	
 	
-	
 	/**
-     * Cancela um agendamento, chamando o AgendaDao.
-     * 
-     * @param codCliente O código do cliente do agendamento.
-     * @param dataAgendamento A data do agendamento.
-     * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
-     */
-	public void cancelarAgendamento(int codCliente, String dataAgendamento) throws ExceptionDao {
+	 * Cancela um agendamento existente através do código de agendamento fornecido.
+	 * Chama o método deletarAgendamento do AgendaDao para realizar a operação de exclusão.
+	 * @param codAgendamento O código do agendamento a ser cancelado.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados durante a exclusão.
+	 */
+	public void cancelarAgendamento(int codAgendamento) throws ExceptionDao {
 	    try {
-	        agendaDao.deletarAgendamento(codCliente, dataAgendamento);
+	        agendaDao.deletarAgendamento(codAgendamento);
 	    } catch (ExceptionDao e) {  
 	        e.printStackTrace();
-	    }
-	}
-	/**
-     * Busca o código de um usuário pelo nome, método para converter os campos retornados da View em Inserts no Banco de Dados.
-     * @param nomeUsuario O nome do usuário.
-     * @return O código do usuário, ou -1 se não encontrado.
-     * @throws SQLException Se ocorrer um erro ao acessar o banco de dados.
-     */
-	public int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
-        return usuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
-    }	
+	    }}
 	
 	/**
-     * Formata os dados vindos da View TelaAgendamento e valida os campos..
-     * @param servico O serviço do agendamento.
-     * @param cpfCliente O CPF do cliente.
-     * @param nomeUsuario O nome do usuário.
-     * @param dataAtendimento A data do atendimento.
-     * @param horaAtendimento A hora do atendimento.
-     * @param precoServico O preço do serviço.
-     * @return O objeto Agendamento formatado, ou null se ocorrer um erro.
-     * @throws ParseException Se ocorrer um erro ao converter os dados.
-     * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
-     * @throws SQLException Se ocorrer um erro ao acessar o banco de dados.
+	 * Cadastra um novo agendamento com os dados fornecidos da View TelaAgendamentoPanel.
+	 * Cria um objeto Agendamento com os parâmetros especificados e chama o método cadastrarAgendamento
+	 * do AgendaDao para persistir o agendamento no banco de dados.
+	 * @param codUsuario O código do usuário responsável pelo agendamento.
+	 * @param codCliente O código do cliente associado ao agendamento.
+	 * @param codServico O código do serviço a ser realizado no agendamento.
+	 * @param precoServico O preço do serviço agendado.
+	 * @param dataAtendimento A data do agendamento no formato "dd/MM/yyyy".
+	 * @param horaAtendimento A hora do agendamento no formato "HH:mm".
+	 * @throws SQLException Se ocorrer um erro SQL ao acessar o banco de dados.
+	 * @throws ExceptionDao Se ocorrer um erro geral ao acessar o banco de dados durante o cadastro.
+	 */
+    public void cadastrarAgendamento(int codUsuario, int codCliente, int codServico, double precoServico, String dataAtendimento, String horaAtendimento) throws SQLException, ExceptionDao {
+    	Agendamento agendamento = new Agendamento(codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento);
+        agendaDao.cadastrarAgendamento(agendamento);
+    }
+    /**
+     * Atualiza um agendamento existente com os novos dados fornecidos.
+     * Cria um objeto Agendamento com os parâmetros especificados e chama o método atualizarAgendamento
+     * do AgendaDao para persistir as alterações no banco de dados.
+     * Exibe uma mensagem de sucesso após a atualização.
+     * @param codUsuario O código do usuário responsável pelo agendamento.
+     * @param codCliente O código do cliente associado ao agendamento.
+     * @param codServico O código do serviço a ser realizado no agendamento.
+     * @param precoServico O preço do serviço agendado.
+     * @param dataAtendimento A data do agendamento no formato "dd/MM/yyyy".
+     * @param horaAtendimento A hora do agendamento no formato "HH:mm".
+     * @param codAgendamento O código do agendamento a ser atualizado.
+     * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados durante a atualização.
+     * @throws SQLException Se ocorrer um erro SQL ao acessar o banco de dados.
      */
-	public Agendamento formatarDadosAgendamento(Servico servico, String cpfCliente, String nomeUsuario,
-	        String dataAtendimento, String horaAtendimento, String precoServico) throws ParseException, ExceptionDao, SQLException {
+    public void atualizarAgendamento(int codUsuario, int codCliente, int codServico, double precoServico, String dataAtendimento, String horaAtendimento, int codAgendamento) throws ExceptionDao, SQLException {
+    	Agendamento agendamento = new Agendamento(codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento);
 
-	    int codUsuario = usuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
-	    if (codUsuario == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do usuário não pôde ser encontrado para o nome de usuário fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
-	        return null; 
-	    }
+		agendaDao.atualizarAgendamento(agendamento, codAgendamento);
+    }
 
-	    int codServico = ServicoDao.buscarCodigoServicoPorNome(servico.getTipoServico());
-	    if (codServico == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do serviço não pôde ser encontrado para o tipo de serviço fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
-	        return null; 
-	    }
-
-	    int codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
-	    if (codCliente == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do cliente não pôde ser encontrado para o CPF fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
-	        return null;
-	    }
-
-	    // Validação do preço do serviço
-	    float precoServicoFloat;
-	    try {
-	        precoServicoFloat = Float.parseFloat(precoServico);
-	    } catch (NumberFormatException e) {
-	        JOptionPane.showMessageDialog(null, "Preço do serviço inválido: " + precoServico, "Aviso", JOptionPane.WARNING_MESSAGE);
-	        return null; 
-	    }
-
-	    String dataAgendamento = dataAtendimento;
-	    String horaAgendamento = horaAtendimento;
-
-	    Agendamento agendamento = new Agendamento(codUsuario, codCliente, codServico, String.valueOf(precoServicoFloat), dataAgendamento, horaAgendamento);
-	    agendamento.setCodUsuario(codUsuario);
-	    agendamento.setCodCliente(codCliente);
-	    agendamento.setCodServico(codServico);
-	    agendamento.setPrecoServico(String.valueOf(precoServicoFloat));
-	    agendamento.setDataAtendimento(dataAgendamento);
-	    agendamento.setHoraAtendimento(horaAgendamento);
-	    return agendamento;
-	}
-
-	/**
-     *	Cadastrar um agendamento, chamando o método formatarDadosAgendamento com os atributos corretos para INSERT no Banco de dados.
-     */
-	public void cadastrarAgendamento(Servico servico, String cpfCliente, String nomeUsuario,
-	        String dataAtendimento, String horaAtendimento, String precoServico) throws ParseException, ExceptionDao, SQLException {
-		
-	    Agendamento agendamento = formatarDadosAgendamento(servico, cpfCliente, nomeUsuario, dataAtendimento, horaAtendimento, precoServico);
-
-	    // Chame o método cadastrarAgendamento do AgendamentoDao
-	    agendaDao.cadastrarAgendamento(agendamento);
-	}
-	/**
-     * Atualiza um agendamento, chamando o método formatarDadosAgendamento com os atributos corretos para UPDATE no Banco de dados.
-     */
-	public void atualizarAgendamento(Servico servico, String cpfCliente, String nomeUsuario,
-	        String dataAtendimento, String horaAtendimento, String precoServico) throws ParseException, ExceptionDao, SQLException {
-
-	    Agendamento agendamento = formatarDadosAgendamento(servico, cpfCliente, nomeUsuario, dataAtendimento, horaAtendimento, precoServico);
-
-	    // Chame o método atualizarAgendamento do AgendamentoDao
-	    agendaDao.atualizarAgendamento(agendamento);
-	}
-	
 	/**
      * Retorna a carga horária disponível para um determinado barbeiro.
      * @param codBarbeiro O código do barbeiro.
@@ -169,7 +121,7 @@ public class AgendamentoController {
 	private ArrayList<LocalTime> cargaHorariaBarbeiro() {
         ArrayList<LocalTime> cargaHoraria = new ArrayList<>();
         LocalTime horarioInicio = LocalTime.of(8, 0); // Horário de início da jornada
-        LocalTime horarioFim = LocalTime.of(17, 0); // Horário de término da jornada
+        LocalTime horarioFim = LocalTime.of(19, 0); // Horário de término da jornada
 
         while (horarioInicio.isBefore(horarioFim)) {
             cargaHoraria.add(horarioInicio);
@@ -179,37 +131,71 @@ public class AgendamentoController {
         return cargaHoraria;
     }
 
-	/*
-	 * Este método é responsável por obter os horários disponíveis para agendamento
-	 * com base no código do barbeiro e na data de agendamento fornecidos.
-	 * Ele primeiro imprime os parâmetros de entrada para fins de depuração.
-	 * Em seguida, chama o método consultarHorariosMarcados() do DAO para obter os horários já agendados.
-	 * Em seguida, obtém a carga horária do barbeiro através do método cargaHorariaBarbeiro().
-	 * Em seguida, itera sobre a carga horária e verifica se cada horário não está contido nos horários marcados.
-	 * Os horários disponíveis são armazenados em uma lista e retornados.
-	 * Se ocorrer uma exceção SQLException, imprime o stack trace e retorna uma lista vazia.
+	/**
+	 * Obtém os horários disponíveis para agendamento com base no código do barbeiro e na data de agendamento fornecidos, fornecidos através da View TelaAgendamentoPanel.
+	 * Verifica os horários já marcados consultando o método consultarHorariosMarcados do AgendaDao.
+	 * Utiliza o método cargaHorariaBarbeiro para obter a carga horária padrão do barbeiro.
+	 * Itera sobre a carga horária e adiciona os horários não marcados à lista de horários disponíveis.
+	 * Exibe uma mensagem se não houver horários disponíveis para o dia especificado.
+	 * @param codBarbeiro O código do barbeiro para quem se deseja verificar os horários disponíveis.
+	 * @param dataAgendamento A data do agendamento no formato "dd/MM/yyyy".
+	 * @return Uma lista de LocalTime contendo os horários disponíveis para o dia especificado.
+	 *         Retorna uma lista vazia se ocorrer um erro ao acessar o banco de dados.
 	 */
-	 public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
-	        try {
-	        	System.out.println("Método obterHorariosDisponiveis chamado com codBarbeiro: " + codBarbeiro + " e dataAgendamento: " + dataAgendamento);
-	            ArrayList<LocalTime> horariosMarcados = agendaDao.consultarHorariosMarcados(codBarbeiro, dataAgendamento);
-	            ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro();
+	 
+	public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
+	    try {
+	        System.out.println("Método obterHorariosDisponiveis chamado com codBarbeiro: " + codBarbeiro + " e dataAgendamento: " + dataAgendamento);
+	        ArrayList<LocalTime> horariosMarcados = agendaDao.consultarHorariosMarcados(codBarbeiro, dataAgendamento);
+	        ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro();
 
-	            Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
-	            ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
-
+	        Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
+	        ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
+	        LocalTime horarioAtual = LocalTime.now();
+	        // Converte a data de agendamento para LocalDate
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	        LocalDate dataAgendamentoFormatada = LocalDate.parse(dataAgendamento, formatter);
+	        LocalDate hoje = LocalDate.now(); // Verifica se a data de agendamento é igual ou depois do dia de hoje
+	        if (dataAgendamentoFormatada.isBefore(hoje)) {
+	            JOptionPane.showMessageDialog(null, "Data de agendamento não pode ser anterior ao dia de hoje.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	            return new ArrayList<>(); }
+	        // Verifica se a data de agendamento é igual ao dia de hoje
+	        if (dataAgendamentoFormatada.equals(hoje)) {
+	            LocalTime horarioInicioExpediente = horarioAtual.plusMinutes(30 - (horarioAtual.getMinute() % 30));
+	            for (LocalTime horario : cargaHoraria) {
+	                if (horario.isAfter(horarioAtual) && horario.isAfter(horarioInicioExpediente) && !horariosMarcadosSet.contains(horario)) {
+	                    horariosDisponiveis.add(horario);
+	                }}} else {
+	            // Se a data de agendamento é depois do dia de hoje, considera o expediente completo
+	            LocalTime horarioInicioExpediente = LocalTime.of(8, 0); // Horário de início da jornada
 	            for (LocalTime horario : cargaHoraria) {
 	                if (!horariosMarcadosSet.contains(horario)) {
 	                    horariosDisponiveis.add(horario);
-	                }
-	            }
-	            System.out.println("Horários disponíveis: " + horariosDisponiveis);
-	            return horariosDisponiveis;
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            return new ArrayList<>();
+	                }}}
+	        if (horariosDisponiveis.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Não possuem mais horários disponíveis para hoje.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
 	        }
-	    }
-
-
-}
+	        return horariosDisponiveis;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return new ArrayList<>();
+	    }}
+	
+	/**
+	 * Busca o código de um agendamento através dos códigos de cliente, usuário, serviço, data e hora de atendimento.
+	 * Chama o método estático buscarCodAgendamento do AgendaDao para realizar a busca no banco de dados.
+	 *
+	 * @param codCliente O código do cliente associado ao agendamento.
+	 * @param codUsuario O código do usuário responsável pelo agendamento.
+	 * @param codServico O código do serviço realizado no agendamento.
+	 * @param dataAtendimento A data do agendamento no formato "dd/MM/yyyy".
+	 * @param horaAtendimento A hora do agendamento no formato "HH:mm".
+	 * @return O código do agendamento encontrado.
+	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados durante a busca.
+	 */
+	 public static int buscarCodAgendamento(int codCliente, int codUsuario, int codServico, String dataAtendimento, String horaAtendimento) throws ExceptionDao {
+		    try {
+		        return AgendaDao.buscarCodAgendamento(codCliente, codUsuario, codServico, dataAtendimento, horaAtendimento);
+		    } catch (SQLException e) {
+		        throw new ExceptionDao("Erro ao buscar código do agendamento: " + e.getMessage());
+		    }}}

@@ -141,7 +141,7 @@ public class TelaAgendamento extends JInternalFrame {
         contentPane.add(txtObs);
         
         JButton btnAgendar = new JButton("Agendar");
-        btnAgendar.addActionListener(new ActionListener() {
+        /*btnAgendar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Obter os dados da tela
             	Servico servico = (Servico) jboxServico.getSelectedItem();
@@ -150,7 +150,7 @@ public class TelaAgendamento extends JInternalFrame {
                 String precoServico = txtValor.getText(); // String para consistência
 
                 try {  
-                    controller.cadastrarAgendamento(servico, cpfCliente, nomeUsuario,
+                    //controller.cadastrarAgendamento(servico, cpfCliente, nomeUsuario,
                             txtDataAgenda.getText(), txtHoraAgenda.getText(), precoServico);
                     //AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamento.this);
                     //agendaHelper.limparAgendamentoConcluido();
@@ -158,15 +158,15 @@ public class TelaAgendamento extends JInternalFrame {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao agendar: " + ex.getMessage());
                 }
-            }
-        });
+            
+        });}*/
         btnAgendar.setPreferredSize(new Dimension(80, 80));
         btnAgendar.setBackground(UIManager.getColor("Button.background"));
         btnAgendar.setBounds(74, 323, 104, 27);
         contentPane.add(btnAgendar);
 
         JButton btnReagendar = new JButton("Reagendar");
-        btnReagendar.addActionListener(new ActionListener() {
+        /*btnReagendar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Servico servico = (Servico) jboxServico.getSelectedItem();
                 String cpfCliente = txtCpfCliente.getText();
@@ -181,14 +181,14 @@ public class TelaAgendamento extends JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Erro ao atualizar o agendamento: " + ex.getMessage());
                 }
             }
-        });
+        });*/
         btnReagendar.setPreferredSize(new Dimension(80, 80));
         btnReagendar.setBackground(UIManager.getColor("Button.background"));
         btnReagendar.setBounds(203, 323, 104, 27);
         contentPane.add(btnReagendar);
 
         JButton btnCancelar = new JButton("Cancelar");
-        btnCancelar.addActionListener(new ActionListener() {
+        /*btnCancelar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		String cpfCliente = txtCpfCliente.getText();
                 String dataAgendamento = txtDataAgenda.getText();
@@ -216,7 +216,7 @@ public class TelaAgendamento extends JInternalFrame {
                 }
             }	
         	
-        });
+        });*/
         btnCancelar.setPreferredSize(new Dimension(80, 80));
         btnCancelar.setBackground(UIManager.getColor("Button.background"));
         btnCancelar.setBounds(463, 323, 104, 27);

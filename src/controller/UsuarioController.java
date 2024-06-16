@@ -128,5 +128,18 @@ public class UsuarioController {
 	        return usuarioDao.buscarUsuarioPorId(codUsuario);
 	    }
 	
-
+	/**
+     * Busca o código de um usuário pelo seu nome.
+     * 
+     * @param nomeUsuario O nome do usuário a ser buscado.
+     * @return O código do usuário, ou -1 se não for encontrado.
+     * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+     * @throws SQLException Se ocorrer um erro de SQL.
+     */
+    public static int buscarCodigoUsuarioPorNome(String nomeUsuario) throws ExceptionDao, SQLException {
+        return usuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
+    }
 }
+	
+
+

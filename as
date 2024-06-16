@@ -1,0 +1,114 @@
+[33m84a4438[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAgendamentoFinalizado[m[33m)[m HEAD@{0}: checkout: moving from main to AgendamentoFinalizado
+[33m3580038[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m HEAD@{1}: pull: Fast-forward
+[33m84a4438[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAgendamentoFinalizado[m[33m)[m HEAD@{2}: checkout: moving from AgendamentoFinalizado to main
+[33m84a4438[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAgendamentoFinalizado[m[33m)[m HEAD@{3}: pull origin main: Fast-forward
+[33md1780a9[m[33m ([m[1;31morigin/AgendamentoFinalizado[m[33m)[m HEAD@{4}: checkout: moving from main to AgendamentoFinalizado
+[33m84a4438[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAgendamentoFinalizado[m[33m)[m HEAD@{5}: pull: Fast-forward
+[33m02b61ce[m HEAD@{6}: checkout: moving from AgendamentoFinalizado to main
+[33md1780a9[m[33m ([m[1;31morigin/AgendamentoFinalizado[m[33m)[m HEAD@{7}: commit: Aguardando correção do Panel no Agendamento
+[33m02b61ce[m HEAD@{8}: checkout: moving from main to AgendamentoFinalizado
+[33m02b61ce[m HEAD@{9}: checkout: moving from AgendamentoFinalizado to main
+[33m02b61ce[m HEAD@{10}: pull origin main: Fast-forward
+[33m6431e16[m HEAD@{11}: checkout: moving from main to AgendamentoFinalizado
+[33m02b61ce[m HEAD@{12}: pull: Fast-forward
+[33m6431e16[m HEAD@{13}: checkout: moving from AgendamentoFinalizado to main
+[33m6431e16[m HEAD@{14}: checkout: moving from main to AgendamentoFinalizado
+[33m6431e16[m HEAD@{15}: pull: Fast-forward
+[33m29999d8[m HEAD@{16}: checkout: moving from KauaAlteracoes1 to main
+[33m343c816[m[33m ([m[1;31morigin/KauaAlteracoes1[m[33m, [m[1;32mKauaAlteracoes1[m[33m)[m HEAD@{17}: commit (merge): Merge branch 'main' of https://github.com/Kauawt/Barbearia_Desktop into KauaAlteracoes1
+[33m9d0fce7[m HEAD@{18}: commit: Controllers e Dao comentados
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{19}: checkout: moving from main to KauaAlteracoes1
+[33m29999d8[m HEAD@{20}: checkout: moving from KauaAlteracoes1 to main
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{21}: checkout: moving from main to KauaAlteracoes1
+[33m29999d8[m HEAD@{22}: checkout: moving from KauaAlteracoes1 to main
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{23}: checkout: moving from AgendamentoHorarios to KauaAlteracoes1
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{24}: checkout: moving from main to AgendamentoHorarios
+[33m29999d8[m HEAD@{25}: checkout: moving from AgendamentoHorarios to main
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{26}: checkout: moving from kauabranch2 to AgendamentoHorarios
+[33maef3d3a[m[33m ([m[1;31morigin/kauabranch2[m[33m, [m[1;32mkauabranch2[m[33m, [m[1;32mAgendamentoHorarios[m[33m)[m HEAD@{27}: pull: Fast-forward
+[33m6c4265d[m HEAD@{28}: checkout: moving from main to kauabranch2
+[33m29999d8[m HEAD@{29}: pull: Fast-forward
+[33mb0b9629[m HEAD@{30}: checkout: moving from kauabranch2 to main
+[33m6c4265d[m HEAD@{31}: commit (merge): Merge branch 'kauabranch2' of https://github.com/Kauawt/Barbearia_Desktop into kauabranch2
+[33mceab471[m HEAD@{32}: reset: moving to HEAD
+[33mceab471[m HEAD@{33}: checkout: moving from main to kauabranch2
+[33mb0b9629[m HEAD@{34}: checkout: moving from kauabranch2 to main
+[33mceab471[m HEAD@{35}: checkout: moving from main to kauabranch2
+[33mb0b9629[m HEAD@{36}: pull: Fast-forward
+[33mffbbcc9[m HEAD@{37}: checkout: moving from kauabranch2 to main
+[33mceab471[m HEAD@{38}: commit: CRUD Agendamento finalizado
+[33m4ccff2d[m HEAD@{39}: checkout: moving from main to kauabranch2
+[33mffbbcc9[m HEAD@{40}: pull: Fast-forward
+[33m5c7bb9b[m HEAD@{41}: checkout: moving from kauabranch2 to main
+[33m4ccff2d[m HEAD@{42}: checkout: moving from main to kauabranch2
+[33m5c7bb9b[m HEAD@{43}: pull: Fast-forward
+[33m47ee106[m HEAD@{44}: checkout: moving from kauabranch2 to main
+[33m4ccff2d[m HEAD@{45}: commit: Inserindo telas Agendamento e Consulta Agendamento
+[33mc4636a5[m HEAD@{46}: checkout: moving from main to kauabranch2
+[33m47ee106[m HEAD@{47}: checkout: moving from kauabranch2 to main
+[33mc4636a5[m HEAD@{48}: checkout: moving from kauabranch2 to kauabranch2
+[33mc4636a5[m HEAD@{49}: checkout: moving from kauabranch2 to kauabranch2
+[33mc4636a5[m HEAD@{50}: checkout: moving from kauabranch2 to kauabranch2
+[33mc4636a5[m HEAD@{51}: checkout: moving from main to kauabranch2
+[33m47ee106[m HEAD@{52}: checkout: moving from kauabranch2 to main
+[33mc4636a5[m HEAD@{53}: checkout: moving from main to kauabranch2
+[33m47ee106[m HEAD@{54}: checkout: moving from kauabranch2 to main
+[33mc4636a5[m HEAD@{55}: checkout: moving from main to kauabranch2
+[33m47ee106[m HEAD@{56}: checkout: moving from kauabranch2 to main
+[33mc4636a5[m HEAD@{57}: checkout: moving from main to kauabranch2
+[33m47ee106[m HEAD@{58}: pull: Fast-forward
+[33mf17f96d[m HEAD@{59}: checkout: moving from kauabranch2 to main
+[33mc4636a5[m HEAD@{60}: commit (merge): Arquivos bin - Merge branch 'main' into kauabranch2
+[33m26e8226[m HEAD@{61}: checkout: moving from main to kauabranch2
+[33mf17f96d[m HEAD@{62}: checkout: moving from kauabranch2 to main
+[33m26e8226[m HEAD@{63}: checkout: moving from kauabranch2 to kauabranch2
+[33m26e8226[m HEAD@{64}: checkout: moving from main to kauabranch2
+[33mf17f96d[m HEAD@{65}: checkout: moving from main to main
+[33mf17f96d[m HEAD@{66}: pull: Fast-forward
+[33ma505e6a[m HEAD@{67}: checkout: moving from kauabranch2 to main
+[33m26e8226[m HEAD@{68}: commit: Agendamento 01 + arquivos Bin
+[33mcc6ee4b[m HEAD@{69}: checkout: moving from kauabranch2 to kauabranch2
+[33mcc6ee4b[m HEAD@{70}: checkout: moving from main to kauabranch2
+[33ma505e6a[m HEAD@{71}: checkout: moving from main to main
+[33ma505e6a[m HEAD@{72}: pull: Fast-forward
+[33mf3dabbe[m HEAD@{73}: checkout: moving from kauabranch2 to main
+[33mcc6ee4b[m HEAD@{74}: pull: Fast-forward
+[33m1d35e5f[m HEAD@{75}: checkout: moving from main to kauabranch2
+[33mf3dabbe[m HEAD@{76}: reset: moving to HEAD
+[33mf3dabbe[m HEAD@{77}: checkout: moving from main to main
+[33mf3dabbe[m HEAD@{78}: checkout: moving from main to main
+[33mf3dabbe[m HEAD@{79}: checkout: moving from kauabranch2 to main
+[33m1d35e5f[m HEAD@{80}: checkout: moving from main to kauabranch2
+[33mf3dabbe[m HEAD@{81}: checkout: moving from kauabranch2 to main
+[33m1d35e5f[m HEAD@{82}: checkout: moving from main to kauabranch2
+[33mf3dabbe[m HEAD@{83}: pull: Fast-forward
+[33mfd58a85[m HEAD@{84}: checkout: moving from kauabranch2 to main
+[33m1d35e5f[m HEAD@{85}: commit: Layout 01 - Telas
+[33me7b61cc[m HEAD@{86}: checkout: moving from main to kauabranch2
+[33mfd58a85[m HEAD@{87}: checkout: moving from main to main
+[33mfd58a85[m HEAD@{88}: checkout: moving from main to main
+[33mfd58a85[m HEAD@{89}: checkout: moving from kauabranch2 to main
+[33me7b61cc[m HEAD@{90}: checkout: moving from main to kauabranch2
+[33mfd58a85[m HEAD@{91}: pull: Fast-forward
+[33m807046b[m HEAD@{92}: checkout: moving from kauabranch2 to main
+[33me7b61cc[m HEAD@{93}: commit: Teste Telas
+[33m807046b[m HEAD@{94}: checkout: moving from main to kauabranch2
+[33m807046b[m HEAD@{95}: checkout: moving from kauabranch to main
+[33m9ae012c[m[33m ([m[1;32mkauabranch[m[33m)[m HEAD@{96}: commit: Atualização telas
+[33ma9aeec0[m HEAD@{97}: checkout: moving from main to kauabranch
+[33m807046b[m HEAD@{98}: pull: Fast-forward
+[33m9405eb0[m HEAD@{99}: checkout: moving from kauabranch to main
+[33ma9aeec0[m HEAD@{100}: commit: Adicionando Layout 1 para as Telas e a TelaAgendamento
+[33m9405eb0[m HEAD@{101}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{102}: checkout: moving from kauabranch to main
+[33m9405eb0[m HEAD@{103}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{104}: checkout: moving from kauabranch to main
+[33m9405eb0[m HEAD@{105}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{106}: checkout: moving from kauabranch to main
+[33m9405eb0[m HEAD@{107}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{108}: checkout: moving from kauabranch to main
+[33m9405eb0[m HEAD@{109}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{110}: checkout: moving from kauabranch to main
+[33m9405eb0[m HEAD@{111}: checkout: moving from main to kauabranch
+[33m9405eb0[m HEAD@{112}: checkout: moving from main to main
+[33m9405eb0[m HEAD@{113}: 

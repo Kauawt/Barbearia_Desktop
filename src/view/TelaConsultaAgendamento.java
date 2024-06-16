@@ -226,6 +226,7 @@ public class TelaConsultaAgendamento extends JPanel {
 		}
 	}
 
+	
 	public JTable getTable() {
 		return table;
 	}

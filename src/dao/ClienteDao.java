@@ -115,6 +115,33 @@ public class ClienteDao {
 		return cliente;
 	}
 	/**
+	 * Consulta o nome do cliente no banco de dados a partir do CPF fornecido.
+	 * @param cpfCliente CPF do cliente a ser consultado.
+	 * @return O nome do cliente correspondente ao CPF, ou null se o cliente não for encontrado.
+	 * @throws ExceptionDao Se ocorrer algum erro durante a consulta ao banco de dados.
+	 */
+	public static String consultarNomeClientePorCPF(String cpfCliente) throws ExceptionDao {
+	    String query = CONSULTAR_CLIENTE_POR_CPF;
+	    Connection conexao = ModuloConexao.conector();
+	    String nomeCliente = null;
+
+	    try {
+	        pst = conexao.prepareStatement(query);
+	        pst.setString(1, cpfCliente);
+	        rs = pst.executeQuery();
+	        
+	        if (rs.next()) {
+	            nomeCliente = rs.getString("nomeCliente");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        ModuloConexao.fecharConexao();
+	    }
+
+	    return nomeCliente;
+	}
+	/**
 	 * Altera as informações de um cliente no banco de dados.
 	 * 
 	 * @param cpfCliente O CPF do cliente a ser alterado.

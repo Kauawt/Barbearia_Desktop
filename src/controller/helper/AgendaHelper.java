@@ -1,11 +1,14 @@
 package controller.helper;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 import model.Servico;
+import model.Validador;
 import view.TelaAgendamento;
 import view.TelaAgendamentoPanel;
 
@@ -34,8 +37,17 @@ public class AgendaHelper {
      * Obtém o serviço selecionado no ComboBox.
      * @return O serviço selecionado.
      */
-	public Servico obterServico() {
+	/*public Servico obterServico() {
 		return (Servico) view.getJboxServico().getSelectedItem();
+	}*/
+	public Servico obterServico() {
+		Object selectedItem = view.getJboxServico().getSelectedItem();
+	    if (selectedItem instanceof Servico) {
+	        return (Servico) selectedItem;
+	    } else {
+	        // Lida com o caso em que o item selecionado não é do tipo Servico
+	        return null; // ou lança uma exceção, dependendo do seu fluxo de controle
+	    }
 	}
 	
 	/**
@@ -55,6 +67,52 @@ public class AgendaHelper {
 		view.getTxtDataAgenda().setText("");
 	}
 	/**
+	 * Valida os campos da tela de agendamento.
+	 * @param codUsuario - O código do usuário (barbeiro).
+	 * @param codCliente - O código do cliente.
+	 * @param codServico - O código do serviço.
+	 * @param precoServico - O preço do serviço.
+	 * @param dataAtendimento - A data do agendamento.
+	 * @param horaAtendimento - A hora do agendamento.
+	 * @return true se os campos estiverem preenchidos corretamente, false caso contrário.
+	 */
+	public boolean validadorCamposTelaAgendamento(int codUsuario, int codCliente, int codServico, double precoServico, String dataAtendimento, LocalTime horaAtendimento) {
+		String codUsuarioStr = String.valueOf(codUsuario);
+		String codClienteStr = String.valueOf(codCliente);
+		String codServicoStr = String.valueOf(codServico);
+		String precoServicoStr = String.valueOf(precoServico);
+		String horaAtendimentoStr = String.valueOf(horaAtendimento);
+		if (codUsuarioStr.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo Barbeiro precisa estar preenchido");
+			return false;
+		}
+		if (codClienteStr.isEmpty() || codClienteStr == null) {
+			JOptionPane.showMessageDialog(null, "O campo CPF precisa estar preenchido");
+			return false;
+		}
+		if (codServicoStr.isEmpty()){
+			JOptionPane.showMessageDialog(null, "O campo Serviço precisa estar preenchido");
+			return false;
+		}
+		if (precoServicoStr.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo Preço precisa estar preenchido");
+			return false;
+		}
+		if (dataAtendimento.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo Data precisa estar preenchido");
+			return false;
+		}
+		if (horaAtendimentoStr.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "O campo Hora precisa estar preenchido");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	
+	/**
      * Limpa os campos após um agendamento ser concluído.
      */
 	public void limparAgendamentoConcluido() {
@@ -62,9 +120,9 @@ public class AgendaHelper {
 		view.getJboxBarbeiro().setSelectedItem("");
 		view.getTxtCpfCliente().setText("");
 		view.getTxtNomeCliente().setText("");
-		view.getJboxServico().setSelectedItem(null);
+		view.getJboxServico().setSelectedItem("");
 		view.getTxtValor().setText("");
-		view.getTxtDataAgenda().setText("");
+		view.getJboxHora().setSelectedItem("");
 		view.getJboxHora().setToolTipText("");
 	}
 	

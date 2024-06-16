@@ -25,13 +25,13 @@ public class Agendamento {
 	private int codServico;
 	private int codCliente;
 	private int codUsuario;
-	private String precoServico;
+	private double precoServico;
 
-	// Construtor vazio (caso necessário)
+	// Construtor vazio
 	public Agendamento() {}
 
 	// Construtor utilizado no método formatarDadosAgendamento
-	public Agendamento(int codUsuario, int codCliente, int codServico, String precoServico, String dataAtendimento, String horaAtendimento) {
+	public Agendamento(int codUsuario, int codCliente, int codServico, double precoServico, String dataAtendimento, String horaAtendimento) {
 	    this.codUsuario = codUsuario;
 	    this.codCliente = codCliente;
 	    this.codServico = codServico;
@@ -39,31 +39,41 @@ public class Agendamento {
 	    this.dataAtendimento = dataAtendimento;
 	    this.horaAtendimento = horaAtendimento;
 	}
-    
-	// Construtor completo (caso necessário)
-    public Agendamento(int codAgendamento, Servico servico, Cliente cliente, Usuario usuario, String dataAtendimento, String horaAtendimento) {
-        this.codAgendamento = codAgendamento;
-    	this.servico = servico;
-        this.cliente = cliente;
-        this.usuario = usuario;
-        this.dataAtendimento = dataAtendimento;
-        this.horaAtendimento = horaAtendimento;
-	}
 
+	// Construtor usado no ListarAgendamento
     public Agendamento(int codAgendamento, Servico servico, Cliente cliente, Usuario usuario, LocalDate dataAtendimento, LocalTime horaAtendimento) {
         this.codAgendamento = codAgendamento;
         this.servico = servico;
         this.cliente = cliente;
         this.usuario = usuario;
-        this.dataAtendimento = dataAtendimento.toString(); // Convertendo LocalDate para String
-        this.horaAtendimento = horaAtendimento.toString(); // Convertendo LocalTime para String
+        this.dataAtendimento = dataAtendimento.toString();
+        this.horaAtendimento = horaAtendimento.toString();
     }
    
-	public String getPrecoServico() {
+	 public Agendamento(int codAgendamento, int codCliente, int codUsuario, int codServico, double precoServico, String dataAtendimento, String horaAtendimento) {
+	        this.codAgendamento = codAgendamento;
+	        this.codCliente = codCliente;
+	        this.codUsuario = codUsuario;
+	        this.codServico = codServico;
+	        this.precoServico = precoServico;
+	        this.dataAtendimento = dataAtendimento;
+	        this.horaAtendimento = horaAtendimento;
+	    }
+	 
+
+	@Override
+	public String toString() {
+		return "Agendamento [codAgendamento=" + codAgendamento + ", servico=" + servico + ", cliente=" + cliente
+				+ ", usuario=" + usuario + ", dataAtendimento=" + dataAtendimento + ", horaAtendimento="
+				+ horaAtendimento + ", codServico=" + codServico + ", codCliente=" + codCliente + ", codUsuario="
+				+ codUsuario + ", precoServico=" + precoServico + "]";
+	}
+
+	public double getPrecoServico() {
 		return precoServico;
 	}
 
-	public void setPrecoServico(String precoServico) {
+	public void setPrecoServico(double precoServico) {
 		this.precoServico = precoServico;
 	}
 	
