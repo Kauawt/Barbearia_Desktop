@@ -61,7 +61,7 @@ public class TelaConsultaServico extends JPanel {
 	private JTable table;
 	private JTextField txtFiltrarServico;
 	private TableRowSorter<ModeloTabelaServico> rowSorter;
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -82,7 +82,7 @@ public class TelaConsultaServico extends JPanel {
 	 * Create the frame.
 	 */
 	public TelaConsultaServico() {
-			
+
 		setBackground(new Color(232, 227, 225));
 
 		setSize(new Dimension(640, 480));
@@ -107,21 +107,15 @@ public class TelaConsultaServico extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(new MigLayout("insets 0", "[100,grow][::600,grow][100,grow]",
 				"[grow,fill][grow 50,fill][][::300,grow,fill][grow][grow,fill]"));
-		
+
 		JLabel lblConsultarServico = new JLabel("Consultar Serviço");
 		lblConsultarServico.setForeground(new Color(255, 255, 255));
 		lblConsultarServico.setBounds(220, 57, 280, 32);
 		panel_1.add(lblConsultarServico, "cell 1 1,alignx center");
 		lblConsultarServico.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
-		
-		JLabel lblFiltrarServico = new JLabel("Filtrar");
-		lblFiltrarServico.setForeground(new Color(255, 255, 255));
-		lblFiltrarServico.setBounds(197, 108, 60, 21);
-		panel_1.add(lblFiltrarServico, "flowy,cell 0 2,alignx right,aligny center");
-		lblFiltrarServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		
+
 		ModeloTabelaServico modeloTabela = new ModeloTabelaServico(ServicoDao.listarServicos());
-		
+
 		rowSorter = new TableRowSorter<>(modeloTabela);
 
 		txtFiltrarServico = new JTextField();
@@ -132,15 +126,21 @@ public class TelaConsultaServico extends JPanel {
 				filtrar();
 			}
 		});
+
+		JLabel lblFiltrarServico = new JLabel("Filtrar");
+		lblFiltrarServico.setForeground(new Color(255, 255, 255));
+		lblFiltrarServico.setBounds(197, 108, 60, 21);
+		panel_1.add(lblFiltrarServico, "flowx,cell 1 2,alignx left,aligny center");
+		lblFiltrarServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrarServico.setBorder(null);
 		txtFiltrarServico.setAlignmentX(Component.LEFT_ALIGNMENT);
 		txtFiltrarServico.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFiltrarServico.setForeground(new Color(128, 128, 128));
 		txtFiltrarServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrarServico.setBounds(261, 110, 176, 20);
-		panel_1.add(txtFiltrarServico, "flowx,cell 1 2,alignx left");
+		panel_1.add(txtFiltrarServico, "cell 1 2,alignx left");
 		txtFiltrarServico.setColumns(10);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBorder(null);
 		scrollPane.setBounds(25, 99, 591, 301);
@@ -156,7 +156,8 @@ public class TelaConsultaServico extends JPanel {
 						int selectedRow = table.getSelectedRow();
 						int modelRow = table.convertRowIndexToModel(selectedRow);
 
-						Servico servicoSelecionado = ServicoDao.consultarServicoPorCOD((int)modeloTabela.getValueAt(modelRow, 0));
+						Servico servicoSelecionado = ServicoDao
+								.consultarServicoPorCOD((int) modeloTabela.getValueAt(modelRow, 0));
 
 						TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
 								.getWindowAncestor(TelaConsultaServico.this);
@@ -208,13 +209,14 @@ public class TelaConsultaServico extends JPanel {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
 	}
+
 	private void filtrar() {
 		String filtrar = txtFiltrarServico.getText().trim();
-		if(filtrar.length()==0) {
+		if (filtrar.length() == 0) {
 			rowSorter.setRowFilter(null);
-		}else {
-			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)"+filtrar));
+		} else {
+			rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + filtrar));
 		}
 	}
-	
+
 }

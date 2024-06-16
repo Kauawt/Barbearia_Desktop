@@ -60,7 +60,7 @@ public class LoginController {
 			String nome = telaLogin.getTxtUserUsuario().getText();
 			//String senha = telaLogin.getTxtSenhaUsuario().getText();
 			String senha = criptografia.criptografar();;
-			String sql = "select * from tbUsuario where emailUsuario=? and senhaUsuario=?";
+			String sql = "select * from tbUsuario where emailUsuario=? and senhaUsuario=? and statusUsuario = 'Ativo'";
 			System.out.println(senha);
 			pst = conexao.prepareStatement(sql);
 			pst.setString(1, nome); //o numero é 1 do setString e referente a primeira posição do?
