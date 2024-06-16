@@ -15,7 +15,7 @@ import model.Usuario;
 public class ClienteDao {
 
 	private final String CADASTRAR_CLIENTE = "insert into tbCliente(nomeCliente,enderecoCliente,telefoneCliente,cpfCliente,statusCliente) values (?,?,?,?,?)";
-	private static final String LISTAR_CLIENTES = "select * from tbCliente";
+	private static final String LISTAR_CLIENTES = "select * from tbCliente where statusCliente = 'Ativo'";
 	private static final String CONSULTAR_CLIENTE_POR_CPF = "select * from tbCliente where cpfCliente = ?";
 	private static final String ALTERAR_CLIENTE = "UPDATE tbCliente set nomeCliente = ?, enderecoCliente = ?, telefoneCliente = ?, cpfCliente = ?, statusCliente = ? where cpfCliente = ?";
 	private static final String DELETAR_CLIENTE = "UPDATE tbCliente set statusCliente = 'Inativo' where codCliente = ?";

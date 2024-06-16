@@ -114,12 +114,6 @@ public class TelaConsultaCliente extends JPanel {
 		panel_1.add(lblConsultarCliente, "cell 1 1,alignx center");
 		lblConsultarCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
 
-		JLabel lblFiltrar = new JLabel("Filtrar");
-		lblFiltrar.setForeground(new Color(255, 255, 255));
-		lblFiltrar.setBounds(197, 108, 60, 21);
-		panel_1.add(lblFiltrar, "flowy,cell 0 2,alignx right,aligny center");
-		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-
 		ModeloTabelaCliente modeloTabela = new ModeloTabelaCliente(ClienteDao.listarClientes());
 
 		rowSorter = new TableRowSorter<>(modeloTabela);
@@ -132,13 +126,19 @@ public class TelaConsultaCliente extends JPanel {
 				filtrar();
 			}
 		});
+
+		JLabel lblFiltrar = new JLabel("Filtrar");
+		lblFiltrar.setForeground(new Color(255, 255, 255));
+		lblFiltrar.setBounds(197, 108, 60, 21);
+		panel_1.add(lblFiltrar, "flowx,cell 1 2,alignx left,aligny center");
+		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrar.setBorder(null);
 		txtFiltrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 		txtFiltrar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFiltrar.setForeground(new Color(128, 128, 128));
 		txtFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrar.setBounds(261, 110, 176, 20);
-		panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
+		panel_1.add(txtFiltrar, "cell 1 2,alignx left");
 		txtFiltrar.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();

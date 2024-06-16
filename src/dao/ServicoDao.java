@@ -14,7 +14,7 @@ import model.Servico;
 public class ServicoDao {
 private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,descricaoServico,precoServico,duracaoServico,statusServico) values (?,?,?,?,?)";
 
-	private static final String LISTAR_SERVICOS = "select * from tbServico";
+	private static final String LISTAR_SERVICOS = "select * from tbServico where statusServico = 'Ativo'";
 	private static final String CONSULTAR_SERVICOS_POR_COD = "select * from tbServico where codServico = ?";
 	private static final String ALTERAR_SERVICO = "UPDATE tbServico set tipoServico = ?, descricaoServico = ?, precoServico = ?, duracaoServico = ?, statusServico = ? where codServico = ?";
 	private static final String DELETAR_SERVICO = "UPDATE tbServico set statusServico = 'Inativo' where codServico = ?";

@@ -108,12 +108,6 @@ public class TelaConsultaAgendamento extends JPanel {
 		panel_1.add(lblConsultarAgendamento, "cell 1 1,alignx center");
 		lblConsultarAgendamento.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
 
-		JLabel lblFiltrar = new JLabel("Filtrar");
-		lblFiltrar.setForeground(new Color(255, 255, 255));
-		lblFiltrar.setBounds(197, 108, 60, 21);
-		panel_1.add(lblFiltrar, "flowy,cell 0 2,alignx right,aligny center");
-		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-
 		ModeloTabelaAgendamento modeloTabela = new ModeloTabelaAgendamento(AgendaDao.listarAgendamentos());
 
 		rowSorter = new TableRowSorter<>(modeloTabela);
@@ -126,13 +120,19 @@ public class TelaConsultaAgendamento extends JPanel {
 				filtrar();
 			}
 		});
+
+		JLabel lblFiltrar = new JLabel("Filtrar");
+		lblFiltrar.setForeground(new Color(255, 255, 255));
+		lblFiltrar.setBounds(197, 108, 60, 21);
+		panel_1.add(lblFiltrar, "flowx,cell 1 2,alignx left,aligny center");
+		lblFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrar.setBorder(null);
 		txtFiltrar.setAlignmentX(Component.LEFT_ALIGNMENT);
 		txtFiltrar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFiltrar.setForeground(new Color(128, 128, 128));
 		txtFiltrar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtFiltrar.setBounds(261, 110, 176, 20);
-		panel_1.add(txtFiltrar, "flowx,cell 1 2,alignx left");
+		panel_1.add(txtFiltrar, "cell 1 2,alignx left");
 		txtFiltrar.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -143,22 +143,23 @@ public class TelaConsultaAgendamento extends JPanel {
 		table.setModel(modeloTabela);
 		scrollPane.setViewportView(table);
 		table.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		        if (e.getButton() == MouseEvent.BUTTON1) { 
-		            try {
-		                int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada na tabela
-		                String codAgendamentoStr = modeloTabela.getValueAt(selectedRow, 0).toString();
-		                String nomeUsuario = modeloTabela.getValueAt(selectedRow, 7).toString();
-		                String dataAtendimentoStr = modeloTabela.getValueAt(selectedRow, 5).toString();
-		                int codAgendamento = Integer.parseInt(codAgendamentoStr);
-		                String dataAtendimentoFormatada = DataUtil.formatarData(dataAtendimentoStr); // Formatar a data
-		                int codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
-		                Agendamento agendamentoSelecionado = AgendaDao.consultarAgendamentoPorId(codAgendamento);
-		                if (agendamentoSelecionado != null) {
-		                    agendamentoSelecionado.setCodUsuario(codUsuario); // Atualiza o agendamento com os valores obtidos da tabela (caso necessário)
-		                    agendamentoSelecionado.setDataAtendimento(dataAtendimentoFormatada);
-		                    TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					try {
+						int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada na tabela
+						String codAgendamentoStr = modeloTabela.getValueAt(selectedRow, 0).toString();
+						String nomeUsuario = modeloTabela.getValueAt(selectedRow, 7).toString();
+						String dataAtendimentoStr = modeloTabela.getValueAt(selectedRow, 5).toString();
+						int codAgendamento = Integer.parseInt(codAgendamentoStr);
+						String dataAtendimentoFormatada = DataUtil.formatarData(dataAtendimentoStr); // Formatar a data
+						int codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
+						Agendamento agendamentoSelecionado = AgendaDao.consultarAgendamentoPorId(codAgendamento);
+						if (agendamentoSelecionado != null) {
+							agendamentoSelecionado.setCodUsuario(codUsuario); // Atualiza o agendamento com os valores
+																				// obtidos da tabela (caso necessário)
+							agendamentoSelecionado.setDataAtendimento(dataAtendimentoFormatada);
+							TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
 									.getWindowAncestor(TelaConsultaAgendamento.this);
 							JPanel desktop = mainFrame.getDesktop();
 							desktop.removeAll();
@@ -167,23 +168,27 @@ public class TelaConsultaAgendamento extends JPanel {
 							desktop.add(cadastraAgendamento);
 							desktop.revalidate();
 							desktop.repaint();
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Agendamento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-		                }
-		            } catch (NumberFormatException ex) {
-		                ex.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao converter ID do agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            } catch (ExceptionDao | SQLException ex) {
-		                ex.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao buscar agendamento: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            } catch (ParseException e1) {
-		                e1.printStackTrace();
-		                JOptionPane.showMessageDialog(null, "Erro ao formatar data: " + e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		            }
-		        }
-		    }
+						} else {
+							JOptionPane.showMessageDialog(null, "Agendamento não encontrado.", "Erro",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (NumberFormatException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erro ao converter ID do agendamento: " + ex.getMessage(),
+								"Erro", JOptionPane.ERROR_MESSAGE);
+					} catch (ExceptionDao | SQLException ex) {
+						ex.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erro ao buscar agendamento: " + ex.getMessage(), "Erro",
+								JOptionPane.ERROR_MESSAGE);
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Erro ao formatar data: " + e1.getMessage(), "Erro",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
 		});
-		
+
 		table.setRowSorter(rowSorter);
 
 		JPanel panel = new JPanel();
