@@ -21,8 +21,9 @@ import model.Servico;
 public class AgendaDao {
 
 	private final String CADASTRAR_AGENDAMENTO = "insert into tbAgendamento(codUsuario,codCliente,codServico,precoServico,dataAgendamento,horaAtendimento) values (?,?,?,?,?,?)";
-	private static final String ALTERAR_AGENDAMENTO = "UPDATE tbAgendamento SET codServico = ?, precoServico = ?, dataAgendamento = ?, horaAtendimento = ? WHERE codCliente = ?";
-	private static final String DELETAR_AGENDAMENTO = "DELETE FROM tbAgendamento WHERE codCliente = ? AND dataAgendamento = ?";	
+	private static final String ALTERAR_AGENDAMENTO = "UPDATE tbAgendamento SET codUsuario = ?, codCliente = ?, codServico = ?,  precoServico = ?, dataAgendamento = ?, horaAtendimento = ? " +
+            "WHERE codAgendamento = ?";
+	private static final String DELETAR_AGENDAMENTO = "DELETE FROM tbAgendamento WHERE codAgendamento = ?";	
     private static final String LISTAR_AGENDAMENTOS = "SELECT a.codAgendamento, a.dataAgendamento, a.horaAtendimento, " +
 											            "c.codCliente, c.nomeCliente, c.cpfCliente, " +
 											            "u.codUsuario, u.nomeUsuario, " +
@@ -32,6 +33,7 @@ public class AgendaDao {
 											            "INNER JOIN tbUsuario u ON a.codUsuario = u.codUsuario " +
 											            "INNER JOIN tbServico s ON a.codServico = s.codServico";
     private static final String LISTAR_SERVICOS = "SELECT DISTINCT codServico, tipoServico, precoServico FROM tbServico";
+    private static final String BUSCAR_COD_AGENDAMENTO = "SELECT codAgendamento FROM tbAgendamento WHERE codCliente = ? AND codUsuario = ? AND codServico = ? AND dataAgendamento = ? AND horaAtendimento = ?";
     private static final String BUSCAR_AGENDAMENTO_POR_ID = LISTAR_AGENDAMENTOS + " WHERE a.codAgendamento = ?";
     private static final String CONSULTAR_HORARIOS = "SELECT horaAtendimento FROM tbAgendamento WHERE codUsuario = ? AND dataAgendamento = ?";
 	private Connection conexao = null;
@@ -40,7 +42,6 @@ public class AgendaDao {
 
 	/**
 	 * Cadastra um novo agendamento no banco de dados.
-	 * 
 	 * @param agendamento O agendamento a ser cadastrado.
 	 * @throws ExceptionDao Se ocorrer algum erro durante o cadastro.
 	 */
@@ -54,7 +55,7 @@ public class AgendaDao {
 			preparedStatement.setInt(1, agendamento.getCodUsuario());
 			preparedStatement.setInt(2, agendamento.getCodCliente());
 			preparedStatement.setInt(3, agendamento.getCodServico());
-			preparedStatement.setFloat(4, Float.parseFloat(agendamento.getPrecoServico()));
+			preparedStatement.setDouble(4, agendamento.getPrecoServico());
 			preparedStatement.setString(5, agendamento.getDataAtendimento());
 			preparedStatement.setString(6, agendamento.getHoraAtendimento());
 			preparedStatement.executeUpdate();
@@ -69,7 +70,6 @@ public class AgendaDao {
 
 	/**
 	 * Lista todos os agendamentos cadastrados no banco de dados.
-	 * 
 	 * @return Uma lista de agendamentos.
 	 */
 	public static ArrayList<Agendamento> listarAgendamentos() {
@@ -97,51 +97,50 @@ public class AgendaDao {
 	    }
 	    return agendamentos;
 	}
-
-	/**
-	 * Atualiza um agendamento no banco de dados.
-	 * 
-	 * @param agendamento O agendamento atualizado.
-	 * @throws ExceptionDao Se ocorrer algum erro durante a atualização.
-	 */
-	public void atualizarAgendamento(Agendamento agendamento) throws ExceptionDao {
-		try {
-			String query = ALTERAR_AGENDAMENTO;
-			conexao = ModuloConexao.conector();
-			preparedStatement = conexao.prepareStatement(query);
-			preparedStatement.setInt(1, agendamento.getCodServico());
-			preparedStatement.setFloat(2, Float.parseFloat(agendamento.getPrecoServico()));
-			preparedStatement.setString(3, agendamento.getDataAtendimento());
-			preparedStatement.setString(4, agendamento.getHoraAtendimento());
-			preparedStatement.setInt(5, agendamento.getCodCliente());
-			preparedStatement.executeUpdate();
-			JOptionPane.showMessageDialog(null, "Agendamento atualizado com sucesso!!");
-		} catch (SQLException e) {
-			throw new ExceptionDao("Erro ao atualizar o agendamento: " + e.getMessage());
-		} finally {
-			ModuloConexao.fecharConexao();
-		}
-	}
-
 	/**
 	 * Deleta um agendamento do banco de dados.
-	 * 
-	 * @param codCliente      O código do cliente do agendamento.
-	 * @param dataAgendamento A data do agendamento a ser cancelado.
+	 * @param codAgendamento O código do agendamento a ser cancelado.
 	 * @throws ExceptionDao Se ocorrer algum erro durante a exclusão.
 	 */
+	 
+    public void deletarAgendamento(int codAgendamento) throws ExceptionDao {
+        try {
+            String query = DELETAR_AGENDAMENTO;
+            conexao = ModuloConexao.conector();
+            preparedStatement = conexao.prepareStatement(query);
+            preparedStatement.setInt(1, codAgendamento);
+            preparedStatement.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Agendamento cancelado com sucesso!!");
+        } catch (SQLException e) {
+            throw new ExceptionDao("Erro ao cancelar o agendamento: " + e.getMessage());
+        } finally {
+            ModuloConexao.fecharConexao();
+        }
+    }
 
-	public void deletarAgendamento(int codCliente, String dataAgendamento) throws ExceptionDao {
+    /**
+     * Atualiza um agendamento no banco de dados.
+     * @param agendamento   O agendamento atualizado.
+     * @param codAgendamento O código do agendamento a ser atualizado.
+     * @throws ExceptionDao Se ocorrer algum erro durante a atualização.
+     */
+
+	public void atualizarAgendamento(Agendamento agendamento, int codAgendamento) throws ExceptionDao {
 	    try {
-	        String query = DELETAR_AGENDAMENTO;
+	        String query = ALTERAR_AGENDAMENTO;
 	        conexao = ModuloConexao.conector();
 	        preparedStatement = conexao.prepareStatement(query);
-	        preparedStatement.setInt(1, codCliente);
-	        preparedStatement.setString(2, dataAgendamento);
+	        preparedStatement.setInt(1, agendamento.getCodUsuario());
+	        preparedStatement.setInt(2, agendamento.getCodCliente());
+	        preparedStatement.setInt(3, agendamento.getCodServico());
+	        preparedStatement.setDouble(4, agendamento.getPrecoServico());
+	        preparedStatement.setString(5, agendamento.getDataAtendimento());
+	        preparedStatement.setString(6, agendamento.getHoraAtendimento());
+	        preparedStatement.setInt(7, codAgendamento);
 	        preparedStatement.executeUpdate();
-	        JOptionPane.showMessageDialog(null, "Agendamento cancelado com sucesso!!");
+	        JOptionPane.showMessageDialog(null, "Agendamento atualizado com sucesso!!");
 	    } catch (SQLException e) {
-	        throw new ExceptionDao("Erro ao cancelar o agendamento: " + e);
+	        throw new ExceptionDao("Erro ao atualizar o agendamento: " + e);
 	    } finally {
 	        ModuloConexao.fecharConexao();
 	    }
@@ -149,7 +148,6 @@ public class AgendaDao {
 
 	/**
 	 * Lista todos os serviços cadastrados no banco de dados.
-	 * 
 	 * @return Uma lista de serviços.
 	 */
 	public static ArrayList<Servico> listarServicos() {
@@ -180,12 +178,12 @@ public class AgendaDao {
 	}
 	
 	/**
-     * Consulta um agendamento por ID.
-     * @param idAgendamento O ID do agendamento a ser consultado.
-     * @return O agendamento encontrado ou null se não encontrado.
-     * @throws SQLException Se ocorrer algum erro durante a consulta.
-     */
-    public static Agendamento consultarAgendamentoPorId(int codAgendamento) throws SQLException {
+	 * Consulta um agendamento por ID.
+	 * @param codAgendamento O ID do agendamento a ser consultado.
+	 * @return O agendamento encontrado ou null se não encontrado.
+	 * @throws SQLException Se ocorrer algum erro durante a consulta.
+	 */
+   public static Agendamento consultarAgendamentoPorId(int codAgendamento) throws SQLException {
         String query = BUSCAR_AGENDAMENTO_POR_ID;
         Connection conexao = ModuloConexao.conector();
         Agendamento agendamento = null;
@@ -215,13 +213,13 @@ public class AgendaDao {
         return agendamento;
     }
     
-    /**
-     * Consulta os horários marcados para um determinado barbeiro em uma data específica.
-     * @param codBarbeiro O código do barbeiro.
-     * @param dataAgendamento A data dos agendamentos.
-     * @return Uma lista de horários marcados para o barbeiro na data especificada.
-     * @throws SQLException Se ocorrer algum erro durante a consulta ao banco de dados.
-     */
+   /**
+    * Consulta os horários marcados para um determinado barbeiro em uma data específica.
+    * @param codBarbeiro O código do barbeiro.
+    * @param dataAgendamento A data dos agendamentos.
+    * @return Uma lista de horários marcados para o barbeiro na data especificada.
+    * @throws SQLException Se ocorrer algum erro durante a consulta ao banco de dados.
+    */
     public ArrayList<LocalTime> consultarHorariosMarcados(int codBarbeiro, String dataAgendamento) throws SQLException {
         ArrayList<LocalTime> horariosMarcados = new ArrayList<>();
         Connection conexao = ModuloConexao.conector();
@@ -245,44 +243,39 @@ public class AgendaDao {
         
         return horariosMarcados;
     }
+    /**
+     * Busca o código de um agendamento no banco de dados com base nos parâmetros fornecidos.
+     * @param codCliente O código do cliente do agendamento.
+     * @param codUsuario O código do usuário responsável pelo agendamento.
+     * @param codServico O código do serviço realizado no agendamento.
+     * @param dataAtendimento A data do agendamento no formato "dd/MM/yyyy".
+     * @param horaAtendimento A hora do agendamento no formato "HH:mm".
+     * @return O código do agendamento encontrado ou -1 se não encontrado.
+     * @throws SQLException Se ocorrer algum erro durante a busca no banco de dados.
+     */
 
-    
-    
+    public static int buscarCodAgendamento(int codCliente, int codUsuario, int codServico, String dataAtendimento, String horaAtendimento) throws SQLException {
+        int codAgendamento = -1;
 
-	public static Agendamento consultarAgendamentoByID(String idAgendamento) throws ExceptionDao {
-		String query = BUSCAR_AGENDAMENTO_POR_ID;
-		Connection conexao = ModuloConexao.conector();
-		Agendamento agendamento = null;
+        try (Connection conexao = ModuloConexao.conector();
+             PreparedStatement pst = conexao.prepareStatement(BUSCAR_COD_AGENDAMENTO)) {
 
-		try {
-			preparedStatement = conexao.prepareStatement(query);
+            pst.setInt(1, codCliente);
+            pst.setInt(2, codUsuario);
+            pst.setInt(3, codServico);
+            pst.setString(4, dataAtendimento);
+            pst.setString(5, horaAtendimento);
 
-			int i = 1;
-			preparedStatement.setString(i++, idAgendamento);
-			rs = preparedStatement.executeQuery();
-			while (rs.next()) {
-				int codAtendimento = rs.getInt("codAgendamento");
-				Cliente cliente = new Cliente(rs.getInt("codCliente"), rs.getString("nomeCliente"),
-						rs.getString("cpfCliente"));
-				Servico servico = new Servico(rs.getInt("codServico"), rs.getString("tipoServico"),
-						rs.getDouble("precoServico"));
-				Usuario usuario = new Usuario(rs.getInt("codUsuario"), rs.getString("nomeUsuario"));
-				LocalDate dataAtendimento = rs.getDate("dataAgendamento").toLocalDate();
-				LocalTime horaAtendimento = rs.getTime("horaAtendimento").toLocalTime();
-				agendamento = new Agendamento(codAtendimento, servico, cliente, usuario, dataAtendimento,
-						horaAtendimento);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ModuloConexao.fecharConexao();
-		}
-		if (agendamento == null) {
-			JOptionPane.showMessageDialog(null, "Não foi possível encontrar este Agendamento ", "",
-					JOptionPane.WARNING_MESSAGE);
-			throw new ExceptionDao("Não foi possivel localizar o agendamento selecionado");
-		}
-		return agendamento;
-	}
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    codAgendamento = rs.getInt("codAgendamento");
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao buscar o código do agendamento: " + e.getMessage(), e);
+        }
+
+        return codAgendamento;
+    }
 
 }
