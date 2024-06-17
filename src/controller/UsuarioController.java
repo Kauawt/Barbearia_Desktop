@@ -16,8 +16,6 @@ import model.Gerente;
 import dao.UsuarioDao;
 import model.Usuario;
 import model.Validador;
-import view.TelaCliente;
-import view.TelaUsuario;
 
 public class UsuarioController {
 	
@@ -85,7 +83,6 @@ public class UsuarioController {
 		Gerente usuario = new Gerente(nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario, emailUsuario,
 				senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.cadastrarUsuario(usuario);
-		System.out.println(usuario);
 
 	}
 	/**
@@ -110,7 +107,6 @@ public class UsuarioController {
 		Gerente usuario = new Gerente(codUsuario, nomeUsuario, cpfUsuario, dataNascimentoUsuario, salarioUsuario,
 				emailUsuario, senhaUsuario, perfilUsuario, statusUsuario);
 		usuario.alterarUsuario(usuario);
-		System.out.println(usuario);
 
 	}
 	public UsuarioController() {

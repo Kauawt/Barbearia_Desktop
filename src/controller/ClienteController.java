@@ -5,7 +5,6 @@ import java.text.ParseException;
 import javax.swing.JOptionPane;
 
 import controller.helper.ClienteHelper;
-import view.TelaCliente;
 import view.TelaClientePanel;
 import model.Cliente;
 import model.Usuario;
@@ -28,13 +27,15 @@ public class ClienteController {
 	 * da TelaCliente, instância esse objeto em um variavel(cliente), posteriormente
 	 * passa este objeto como parâmetro para o método cadastrarCliente da ClasseDao
 	 * (Responsável por puxar dados do BD)
+	 * @throws ExceptionDao 
 	 */
-	public void cadastrarCliente() {
+	public void cadastrarCliente() throws ExceptionDao {
 		Cliente cliente = clienteHelper.validadorCamposTelaCliente();
 		try {
 			cliente.cadastrarCliente(cliente);
 			clienteHelper.limparTelaCliente();
 		} catch (ExceptionDao e) {
+			JOptionPane.showMessageDialog(null, e + "Não foi possível converter os dados captados");
 			e.printStackTrace();
 		}
 	}
@@ -44,13 +45,15 @@ public class ClienteController {
 	 * da TelaCliente, instância esse objeto em um variavel(cliente), posteriormente
 	 * passa este objeto como parâmetro para o método alterarCliente da ClasseDao
 	 * (Responsável por alterar dados do BD)
+	 * @throws ExceptionDao 
 	 */
-	public void alterarCliente() {
+	public void alterarCliente() throws ExceptionDao {
 		Cliente cliente = clienteHelper.validadorCamposTelaCliente(); 
 		try {
 			cliente.alterarCliente(cliente);
 			clienteHelper.limparTelaCliente();
 		} catch (ExceptionDao e) {
+			JOptionPane.showMessageDialog(null, e + "Não foi possível converter os dados captados");
 			e.printStackTrace();
 		}
 	}
