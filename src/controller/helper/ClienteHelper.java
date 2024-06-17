@@ -1,10 +1,11 @@
 package controller.helper;
 
 import model.Cliente;
-import view.TelaCliente;
 import view.TelaClientePanel;
 
 import javax.swing.JOptionPane;
+
+import dao.ExceptionDao;
 
 public class ClienteHelper {
 	private TelaClientePanel telaClientePanel;
@@ -20,7 +21,7 @@ public class ClienteHelper {
 	 * atrelado ao campo inválido
 	 */
 
-	public Cliente validadorCamposTelaCliente() {
+	public Cliente validadorCamposTelaCliente(){
 
 		String nomeCliente = telaClientePanel.getTxtNomeCliente().getText();
 		String enderecoCliente = telaClientePanel.getTxtEnderecoCliente().getText();
@@ -28,11 +29,11 @@ public class ClienteHelper {
 		String cpfCliente = telaClientePanel.getFtxtCpfCliente().getText();
 		String statusCliente = telaClientePanel.getCbStatusCliente().getSelectedItem().toString();
 
-		if (nomeCliente != null && enderecoCliente != null && ValidadorHelper.validadorCpf(cpfCliente)) {
+		if (nomeCliente != null && enderecoCliente != null && ValidadorHelper.validadorCpf(cpfCliente))  {
 			Cliente cliente = new Cliente(nomeCliente, enderecoCliente, telefoneCliente, cpfCliente, statusCliente);
 			return cliente;
 		} else {
-
+			JOptionPane.showMessageDialog( null, "Todos os campos precisam ser preenchidos");
 			if (ValidadorHelper.validadorCpf(cpfCliente) == false) {
 				JOptionPane.showMessageDialog(null, "CPF Inválido");
 			}

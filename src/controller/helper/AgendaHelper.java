@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import model.Servico;
 import model.Validador;
-import view.TelaAgendamento;
 import view.TelaAgendamentoPanel;
 
 public class AgendaHelper {

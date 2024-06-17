@@ -148,9 +148,10 @@ public class TelaConsultaAgendamento extends JPanel {
 				if (e.getButton() == MouseEvent.BUTTON1) {
 					try {
 						int selectedRow = table.getSelectedRow(); // Obtém a linha selecionada na tabela
-						String codAgendamentoStr = modeloTabela.getValueAt(selectedRow, 0).toString();
-						String nomeUsuario = modeloTabela.getValueAt(selectedRow, 7).toString();
-						String dataAtendimentoStr = modeloTabela.getValueAt(selectedRow, 5).toString();
+						int modelRow = table.convertRowIndexToModel(selectedRow);
+						String codAgendamentoStr = modeloTabela.getValueAt(modelRow, 0).toString();
+						String nomeUsuario = modeloTabela.getValueAt(modelRow, 7).toString();
+						String dataAtendimentoStr = modeloTabela.getValueAt(modelRow, 5).toString();
 						int codAgendamento = Integer.parseInt(codAgendamentoStr);
 						String dataAtendimentoFormatada = DataUtil.formatarData(dataAtendimentoStr); // Formatar a data
 						int codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
