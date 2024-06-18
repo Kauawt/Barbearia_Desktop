@@ -65,7 +65,6 @@ public class AgendamentoController {
 	public void atualizaValor() {
 	    Servico servico = helper.obterServico();
 	    if (servico == null) {
-	        System.out.println("Serviço não selecionado.");
 	    } else {
 	        helper.setarValor(servico.getPrecoServico());
 	    }
@@ -133,10 +132,8 @@ public class AgendamentoController {
         ArrayList<LocalTime> cargaHoraria = new ArrayList<>();
         LocalTime horarioInicio = LocalTime.of(8, 0); // Horário de início da jornada
         LocalTime horarioFim = LocalTime.of(19, 0); // Horário de término da jornada
-
         DayOfWeek diaDaSemana = data.getDayOfWeek();
-        // Verifica se é de segunda a sábado
-        if (diaDaSemana != DayOfWeek.SUNDAY) {
+        if (diaDaSemana != DayOfWeek.SUNDAY) {        // Verifica se é de segunda a sábado
             while (horarioInicio.isBefore(horarioFim)) {
                 cargaHoraria.add(horarioInicio);
                 horarioInicio = horarioInicio.plusMinutes(30); // 30 minutos padrão para o tempo do corte
@@ -144,11 +141,10 @@ public class AgendamentoController {
         return cargaHoraria;
         }
     /**
-     * Obtém os horários disponíveis para agendamento de um barbeiro em uma determinada data.
-     *
-     * @param codBarbeiro O código do barbeiro para o qual se deseja verificar os horários disponíveis.
-     * @param dataAgendamento A data para a qual se deseja agendar no formato "dd/MM/yyyy".
-     * @return ArrayList contendo os horários disponíveis para agendamento na data especificada.
+     * Retorna uma lista de horários disponíveis para agendamento de um barbeiro em uma data específica.
+     * @param codBarbeiro ID do barbeiro para consulta dos horários disponíveis.
+     * @param dataAgendamento Data para a qual se deseja verificar os horários disponíveis no formato "dd/MM/yyyy".
+     * @return ArrayList contendo os horários disponíveis para agendamento.
      */
     public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
         try {
@@ -160,22 +156,18 @@ public class AgendamentoController {
                 e.printStackTrace();
                 return new ArrayList<>();}
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataAgendamentoFormatada = LocalDate.parse(dataAgendamento, formatter);            
-            // Verifica se o dia é domingo
+            LocalDate dataAgendamentoFormatada = LocalDate.parse(dataAgendamento, formatter);
             if (dataAgendamentoFormatada.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 JOptionPane.showMessageDialog(null, "Não é possível agendar no Domingo.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return new ArrayList<>(); }
+                return new ArrayList<>();}
             ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro(dataAgendamentoFormatada);
             Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
             ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
             LocalTime horarioAtual = LocalTime.now();
-
             LocalDate hoje = LocalDate.now();
-            
             if (dataAgendamentoFormatada.isBefore(hoje)) {
                 JOptionPane.showMessageDialog(null, "Data de agendamento não pode ser anterior ao dia de hoje.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return new ArrayList<>();
-            }
+                return new ArrayList<>();}
             if (dataAgendamentoFormatada.equals(hoje)) {
                 LocalTime horarioInicioExpediente = horarioAtual.plusMinutes(30 - (horarioAtual.getMinute() % 30));
                 for (LocalTime horario : cargaHoraria) {
@@ -196,23 +188,4 @@ public class AgendamentoController {
             e.printStackTrace();
             return new ArrayList<>();
         }}
-
-	
-	/**
-	 * Busca o código de um agendamento através dos códigos de cliente, usuário, serviço, data e hora de atendimento.
-	 * Chama o método estático buscarCodAgendamento do AgendaDao para realizar a busca no banco de dados.
-	 *
-	 * @param codCliente O código do cliente associado ao agendamento.
-	 * @param codUsuario O código do usuário responsável pelo agendamento.
-	 * @param codServico O código do serviço realizado no agendamento.
-	 * @param dataAtendimento A data do agendamento no formato "dd/MM/yyyy".
-	 * @param horaAtendimento A hora do agendamento no formato "HH:mm".
-	 * @return O código do agendamento encontrado.
-	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados durante a busca.
-	 */
-	 public static int buscarCodAgendamento(int codCliente, int codUsuario, int codServico, String dataAtendimento, String horaAtendimento) throws ExceptionDao {
-		    try {
-		        return AgendaDao.buscarCodAgendamento(codCliente, codUsuario, codServico, dataAtendimento, horaAtendimento);
-		    } catch (SQLException e) {
-		        throw new ExceptionDao("Erro ao buscar código do agendamento: " + e.getMessage());
-		    }}}
+}

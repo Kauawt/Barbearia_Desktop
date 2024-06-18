@@ -47,7 +47,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
-
+/**
+ * Painel de interface para consulta de usuários.
+ */
 public class TelaConsultaUsuario extends JPanel {
 
 	/**
@@ -204,7 +206,10 @@ public class TelaConsultaUsuario extends JPanel {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
 	}
-
+	/**
+     * Filtra os resultados da consulta de usuários com base no texto inserido no campo de filtragem.
+     * O filtro é aplicado de forma case insensitive.
+     */
 	private void filtrar() {
 		String filtrar = txtFiltrar.getText().trim();
 		if (filtrar.length() == 0) {

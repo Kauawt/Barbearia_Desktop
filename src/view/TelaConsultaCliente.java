@@ -51,7 +51,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.ImageIcon;
-
+/**
+ * Painel de interface para consulta de clientes.
+ */
 public class TelaConsultaCliente extends JPanel {
 
 	/**
@@ -209,7 +211,10 @@ public class TelaConsultaCliente extends JPanel {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
 	}
-
+	/**
+     * Filtra os resultados da consulta com base no texto inserido no campo de filtragem.
+     * O filtro é aplicado de forma case insensitive.
+     */
 	private void filtrar() {
 		String filtrar = txtFiltrar.getText().trim();
 		if (filtrar.length() == 0) {

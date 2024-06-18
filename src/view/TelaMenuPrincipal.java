@@ -45,7 +45,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import view.JPictureBox.SizeMode;
 import java.awt.ComponentOrientation;
-
+/**
+ * Classe responsável pela interface do menu principal do sistema.
+ * Esta classe estende JFrame para criar uma janela que exibe opções principais de navegação.
+ */
 public class TelaMenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;

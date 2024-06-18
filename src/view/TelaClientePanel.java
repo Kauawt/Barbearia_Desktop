@@ -31,7 +31,9 @@ import dao.ClienteDao;
 import dao.ExceptionDao;
 import model.Cliente;
 import net.miginfocom.swing.MigLayout;
-
+/**
+ * Painel de interface para gerenciamento de clientes.
+ */
 public class TelaClientePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -287,7 +289,11 @@ public class TelaClientePanel extends JPanel {
 			preencherCampos(clienteSelecionado);
 		}
 	}
-
+	 /**
+     * Preenche os campos da interface com as informações do cliente selecionado.
+     * @param clienteSelecionado O cliente cujas informações serão exibidas nos campos da interface.
+     * @throws ExceptionDao Se ocorrer um erro ao acessar os dados do cliente no banco de dados.
+     */
 	private void preencherCampos(Cliente clienteSelecionado) throws ExceptionDao {
 		txtNomeCliente.setText(clienteSelecionado.getNomeCliente());
 		txtEnderecoCliente.setText(clienteSelecionado.getEnderecoCliente());

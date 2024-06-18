@@ -49,7 +49,9 @@ import model.ModeloTabelaAgendamento;
 import model.ModeloTabelaCliente;
 import model.ModeloTabelaUsuario;
 import net.miginfocom.swing.MigLayout;
-
+/**
+ * Painel de interface para consulta de agendamentos.
+ */
 public class TelaConsultaAgendamento extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -222,8 +224,17 @@ public class TelaConsultaAgendamento extends JPanel {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setBounds(100, 100, 640, 480);
 	}
-
+	/**
+     * Classe utilitária para formatação de datas.
+     * Converte uma data do formato "yyyy-MM-dd" para "dd/MM/yyyy".
+     */
 	public class DataUtil {
+		/**
+         * Formata uma data do formato "yyyy-MM-dd" para "dd/MM/yyyy".
+         * @param dataOriginal A data no formato "yyyy-MM-dd".
+         * @return A data formatada no formato "dd/MM/yyyy".
+         * @throws ParseException Se houver um erro ao analisar a data original.
+         */
 		public static String formatarData(String dataOriginal) throws ParseException {
 			SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat formatoDesejado = new SimpleDateFormat("dd/MM/yyyy");
@@ -240,7 +251,9 @@ public class TelaConsultaAgendamento extends JPanel {
 	public void setTable(JTable table) {
 		this.table = table;
 	}
-
+	/**
+     * Filtra os resultados da consulta com base no texto inserido no campo de filtragem.
+     */
 	private void filtrar() {
 		String filtrar = txtFiltrar.getText().trim();
 		if (filtrar.length() == 0) {

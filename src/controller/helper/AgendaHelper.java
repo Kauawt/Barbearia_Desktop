@@ -123,5 +123,5 @@ public class AgendaHelper {
 		view.getJboxServico().setSelectedItem("");
 		view.getTxtValor().setText("");
 		view.getJboxHora().setSelectedItem("");
-		view.getJboxHora().setToolTipText("");
+		view.getTxtDataAgenda().setText("");
 	}}

@@ -42,6 +42,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.awt.event.ItemEvent;
 
+/**
+ * Painel de interface para gerenciamento de agendamentos.
+ * Este painel permite preencher informações de agendamento, atualizar horários disponíveis,
+ * inicializar a interface e formatar dados para criação de um novo agendamento.
+ */
 public class TelaAgendamentoPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -71,8 +76,6 @@ public class TelaAgendamentoPanel extends JPanel {
 	}
 
 	public TelaAgendamentoPanel(Agendamento agendamentoSelecionado) throws ExceptionDao, SQLException {
-		
-		
 		AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamentoPanel.this);
 		UsuarioController usuarioController = new UsuarioController();
 		usuarioController.inicializarUsuarioDao();
@@ -121,8 +124,6 @@ public class TelaAgendamentoPanel extends JPanel {
 		if (agendamentoSelecionado == null) {
 			txtValor = new JFormattedTextField("Valor R$");
 		}
-
-
 		JLabel lblAgenda = new JLabel("Agenda");
 		lblAgenda.setForeground(new Color(255, 255, 255));
 		lblAgenda.setBounds(220, 57, 280, 32);
@@ -185,8 +186,7 @@ public class TelaAgendamentoPanel extends JPanel {
 					carregarBarbeiros();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
-		    }
+				}}
 		});
 		DefaultListCellRenderer renderer = new DefaultListCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -203,21 +203,29 @@ public class TelaAgendamentoPanel extends JPanel {
 		panel_1.add(txtCpfCliente, "cell 2 2,growx,gapbottom 10");
 		
 		txtNomeCliente.addFocusListener(new FocusAdapter() {
+		    private boolean avisoExibido = false; 
 		    @Override
 		    public void focusGained(FocusEvent e) {
-		        String cpf = txtCpfCliente.getText();
+		        String cpf = txtCpfCliente.getText().trim(); 
+		        if (cpf.isEmpty()) {
+		            if (!avisoExibido) {
+		                JOptionPane.showMessageDialog(null, "Por favor, insira um CPF antes de buscar o nome do Cliente!");
+		                avisoExibido = true; }
+		            return;}
+
 		        try {
 		            String nomeCliente = ClienteController.consultarNomeCliente(cpf);
 		            if (nomeCliente != null) {
 		                txtNomeCliente.setText(nomeCliente);
 		            } else {
 		                txtNomeCliente.setText("");
-		            }
+		                if (!avisoExibido) {
+		                    JOptionPane.showMessageDialog(null, "Por favor, insira um Cliente cadastrado!");
+		                    avisoExibido = true; }}
 		        } catch (Exception ex) {
 		            ex.printStackTrace();
 		            JOptionPane.showMessageDialog(null, "Por favor, insira um CPF correto! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-		        }
-		    }
+		        }}
 		});
 
 		txtNomeCliente.setBorder(null);
@@ -283,7 +291,6 @@ public class TelaAgendamentoPanel extends JPanel {
 		            JOptionPane.showMessageDialog(null, "Por favor preencha uma data, use o formato dd/MM/yyyy.");
 		        }}
 		});
-
 		txtObs = new PlaceholderTextField("Observações:");
 		txtObs.setForeground(new Color(128, 128, 128));
 		txtObs.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -342,15 +349,13 @@ public class TelaAgendamentoPanel extends JPanel {
 		            ex.printStackTrace();
 		            JOptionPane.showMessageDialog(null, "Erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		        }}
-		});
-		       
+		});       
 		JButton btnConsultar = new JButton("Consultar");
 		btnConsultar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		btnConsultar.setPreferredSize(new Dimension(100, 40));
 		btnConsultar.setBackground(new Color(240, 240, 240));
 		btnConsultar.setBounds(148, 367, 104, 41);
 		panel_1.add(btnConsultar, "cell 2 3,growx");
-
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaMenuPrincipal mainFrame = (TelaMenuPrincipal) SwingUtilities
@@ -377,7 +382,6 @@ public class TelaAgendamentoPanel extends JPanel {
 		            JOptionPane.showMessageDialog(null, "Erro ao cancelar: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		        }}
 		});
-
 		btnCancelar.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		btnCancelar.setBackground(new Color(240, 240, 240));
 		btnCancelar.setIcon(null);
@@ -422,9 +426,13 @@ public class TelaAgendamentoPanel extends JPanel {
 		setMinimumSize(new Dimension(450, 480));
 		setAlignmentY(Component.TOP_ALIGNMENT);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setBounds(100, 100, 640, 480);
-
-	}
+		setBounds(100, 100, 640, 480);}
+		
+		/**
+	     * Preenche as informações de um agendamento selecionado nos campos correspondentes.
+	     * @param agendamentoSelecionado O agendamento a ser exibido nos campos.
+	     * @throws SQLException Se houver um problema ao acessar dados do banco.
+	     */
 	private void preencherInfos(Agendamento agendamentoSelecionado) throws SQLException {
 		txtCpfCliente.setText(agendamentoSelecionado.getCliente().getCpfCliente());
 		txtNomeCliente.setText(agendamentoSelecionado.getCliente().getNomeCliente());
@@ -439,22 +447,28 @@ public class TelaAgendamentoPanel extends JPanel {
 		if (barbeiro != null) {
 			jboxBarbeiro.setSelectedItem(barbeiro.getNomeUsuario());
 		} else {
-		}
-	}
+		}}
 	
+		/**
+	     * Atualiza os horários disponíveis baseados no barbeiro selecionado e na data do agendamento.
+	     * Exibe uma mensagem de erro se a data do agendamento não estiver preenchida.
+	     */
 	private void atualizarHorariosDisponiveis() {
-	    String nomeUsuarioSelecionado = (String) jboxBarbeiro.getSelectedItem();
-	    String dataAgendamento = txtDataAgenda.getText();
-
-	    if (dataAgendamento.isEmpty()) {
-	        JOptionPane.showMessageDialog(null, "Por favor, forneça a data de agendamento (formato: dd/MM/yyyy):");
+	    Object selectedObject = jboxBarbeiro.getSelectedItem();
+	    if (selectedObject == null) {
 	        return;
 	    }
-
-	    if (nomeUsuarioSelecionado == null || nomeUsuarioSelecionado.isEmpty()) {
+	    String nomeUsuarioSelecionado;
+	    if (selectedObject instanceof Usuario) {
+	        nomeUsuarioSelecionado = ((Usuario) selectedObject).getNomeUsuario();
+	    } else if (selectedObject instanceof String) {
+	        nomeUsuarioSelecionado = (String) selectedObject;
+	    } else {
+	        nomeUsuarioSelecionado = selectedObject.toString(); 
+	    }
+	    if (nomeUsuarioSelecionado.isEmpty()) {
 	        return;
 	    }
-
 	    int codUsuario = -1;
 	    try {
 	        codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuarioSelecionado);
@@ -462,8 +476,13 @@ public class TelaAgendamentoPanel extends JPanel {
 	        e.printStackTrace();
 	        return;
 	    }
-
 	    if (codUsuario != -1) {
+	        String dataAgendamento = txtDataAgenda.getText();
+
+	        if (dataAgendamento.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Por favor, forneça a data de agendamento (formato: dd/MM/yyyy)");
+	            return;
+	        }
 	        ArrayList<LocalTime> horariosDisponiveis = controller.obterHorariosDisponiveis(codUsuario, dataAgendamento);
 	        jboxHora.removeAllItems();
 	        for (LocalTime horario : horariosDisponiveis) {
@@ -472,69 +491,81 @@ public class TelaAgendamentoPanel extends JPanel {
 	    } else {
 	    }
 	}
-
-
+	/**
+     * Inicializa a interface de agendamento, atualizando serviços, valores e carregando a lista de barbeiros.
+     * @throws ExceptionDao Se houver um problema ao acessar dados do banco.
+     * @throws SQLException Se houver um problema ao acessar dados do banco.
+     */
 	private void iniciar() throws ExceptionDao, SQLException {
-		//getJboxBarbeiro().setSelectedItem(null);
 		controller = new AgendamentoController(this);
 		controller.atualizaServico();
 		controller.atualizaValor();
 		carregarBarbeiros();
 	}
-	
+	/**
+     * Formata os dados inseridos na interface para criar um novo agendamento.
+     * Exibe mensagens de erro se os dados estiverem incompletos ou inválidos.
+     * @return Um array de objetos contendo os dados formatados para o agendamento.
+     * Retorna null se os dados não puderem ser formatados corretamente.
+     * @throws ParseException Se houver um erro ao analisar os dados inseridos.
+     * @throws ExceptionDao Se houver um problema ao acessar dados do banco.
+     * @throws SQLException Se houver um problema ao acessar dados do banco.
+     */
 	private Object[] formatarDados() throws ParseException, ExceptionDao, SQLException {
-	    String nomeUsuario = (String) jboxBarbeiro.getSelectedItem();
+	    Object selectedObject = jboxBarbeiro.getSelectedItem();
+
+	    if (selectedObject == null) {
+	        JOptionPane.showMessageDialog(null, "Selecione um barbeiro válido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	        return null;
+	    }
+
+	    int codUsuario = -1;
+	    if (selectedObject instanceof Usuario) {
+	        codUsuario = ((Usuario) selectedObject).getCodUsuario();
+	    } else if (selectedObject instanceof String) {
+	        String nomeUsuario = (String) selectedObject;
+	        codUsuario = UsuarioController.buscarCodigoUsuarioPorNome(nomeUsuario);
+	    } else {
+	        JOptionPane.showMessageDialog(null, "Item selecionado inválido.", "Aviso", JOptionPane.WARNING_MESSAGE);
+	        return null;}
 	    String cpfCliente = txtCpfCliente.getText();
 	    Servico servico = (Servico) jboxServico.getSelectedItem();
 	    double precoServico = Double.parseDouble(txtValor.getText());
 	    String dataAtendimento = txtDataAgenda.getText();
 	    LocalTime horaAtendimento = (LocalTime) jboxHora.getSelectedItem();
-
-	    int codUsuario = UsuarioController.buscarCodigoUsuarioPorNome(nomeUsuario);
-	    if (codUsuario == -1) {
+	    
+	    if (horaAtendimento == null) {
 	        return null;
 	    }
 
 	    int codServico = ServicoController.buscarCodigoServicoPorNome(servico.getTipoServico());
 	    if (codServico == -1) {
-	    	return null;
+	        return null;
 	    }
-
 	    int codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
 	    if (codCliente == -1) {
 	        return null;
 	    }
 	    return new Object[]{codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento};
 	}
-	
-	/*private void carregarBarbeiros() {
-	    try {
-	        UsuarioController usuarioController = new UsuarioController();
-	        ArrayList<Usuario> barbeiros = usuarioController.obterUsuarios();
-	        jboxBarbeiro.removeAllItems();
-	        for (Usuario barbeiro : barbeiros) {
-	            if (barbeiro != null) {
-	                jboxBarbeiro.addItem(barbeiro);
-	            }}
-	    } catch (ExceptionDao ex) {
-	        ex.printStackTrace();
-	    }}*/
-	
+	/**
+     * Carrega a lista de barbeiros disponíveis no sistema e os adiciona ao seletor de barbeiros (jboxBarbeiro).
+     * Exibe uma mensagem de erro se houver problema ao acessar dados do banco.
+     * @throws SQLException Se houver um problema ao acessar dados do banco.
+     */
 	private void carregarBarbeiros() throws SQLException {
 	    try {
 	        UsuarioController usuarioController = new UsuarioController();
 	        ArrayList<Usuario> barbeiros = usuarioController.obterUsuarios();
 
-	        // Limpar JComboBox e adicionar novos itens
 	        jboxBarbeiro.removeAllItems();
 	        for (Usuario barbeiro : barbeiros) {
 	            if (barbeiro != null) {
-	                jboxBarbeiro.addItem(barbeiro); // Adiciona o objeto Usuario diretamente
+	                jboxBarbeiro.addItem(barbeiro);
 	            }
 	        }
 	    } catch (ExceptionDao ex) {
-	        ex.printStackTrace(); // Trate a exceção conforme necessário
-	        // Aqui você pode adicionar uma mensagem de erro ou outro tratamento adequado
+	        ex.printStackTrace();
 	    }
 	}
 	 
