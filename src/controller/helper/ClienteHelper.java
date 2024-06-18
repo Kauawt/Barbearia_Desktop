@@ -4,17 +4,25 @@ import model.Cliente;
 import view.TelaClientePanel;
 
 import javax.swing.JOptionPane;
-
+/**
+ * Classe helper responsável por auxiliar na manipulação de dados e interação da interface
+ * relacionados aos clientes.
+ * Recebe e manipula a interface de cliente (TelaClientePanel).
+ */
 import dao.ExceptionDao;
 
 public class ClienteHelper {
 	private TelaClientePanel telaClientePanel;
 
+	/**
+     * Construtor da classe ClienteHelper.
+     * @param telaClientePanel A interface de cliente associada a este helper.
+     */
 	public ClienteHelper(TelaClientePanel telaClientePanel) {
 		this.telaClientePanel = telaClientePanel;
 	}
 
-	/*
+	/**
 	 * Capta dos dados da tela do cliente e valida os campos. Caso esteja tudo
 	 * correto ele cria um objeto do tipo cliente e devolve ao Cliente Controller.
 	 * Caso não esteja ele simplesmente retorna null e apresenta uma mensagem
@@ -41,7 +49,9 @@ public class ClienteHelper {
 		}
 	}
 
-
+	/**
+     * Limpa os campos da tela de Cliente.
+     */
 	public void limparTelaCliente() {
 	
 		telaClientePanel.getTxtNomeCliente().setText("");

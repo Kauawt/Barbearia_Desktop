@@ -55,6 +55,7 @@ public class TelaAgendamentoPanel extends JPanel {
 	private JComboBox<Usuario> jboxBarbeiro;
 	private AgendamentoController controller;
 	private JComboBox<LocalTime> jboxHora;
+	private UsuarioDao UsuarioDao;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -73,6 +74,9 @@ public class TelaAgendamentoPanel extends JPanel {
 		
 		
 		AgendaHelper agendaHelper = new AgendaHelper(TelaAgendamentoPanel.this);
+		UsuarioController usuarioController = new UsuarioController();
+		usuarioController.inicializarUsuarioDao();
+		this.UsuarioDao = new UsuarioDao();
 		setBackground(new Color(232, 227, 225));
 
 		setSize(new Dimension(640, 480));
@@ -114,6 +118,10 @@ public class TelaAgendamentoPanel extends JPanel {
 		if (agendamentoSelecionado == null) {
 			txtCpfCliente = new PlaceholderTextField("CPF");
 		}
+		if (agendamentoSelecionado == null) {
+			txtValor = new JFormattedTextField("Valor R$");
+		}
+
 
 		JLabel lblAgenda = new JLabel("Agenda");
 		lblAgenda.setForeground(new Color(255, 255, 255));
@@ -170,13 +178,25 @@ public class TelaAgendamentoPanel extends JPanel {
 
 		jboxBarbeiro.setForeground(new Color(128, 128, 128));
 		jboxBarbeiro.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		jboxBarbeiro.addFocusListener(new FocusAdapter() {
+		    @Override
+		    public void focusGained(FocusEvent e) {
+		        try {
+					carregarBarbeiros();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+		    }
+		});
+		DefaultListCellRenderer renderer = new DefaultListCellRenderer();
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		jboxBarbeiro.setRenderer(renderer);
 		jboxBarbeiro.setBounds(261, 305, 176, 22);
 		jboxBarbeiro.setEditable(true);
-		jboxBarbeiro.setModel(new DefaultComboBoxModel(new String[] { "João Paulo", "Fabricio Vieira", "Matheus Inacio",
-				"Anthony Oliveira", "Sergio Ramos" }));
 		panel_1.add(jboxBarbeiro, "flowy,cell 2 2,growx,gapbottom 10");
 
 		txtCpfCliente = new JFormattedTextField(cpfMask);
+		txtCpfCliente.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCpfCliente.setForeground(new Color(128, 128, 128));
 		txtCpfCliente.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtCpfCliente.setBounds(261, 141, 176, 20);
@@ -191,11 +211,11 @@ public class TelaAgendamentoPanel extends JPanel {
 		            if (nomeCliente != null) {
 		                txtNomeCliente.setText(nomeCliente);
 		            } else {
-		                txtNomeCliente.setText(""); // Limpa o campo se o nome do cliente não for encontrado
+		                txtNomeCliente.setText("");
 		            }
 		        } catch (Exception ex) {
 		            ex.printStackTrace();
-		            JOptionPane.showMessageDialog(null, "Erro ao buscar nome do cliente: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(null, "Por favor, insira um CPF correto! " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		        }
 		    }
 		});
@@ -214,6 +234,8 @@ public class TelaAgendamentoPanel extends JPanel {
 		jboxServico.setToolTipText("");
 		jboxServico.setForeground(new Color(128, 128, 128));
 		jboxServico.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		jboxServico.setRenderer(renderer);
 		jboxServico.setBounds(261, 305, 176, 22);
 		panel_1.add(jboxServico, "cell 2 2,growx,gapbottom 10");
 		jboxServico.addActionListener(new ActionListener() {
@@ -224,12 +246,14 @@ public class TelaAgendamentoPanel extends JPanel {
 		});
 
 		txtValor = new JFormattedTextField(precoMask);
+		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
 		txtValor.setForeground(new Color(128, 128, 128));
 		txtValor.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 		txtValor.setBounds(261, 172, 176, 20);
 		panel_1.add(txtValor, "cell 2 2,growx,gapbottom 10");
 
 		txtDataAgenda = new JFormattedTextField(dataMask);
+		txtDataAgenda.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDataAgenda.setText("Data");
 		txtDataAgenda.addActionListener(new ActionListener() {
 			@Override
@@ -253,10 +277,10 @@ public class TelaAgendamentoPanel extends JPanel {
 		            if (dataAgendamento.isAfter(hoje.minusDays(1)) && dataAgendamento.isBefore(dataMaxima.plusDays(1))) {
 		                atualizarHorariosDisponiveis();
 		            } else {
-		                JOptionPane.showMessageDialog(null, "A data de agendamento deve ser até 45 dias a partir de hoje.");
+		                JOptionPane.showMessageDialog(null, "Data de agendamento não permitida! (Permitido: 45 dias a partir de hoje)");
 		            }
 		        } catch (DateTimeParseException ex) {
-		            JOptionPane.showMessageDialog(null, "Formato de data inválido. Por favor, use o formato dd/MM/yyyy.");
+		            JOptionPane.showMessageDialog(null, "Por favor preencha uma data, use o formato dd/MM/yyyy.");
 		        }}
 		});
 
@@ -269,6 +293,8 @@ public class TelaAgendamentoPanel extends JPanel {
 		jboxHora = new JComboBox<LocalTime>();
 		jboxHora.setForeground(new Color(128, 128, 128));
 		jboxHora.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		jboxServico.setRenderer(renderer);
 		jboxHora.setBounds(261, 305, 176, 22);
 		jboxHora.setEditable(true);
 		panel_1.add(jboxHora, "cell 2 2,growx,gapbottom 10");
@@ -284,7 +310,7 @@ public class TelaAgendamentoPanel extends JPanel {
 				try {
 		            Object[] dadosFormatados = formatarDados();
 		            if (dadosFormatados == null || dadosFormatados.length != 6) {
-		                JOptionPane.showMessageDialog(null, "Dados formatados estão incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
+		                JOptionPane.showMessageDialog(null, "Por favor, preencha os dados corretamente.", "Erro", JOptionPane.ERROR_MESSAGE);
 		                return;
 		            }
 		            int codUsuario = (int) dadosFormatados[0];
@@ -418,7 +444,7 @@ public class TelaAgendamentoPanel extends JPanel {
 	
 	private void atualizarHorariosDisponiveis() {
 	    String nomeUsuarioSelecionado = (String) jboxBarbeiro.getSelectedItem();
-	    String dataAgendamento = txtDataAgenda.getText(); 
+	    String dataAgendamento = txtDataAgenda.getText();
 
 	    if (dataAgendamento.isEmpty()) {
 	        JOptionPane.showMessageDialog(null, "Por favor, forneça a data de agendamento (formato: dd/MM/yyyy):");
@@ -426,7 +452,6 @@ public class TelaAgendamentoPanel extends JPanel {
 	    }
 
 	    if (nomeUsuarioSelecionado == null || nomeUsuarioSelecionado.isEmpty()) {
-	        JOptionPane.showMessageDialog(null, "Por favor, selecione um barbeiro.");
 	        return;
 	    }
 
@@ -434,7 +459,6 @@ public class TelaAgendamentoPanel extends JPanel {
 	    try {
 	        codUsuario = UsuarioDao.buscarCodigoUsuarioPorNome(nomeUsuarioSelecionado);
 	    } catch (SQLException e) {
-	        JOptionPane.showMessageDialog(null, "Erro ao buscar código do usuário.");
 	        e.printStackTrace();
 	        return;
 	    }
@@ -446,16 +470,16 @@ public class TelaAgendamentoPanel extends JPanel {
 	            jboxHora.addItem(horario);
 	        }
 	    } else {
-	        JOptionPane.showMessageDialog(null, "Código do usuário não encontrado para o barbeiro selecionado.");
 	    }
 	}
 
 
 	private void iniciar() throws ExceptionDao, SQLException {
-		getJboxBarbeiro().setSelectedItem("");
+		//getJboxBarbeiro().setSelectedItem(null);
 		controller = new AgendamentoController(this);
 		controller.atualizaServico();
 		controller.atualizaValor();
+		carregarBarbeiros();
 	}
 	
 	private Object[] formatarDados() throws ParseException, ExceptionDao, SQLException {
@@ -468,24 +492,52 @@ public class TelaAgendamentoPanel extends JPanel {
 
 	    int codUsuario = UsuarioController.buscarCodigoUsuarioPorNome(nomeUsuario);
 	    if (codUsuario == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do usuário não pôde ser encontrado para o nome de usuário fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
 	        return null;
 	    }
 
 	    int codServico = ServicoController.buscarCodigoServicoPorNome(servico.getTipoServico());
 	    if (codServico == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do serviço não pôde ser encontrado para o tipo de serviço fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
-	        return null;
+	    	return null;
 	    }
 
 	    int codCliente = ClienteController.buscarCodigoClientePorCPF(cpfCliente);
 	    if (codCliente == -1) {
-	        JOptionPane.showMessageDialog(null, "O código do cliente não pôde ser encontrado para o CPF fornecido.", "Aviso", JOptionPane.WARNING_MESSAGE);
 	        return null;
 	    }
 	    return new Object[]{codUsuario, codCliente, codServico, precoServico, dataAtendimento, horaAtendimento};
 	}
 	
+	/*private void carregarBarbeiros() {
+	    try {
+	        UsuarioController usuarioController = new UsuarioController();
+	        ArrayList<Usuario> barbeiros = usuarioController.obterUsuarios();
+	        jboxBarbeiro.removeAllItems();
+	        for (Usuario barbeiro : barbeiros) {
+	            if (barbeiro != null) {
+	                jboxBarbeiro.addItem(barbeiro);
+	            }}
+	    } catch (ExceptionDao ex) {
+	        ex.printStackTrace();
+	    }}*/
+	
+	private void carregarBarbeiros() throws SQLException {
+	    try {
+	        UsuarioController usuarioController = new UsuarioController();
+	        ArrayList<Usuario> barbeiros = usuarioController.obterUsuarios();
+
+	        // Limpar JComboBox e adicionar novos itens
+	        jboxBarbeiro.removeAllItems();
+	        for (Usuario barbeiro : barbeiros) {
+	            if (barbeiro != null) {
+	                jboxBarbeiro.addItem(barbeiro); // Adiciona o objeto Usuario diretamente
+	            }
+	        }
+	    } catch (ExceptionDao ex) {
+	        ex.printStackTrace(); // Trate a exceção conforme necessário
+	        // Aqui você pode adicionar uma mensagem de erro ou outro tratamento adequado
+	    }
+	}
+	 
 	public JComboBox<Object> getJboxServico() {
 		return jboxServico;
 	}
@@ -514,7 +566,7 @@ public class TelaAgendamentoPanel extends JPanel {
 		return txtCpfCliente;
 	}
 
-	public void setTxtNomeCliente(PlaceholderTextField txtNomeCliente) {
+	public void setTxtNomeCliente(JTextField txtNomeCliente) {
 		this.txtNomeCliente = txtNomeCliente;
 	}
 

@@ -12,7 +12,10 @@ import javax.swing.JOptionPane;
 import dao.ModuloConexao;
 import view.TelaLogin;
 import view.TelaMenuPrincipal;
-
+/**
+ * Controlador responsável pela lógica de login no sistema.
+ * Gerencia a interação entre a tela de login (TelaLogin) e a tela do menu principal (TelaMenuPrincipal).
+ */
 public class LoginController {
 	
 	private final TelaLogin telaLogin;
@@ -21,14 +24,17 @@ public class LoginController {
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
 
-	
+	 /**
+     * Construtor da classe LoginController.
+     * @param telaLogin A tela de login associada a este controlador.
+     */
 	public LoginController(TelaLogin telaLogin) {
 		this.telaLogin =telaLogin;
 		this.principal = new TelaMenuPrincipal(); // Instância  um objeto direto
 
 	}
 	
-	/*
+	/**
 	 * Verifica a conexão com o banco e devolve uma imagem de sucesso e falha
 	 */
 	public void verificaConexão() {
@@ -45,7 +51,7 @@ public class LoginController {
 		
 	}
 	
-	/*
+	/**
 	 * Faz a validação do usuário com base no banco de dados
 	 */
 	

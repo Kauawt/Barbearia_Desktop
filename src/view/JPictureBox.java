@@ -7,6 +7,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
+/**
+ * Um componente personalizado para exibir imagens com diferentes modos de redimensionamento, a fim de personalizar o sistema.
+ */
 public class JPictureBox extends JComponent {
 
     private Icon icon = null;
@@ -15,13 +18,21 @@ public class JPictureBox extends JComponent {
     private ImageIcon ii = null;
     private SizeMode sizeMode = SizeMode.STRETCH;
     private int newHeight, newWidth, originalHeight, originalWidth;
-
+    
+    /**
+     * Construtor padrão que inicializa o componente com dimensões padrão e configurações iniciais.
+     */
     public JPictureBox() {
         JPictureBox.this.setPreferredSize(dimension);
         JPictureBox.this.setOpaque(false);
         JPictureBox.this.setSizeMode(SizeMode.STRETCH);
     }
 
+    /**
+     * Método sobrescrito para desenhar o componente com a imagem de acordo com o modo de redimensionamento escolhido.
+     *
+     * @param g O contexto gráfico usado para desenhar o componente.
+     */
     @Override
     public void paintComponent(Graphics g) {
         if (ii != null) {
@@ -44,11 +55,20 @@ public class JPictureBox extends JComponent {
             }
         }
     }
-
+    /**
+     * Obtém o ícone atualmente definido para o componente (seleiconado sempre pela pasta icones)
+     *
+     * @return O ícone atual.
+     */
     public Icon getIcon() {
         return icon;
     }
 
+    /**
+     * Define o ícone a ser exibido no componente e realiza as operações necessárias de atualização.
+     *
+     * @param icon O novo ícone a ser definido.
+     */
     public void setIcon(Icon icon) {
         this.icon = icon;
         ii = (ImageIcon) icon;
@@ -66,14 +86,18 @@ public class JPictureBox extends JComponent {
     public void setSizeMode(SizeMode sizeMode) {
         this.sizeMode = sizeMode;
     }
-
+    /**
+     * Enumeração que define os diferentes modos de redimensionamento suportados pelo componente.
+     */
     public enum SizeMode {
         NORMAL,
         STRETCH,
         CENTER,
         ZOOM
     }
-
+    /**
+     * Método privado para calcular as novas dimensões da imagem mantendo a proporção original.
+     */
     private void aspectRatio() {
         if (ii != null) {
             newHeight = this.getHeight();
