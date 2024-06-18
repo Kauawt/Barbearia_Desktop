@@ -14,7 +14,10 @@ import controller.Criptografia;
 import model.Cliente;
 import model.Usuario;
 import dao.ExceptionDao;
-
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas a usuários no banco de dados.
+ * Implementa métodos para inserção, consulta, atualização e exclusão de dados de usuários.
+ */
 public class UsuarioDao {
 
 	private final String CADASTRAR_USUARIO = "insert into tbUsuario(nomeUsuario,cpfUsuario,dataNascimentoUsuario,salarioUsuario,emailUsuario,senhaUsuario,perfilUsuario,statusUsuario) values (?,?,?,?,?,?,?,?)";
@@ -51,7 +54,7 @@ public class UsuarioDao {
 			preparedStatement.setString(6, criptografia.criptografar().toString());
 			preparedStatement.setString(7, usuario.getPerfilUsuario());
 			preparedStatement.setString(8, usuario.getStatusUsuario());
-			preparedStatement.executeUpdate(); // atualiza o banco de dados
+			preparedStatement.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Usuario: " + e);
@@ -105,25 +108,27 @@ public class UsuarioDao {
      * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
      */
 
-	public ArrayList<Usuario> selectAllUsuarios() throws ExceptionDao {
-		String query = LISTAR_BARBEIRO;
-		ArrayList<Usuario> usuarios = new ArrayList<>();
+	public ArrayList<Usuario> selectAllUsuarios() throws SQLException {
+	    ArrayList<Usuario> usuarios = new ArrayList<>();
+	    String sql = "SELECT codUsuario, nomeUsuario FROM tbUsuario";
 
-		try (Connection conexao = ModuloConexao.conector();
-				PreparedStatement pst = conexao.prepareStatement(query);
-				ResultSet rs = pst.executeQuery()) {
+	    try (Connection conexao = ModuloConexao.conector();
+	         PreparedStatement stmt = conexao.prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
 
-			while (rs.next()) {
-				Usuario usuario = new Usuario();
-				usuario.setCodUsuario(rs.getInt("codUsuario"));
-				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-				usuarios.add(usuario);
-			}
-		} catch (SQLException e) {
-			throw new ExceptionDao("Erro ao buscar todos os usuários: " + e);
-		}
-		return usuarios;
+	        while (rs.next()) {
+	            Usuario usuario = new Usuario();
+	            usuario.setCodUsuario(rs.getInt("codUsuario"));
+	            usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+	            usuarios.add(usuario);
+	        }
+	    } catch (SQLException e) {
+	        throw new SQLException("Erro ao buscar todos os usuários: " + e.getMessage());
+	    }
+
+	    return usuarios;
 	}
+
 	/**
      * Método para consultar um usuário pelo CPF.
      * 
@@ -231,7 +236,7 @@ public class UsuarioDao {
      */
 
 	public static int buscarCodigoUsuarioPorNome(String nomeUsuario) throws SQLException {
-	    int codigoUsuario = -1; // Valor padrão para indicar que não foi encontrado
+	    int codigoUsuario = -1; 
 
 		try (Connection conexao = ModuloConexao.conector();
 				PreparedStatement preparedStatement = conexao.prepareStatement(CONSULTAR_USUARIO_POR_NOME)) {
@@ -264,7 +269,6 @@ public class UsuarioDao {
 				usuario = new Usuario();
 				usuario.setCodUsuario(rs.getInt("codUsuario"));
 				usuario.setNomeUsuario(rs.getString("nomeUsuario"));
-				// Preencha outros campos conforme necessário
 			}
 		} catch (SQLException e) {
 			throw new SQLException("Erro ao buscar usuário por ID: " + e.getMessage());

@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.Servico;
-
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas a serviços no banco de dados.
+ * Implementa métodos para inserção, consulta, atualização e exclusão de dados de serviços.
+ */
 public class ServicoDao {
 private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,descricaoServico,precoServico,duracaoServico,statusServico) values (?,?,?,?,?)";
 
@@ -194,7 +197,7 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 	     * @throws ExceptionDao Se ocorrer um erro durante a execução da operação de busca.
 	     */
 	 public static int buscarCodigoServicoPorNome(String nomeServico) throws ExceptionDao {
-	        int codServico = -1; // Valor padrão para indicar que não foi encontrado
+	        int codServico = -1;
 	        String query = CONSULTAR_SERVICO_POR_NOME;
 
 	        try (Connection conexao = ModuloConexao.conector();

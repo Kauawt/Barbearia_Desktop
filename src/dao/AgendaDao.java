@@ -17,6 +17,10 @@ import model.Usuario;
 import view.PlaceholderTextField;
 import model.Cliente;
 import model.Servico;
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas a agendamentos no banco de dados.
+ * Implementa métodos para inserção, consulta, atualização e exclusão de dados de agendamentos.
+ */
 
 public class AgendaDao {
 
@@ -50,8 +54,6 @@ public class AgendaDao {
 			String query = CADASTRAR_AGENDAMENTO;
 			conexao = ModuloConexao.conector();
 			preparedStatement = conexao.prepareStatement(query);
-
-			// Atribuir os IDs diretamente, sem verificar se o objeto é nulo
 			preparedStatement.setInt(1, agendamento.getCodUsuario());
 			preparedStatement.setInt(2, agendamento.getCodCliente());
 			preparedStatement.setInt(3, agendamento.getCodServico());

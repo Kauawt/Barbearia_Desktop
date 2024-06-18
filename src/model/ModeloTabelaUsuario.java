@@ -3,13 +3,19 @@ package model;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-
+/**
+ * Modelo de tabela para exibição de usuários em uma interface gráfica.
+ * Extende AbstractTableModel para fornecer os dados necessários à JTable.
+ */
 public class ModeloTabelaUsuario extends AbstractTableModel{
 
 	private static final String[] colunas = {"Código", "Nome", "CPF", "data de Nascimento", "salario",
 			"email", "Perfil", "status"};
 	private ArrayList<Usuario> usuarios;
-	
+	/**
+     * Construtor que inicializa o modelo com uma lista de usuários.
+     * @param usuarios Lista de usuários a serem exibidos na tabela
+     */
 	public ModeloTabelaUsuario(ArrayList<Usuario> usuarios) {
 		super();
 		this.usuarios = usuarios;
@@ -25,7 +31,12 @@ public class ModeloTabelaUsuario extends AbstractTableModel{
 
 		return colunas.length;
 	}
-	
+	/**
+     * Obtém o valor a ser exibido em uma célula da tabela.
+     * @param rowIndex Índice da linha
+     * @param columnIndex Índice da coluna
+     * @return Objeto a ser exibido na célula especificada
+     */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
