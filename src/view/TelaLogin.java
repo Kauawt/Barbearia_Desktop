@@ -129,7 +129,7 @@ public class TelaLogin extends JFrame {
 		txtUserUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		txtUserUsuario.setForeground(new Color(128, 128, 128));
 		txtUserUsuario.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-		txtUserUsuario.setText("admin@gmail.com");
+		txtUserUsuario.setText("");
 		txtUserUsuario.setBounds(261, 110, 200, 20);
 		txtUserUsuario.setColumns(10);
 		panel_1.add(txtUserUsuario, "flowy,cell 1 2,gapbottom 10,grow");
@@ -141,7 +141,7 @@ public class TelaLogin extends JFrame {
 		txtSenhaUsuario.setColumns(10);
 		txtSenhaUsuario.setBounds(261, 274, 176, 20);
 		panel_1.add(txtSenhaUsuario, "cell 1 2,gapbottom 10,grow");
-		txtSenhaUsuario.setText("Admin");
+		txtSenhaUsuario.setText("");
 
 		lblStatus = new JLabel("");
 		lblStatus.setBounds(223, 238, 39, 42);

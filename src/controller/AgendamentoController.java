@@ -22,7 +22,6 @@ import dao.ServicoDao;
 import dao.UsuarioDao;
 import model.Agendamento;
 import model.Servico;
-import view.TelaAgendamento;
 import view.TelaAgendamentoPanel;
 
 

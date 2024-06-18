@@ -45,7 +45,6 @@ public class UsuarioDao {
 			conexao = ModuloConexao.conector(); // abre conexao
 			preparedStatement = conexao.prepareStatement(query); // passa o comando sql como argumento
 			Criptografia criptografia = new Criptografia(usuario.getSenhaUsuario(), Criptografia.MD5);
-			System.out.println(criptografia.criptografar());
 
 			preparedStatement.setString(1, usuario.getNomeUsuario());
 			preparedStatement.setString(2, usuario.getCpfUsuario());

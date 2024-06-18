@@ -46,6 +46,7 @@ public class ClienteDao {
 			pst.setString(4, cliente.getCpfCliente());
 			pst.setString(5, cliente.getStatusCliente());
 			pst.executeUpdate(); // atualiza o banco de dados
+			JOptionPane.showMessageDialog( null, "Cliente cadastrado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Cliente: " + e);
 		} finally {

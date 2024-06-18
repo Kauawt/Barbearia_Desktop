@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -214,9 +215,19 @@ public class TelaClientePanel extends JPanel {
 		btnCadastrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clienteSelecionado == null) {
-					clienteController.cadastrarCliente();
+						try {
+							clienteController.cadastrarCliente();
+						} catch (ExceptionDao e1) {
+							JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
+							e1.printStackTrace();
+						}
 				} else {
-					clienteController.alterarCliente();
+					try {
+						clienteController.alterarCliente();
+					} catch (ExceptionDao e1) {
+						JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
