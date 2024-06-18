@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * Modelo de tabela para exibição de serviços em uma interface gráfica.
+ * Extende AbstractTableModel para fornecer os dados necessários à JTable.
+ */
 public class ModeloTabelaServico extends AbstractTableModel{
 
 	private static final String[] colunas = {"Código", "Nome", "Descrição", "Preço", "Duração",
 			"Status"};
 	private ArrayList<Servico> servicos;
 	
+	/**
+     * Construtor que inicializa o modelo com uma lista de serviços.
+     * @param servicos Lista de serviços a serem exibidos na tabela
+     */
 	public ModeloTabelaServico(ArrayList<Servico> servicos) {
 		super();
 		this.servicos = servicos;
@@ -25,7 +33,12 @@ public class ModeloTabelaServico extends AbstractTableModel{
 
 		return colunas.length;
 	}
-	
+	 /**
+     * Obtém o valor a ser exibido em uma célula da tabela.
+     * @param rowIndex Índice da linha
+     * @param columnIndex Índice da coluna
+     * @return Objeto a ser exibido na célula especificada
+     */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		

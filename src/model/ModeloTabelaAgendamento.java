@@ -5,7 +5,10 @@ import javax.swing.table.AbstractTableModel;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Modelo de tabela para exibição de agendamentos em uma interface gráfica.
+ * Extende AbstractTableModel para fornecer os dados necessários à JTable.
+ */
 public class ModeloTabelaAgendamento extends AbstractTableModel {
 	
 	/**
@@ -17,17 +20,15 @@ public class ModeloTabelaAgendamento extends AbstractTableModel {
 	
 	private ArrayList<Agendamento> agendamentos;
 	private List<Time> horariosDisponiveis;
-	
+	/**
+     * Construtor que inicializa o modelo com uma lista de agendamentos.
+     *
+     * @param agendamentos Lista de agendamentos a serem exibidos na tabela
+     */
 	public ModeloTabelaAgendamento(ArrayList<Agendamento> agendamentos) {
 		super();
 		this.agendamentos = agendamentos;
 	}
-	 // Método para definir os horários disponíveis
-    public void setHorariosDisponiveis(List<Time> horariosDisponiveis) {
-        this.horariosDisponiveis = horariosDisponiveis;
-        fireTableDataChanged(); // Notifica a tabela que os dados mudaram
-        System.out.println("Horários disponíveis definidos no modelo: " + horariosDisponiveis);
-    }
 	@Override
 	public int getRowCount() {
 		return agendamentos.size();
@@ -38,7 +39,12 @@ public class ModeloTabelaAgendamento extends AbstractTableModel {
 
 		return colunas.length;
 	}
-	
+	/**
+     * Obtém o valor a ser exibido em uma célula da tabela.
+     * @param rowIndex Índice da linha
+     * @param columnIndex Índice da coluna
+     * @return Objeto a ser exibido na célula especificada
+     */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		

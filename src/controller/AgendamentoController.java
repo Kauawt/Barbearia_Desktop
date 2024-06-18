@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,6 +25,11 @@ import model.Servico;
 import view.TelaAgendamento;
 import view.TelaAgendamentoPanel;
 
+
+/**
+ * Controlador responsável pela lógica de agendamento de serviços.
+ * Coordena a interação entre a interface de usuário, os dados do sistema e a lógica de negócios.
+ */
 public class AgendamentoController {
 	private final AgendaHelper helper;
 	private TelaAgendamentoPanel view;
@@ -32,6 +38,11 @@ public class AgendamentoController {
 	 private final int TEMPO_PADRAO_CORTE = 30;
 	
 
+	 /**
+	     * Construtor da classe AgendamentoController.
+	     *
+	     * @param telaAgendamentoPanel O painel de tela associado a este controlador.
+	     */
 	public AgendamentoController(TelaAgendamentoPanel telaAgendamentoPanel) {
 	    this.view = telaAgendamentoPanel;
 	    this.helper = new AgendaHelper(telaAgendamentoPanel);
@@ -55,7 +66,7 @@ public class AgendamentoController {
 	public void atualizaValor() {
 	    Servico servico = helper.obterServico();
 	    if (servico == null) {
-	        System.out.println("Serviço não selecionado."); // Apenas para depuração
+	        System.out.println("Serviço não selecionado.");
 	    } else {
 	        helper.setarValor(servico.getPrecoServico());
 	    }
@@ -113,73 +124,80 @@ public class AgendamentoController {
 		agendaDao.atualizarAgendamento(agendamento, codAgendamento);
     }
 
-	/**
-     * Retorna a carga horária disponível para um determinado barbeiro.
-     * @param codBarbeiro O código do barbeiro.
-     * @return Uma lista de horários disponíveis para o barbeiro.
+    /**
+     * Retorna a carga horária disponível para um barbeiro em um determinado dia da semana, exceto domingo (de acordo com a Regra de Negócio definida).
+     *
+     * @param data A data para a qual se deseja verificar a carga horária.
+     * @return ArrayList contendo os horários disponíveis para agendamento.
      */
-	private ArrayList<LocalTime> cargaHorariaBarbeiro() {
+    private ArrayList<LocalTime> cargaHorariaBarbeiro(LocalDate data) {
         ArrayList<LocalTime> cargaHoraria = new ArrayList<>();
         LocalTime horarioInicio = LocalTime.of(8, 0); // Horário de início da jornada
         LocalTime horarioFim = LocalTime.of(19, 0); // Horário de término da jornada
 
-        while (horarioInicio.isBefore(horarioFim)) {
-            cargaHoraria.add(horarioInicio);
-            horarioInicio = horarioInicio.plusMinutes(30); // 30 minutos é o tempo padrão do corte
-        }
-
+        DayOfWeek diaDaSemana = data.getDayOfWeek();
+        // Verifica se é de segunda a sábado
+        if (diaDaSemana != DayOfWeek.SUNDAY) {
+            while (horarioInicio.isBefore(horarioFim)) {
+                cargaHoraria.add(horarioInicio);
+                horarioInicio = horarioInicio.plusMinutes(30); // 30 minutos padrão para o tempo do corte
+            }}
         return cargaHoraria;
-    }
+        }
+    /**
+     * Obtém os horários disponíveis para agendamento de um barbeiro em uma determinada data.
+     *
+     * @param codBarbeiro O código do barbeiro para o qual se deseja verificar os horários disponíveis.
+     * @param dataAgendamento A data para a qual se deseja agendar no formato "dd/MM/yyyy".
+     * @return ArrayList contendo os horários disponíveis para agendamento na data especificada.
+     */
+    public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
+        try {
+            ArrayList<LocalTime> horariosMarcados = null;
+            try {
+                horariosMarcados = agendaDao.consultarHorariosMarcados(codBarbeiro, dataAgendamento);
+            } catch (ClassCastException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao consultar horários marcados: formato de dados inválido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+                return new ArrayList<>();}
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataAgendamentoFormatada = LocalDate.parse(dataAgendamento, formatter);            
+            // Verifica se o dia é domingo
+            if (dataAgendamentoFormatada.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                JOptionPane.showMessageDialog(null, "Não é possível agendar no Domingo.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return new ArrayList<>(); }
+            ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro(dataAgendamentoFormatada);
+            Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
+            ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
+            LocalTime horarioAtual = LocalTime.now();
 
-	/**
-	 * Obtém os horários disponíveis para agendamento com base no código do barbeiro e na data de agendamento fornecidos, fornecidos através da View TelaAgendamentoPanel.
-	 * Verifica os horários já marcados consultando o método consultarHorariosMarcados do AgendaDao.
-	 * Utiliza o método cargaHorariaBarbeiro para obter a carga horária padrão do barbeiro.
-	 * Itera sobre a carga horária e adiciona os horários não marcados à lista de horários disponíveis.
-	 * Exibe uma mensagem se não houver horários disponíveis para o dia especificado.
-	 * @param codBarbeiro O código do barbeiro para quem se deseja verificar os horários disponíveis.
-	 * @param dataAgendamento A data do agendamento no formato "dd/MM/yyyy".
-	 * @return Uma lista de LocalTime contendo os horários disponíveis para o dia especificado.
-	 *         Retorna uma lista vazia se ocorrer um erro ao acessar o banco de dados.
-	 */
-	 
-	public ArrayList<LocalTime> obterHorariosDisponiveis(int codBarbeiro, String dataAgendamento) {
-	    try {
-	        System.out.println("Método obterHorariosDisponiveis chamado com codBarbeiro: " + codBarbeiro + " e dataAgendamento: " + dataAgendamento);
-	        ArrayList<LocalTime> horariosMarcados = agendaDao.consultarHorariosMarcados(codBarbeiro, dataAgendamento);
-	        ArrayList<LocalTime> cargaHoraria = cargaHorariaBarbeiro();
+            LocalDate hoje = LocalDate.now();
+            
+            if (dataAgendamentoFormatada.isBefore(hoje)) {
+                JOptionPane.showMessageDialog(null, "Data de agendamento não pode ser anterior ao dia de hoje.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return new ArrayList<>();
+            }
+            if (dataAgendamentoFormatada.equals(hoje)) {
+                LocalTime horarioInicioExpediente = horarioAtual.plusMinutes(30 - (horarioAtual.getMinute() % 30));
+                for (LocalTime horario : cargaHoraria) {
+                    if (horario.isAfter(horarioAtual) && horario.isAfter(horarioInicioExpediente) && !horariosMarcadosSet.contains(horario)) {
+                        horariosDisponiveis.add(horario);
+                    }}
+            } else {
+                for (LocalTime horario : cargaHoraria) {
+                    if (!horariosMarcadosSet.contains(horario)) {
+                        horariosDisponiveis.add(horario);
+                    }}}
+            if (horariosDisponiveis.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Não possuem mais horários disponíveis para hoje.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
+            return horariosDisponiveis;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return new ArrayList<>();
+        }}
 
-	        Set<LocalTime> horariosMarcadosSet = new HashSet<>(horariosMarcados);
-	        ArrayList<LocalTime> horariosDisponiveis = new ArrayList<>();
-	        LocalTime horarioAtual = LocalTime.now();
-	        // Converte a data de agendamento para LocalDate
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	        LocalDate dataAgendamentoFormatada = LocalDate.parse(dataAgendamento, formatter);
-	        LocalDate hoje = LocalDate.now(); // Verifica se a data de agendamento é igual ou depois do dia de hoje
-	        if (dataAgendamentoFormatada.isBefore(hoje)) {
-	            JOptionPane.showMessageDialog(null, "Data de agendamento não pode ser anterior ao dia de hoje.", "Aviso", JOptionPane.WARNING_MESSAGE);
-	            return new ArrayList<>(); }
-	        // Verifica se a data de agendamento é igual ao dia de hoje
-	        if (dataAgendamentoFormatada.equals(hoje)) {
-	            LocalTime horarioInicioExpediente = horarioAtual.plusMinutes(30 - (horarioAtual.getMinute() % 30));
-	            for (LocalTime horario : cargaHoraria) {
-	                if (horario.isAfter(horarioAtual) && horario.isAfter(horarioInicioExpediente) && !horariosMarcadosSet.contains(horario)) {
-	                    horariosDisponiveis.add(horario);
-	                }}} else {
-	            // Se a data de agendamento é depois do dia de hoje, considera o expediente completo
-	            LocalTime horarioInicioExpediente = LocalTime.of(8, 0); // Horário de início da jornada
-	            for (LocalTime horario : cargaHoraria) {
-	                if (!horariosMarcadosSet.contains(horario)) {
-	                    horariosDisponiveis.add(horario);
-	                }}}
-	        if (horariosDisponiveis.isEmpty()) {
-	            JOptionPane.showMessageDialog(null, "Não possuem mais horários disponíveis para hoje.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-	        }
-	        return horariosDisponiveis;
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return new ArrayList<>();
-	    }}
 	
 	/**
 	 * Busca o código de um agendamento através dos códigos de cliente, usuário, serviço, data e hora de atendimento.

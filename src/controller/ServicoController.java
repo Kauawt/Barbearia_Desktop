@@ -3,12 +3,16 @@ package controller;
 import java.text.ParseException;
 
 import java.sql.SQLException;
-
 import dao.ExceptionDao;
 import dao.ServicoDao;
 import model.Servico;
 import model.Usuario;
 
+/**
+ * Controlador responsável pela lógica de gestão de serviços.
+ * Gerencia a interação entre a interface de usuário para serviços (TelaServicoPanel),
+ * os dados do sistema (ServicoDao) e a lógica de negócios relacionada aos serviços.
+ */
 public class ServicoController {
 	/**
 	 * Cadastra um novo serviço com as informações fornecidas.

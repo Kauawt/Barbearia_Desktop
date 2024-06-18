@@ -18,7 +18,11 @@ import model.Usuario;
 import model.Validador;
 import view.TelaCliente;
 import view.TelaUsuario;
-
+/**
+ * Controlador responsável pela lógica de gestão de usuários.
+ * Gerencia a interação entre a interface de usuário para usuários (TelaUsuarioPanel),
+ * os dados do sistema (UsuarioDao) e a lógica de negócios relacionada aos usuários.
+ */
 public class UsuarioController {
 	
 	private static UsuarioDao usuarioDao;
@@ -116,6 +120,9 @@ public class UsuarioController {
 	public UsuarioController() {
         this.usuarioDao = new UsuarioDao();
     }
+	public void inicializarUsuarioDao() {
+        this.usuarioDao = new UsuarioDao();
+    }
 	/**
 	 * Busca um usuário pelo seu código.
 	 * 
@@ -139,7 +146,26 @@ public class UsuarioController {
     public static int buscarCodigoUsuarioPorNome(String nomeUsuario) throws ExceptionDao, SQLException {
         return usuarioDao.buscarCodigoUsuarioPorNome(nomeUsuario);
     }
+    /**
+     * Obtém todos os usuários cadastrados no sistema.
+     *
+     * @return ArrayList contendo todos os usuários cadastrados.
+     * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
+     * Pode ser lançado se o UsuarioDao não estiver inicializado corretamente.
+     */
+    public ArrayList<Usuario> obterUsuarios() throws ExceptionDao {
+        if (usuarioDao == null) {
+            throw new IllegalStateException("UsuarioDao não foi inicializado corretamente.");
+        }
+
+        try {
+            return usuarioDao.selectAllUsuarios();
+        } catch (Exception e) {
+            throw new ExceptionDao("Erro ao buscar todos os usuários: " + e.getMessage());
+        }
+    }
 }
+
 	
 
 

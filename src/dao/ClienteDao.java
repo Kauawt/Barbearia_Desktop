@@ -11,7 +11,10 @@ import javax.swing.JOptionPane;
 
 import model.Cliente;
 import model.Usuario;
-
+/**
+ * Classe responsável por realizar operações de acesso a dados relacionadas a clientes no banco de dados.
+ * Implementa métodos para inserção, consulta, atualização e exclusão de dados de clientes.
+ */
 public class ClienteDao {
 
 	private final String CADASTRAR_CLIENTE = "insert into tbCliente(nomeCliente,enderecoCliente,telefoneCliente,cpfCliente,statusCliente) values (?,?,?,?,?)";

@@ -14,7 +14,11 @@ import dao.AgendaDao;
 import dao.ClienteDao;
 import dao.ExceptionDao;
 import dao.UsuarioDao;
-
+/**
+ * Classe que representa um agendamento de serviço.
+ * Armazena informações sobre o agendamento, incluindo o serviço, cliente, usuário responsável,
+ * data e hora do atendimento, código do serviço, código do cliente, código do usuário e preço do serviço.
+ */
 public class Agendamento {
 	private int codAgendamento;
 	private Servico servico; // Objeto representando o serviço
@@ -27,10 +31,22 @@ public class Agendamento {
 	private int codUsuario;
 	private double precoServico;
 
-	// Construtor vazio
+	/**
+     * Construtor vazio da classe Agendamento.
+     */
 	public Agendamento() {}
 
-	// Construtor utilizado no método formatarDadosAgendamento
+	/**
+     * Construtor utilizado para formatar dados de agendamento.
+     * Usado no método formatarDadosAgendamento.
+     *
+     * @param codUsuario Código do usuário responsável pelo agendamento
+     * @param codCliente Código do cliente agendado
+     * @param codServico Código do serviço agendado
+     * @param precoServico Preço do serviço agendado
+     * @param dataAtendimento Data do atendimento
+     * @param horaAtendimento Hora do atendimento
+     */
 	public Agendamento(int codUsuario, int codCliente, int codServico, double precoServico, String dataAtendimento, String horaAtendimento) {
 	    this.codUsuario = codUsuario;
 	    this.codCliente = codCliente;
@@ -40,7 +56,17 @@ public class Agendamento {
 	    this.horaAtendimento = horaAtendimento;
 	}
 
-	// Construtor usado no ListarAgendamento
+	/**
+     * Construtor utilizado para listar agendamentos.
+     * Usado no método ListarAgendamento.
+     *
+     * @param codAgendamento Identificador único do agendamento
+     * @param servico Objeto representando o serviço agendado
+     * @param cliente Objeto representando o cliente agendado
+     * @param usuario Objeto representando o usuário responsável pelo agendamento
+     * @param dataAtendimento Data do atendimento
+     * @param horaAtendimento Hora do atendimento
+     */
     public Agendamento(int codAgendamento, Servico servico, Cliente cliente, Usuario usuario, LocalDate dataAtendimento, LocalTime horaAtendimento) {
         this.codAgendamento = codAgendamento;
         this.servico = servico;
@@ -49,7 +75,16 @@ public class Agendamento {
         this.dataAtendimento = dataAtendimento.toString();
         this.horaAtendimento = horaAtendimento.toString();
     }
-   
+    /**
+     * Construtor para a Tela Consulta Agendamento.
+     * @param codAgendamento
+     * @param codCliente
+     * @param codUsuario
+     * @param codServico
+     * @param precoServico
+     * @param dataAtendimento
+     * @param horaAtendimento
+     */
 	 public Agendamento(int codAgendamento, int codCliente, int codUsuario, int codServico, double precoServico, String dataAtendimento, String horaAtendimento) {
 	        this.codAgendamento = codAgendamento;
 	        this.codCliente = codCliente;
@@ -60,7 +95,10 @@ public class Agendamento {
 	        this.horaAtendimento = horaAtendimento;
 	    }
 	 
-
+	 /**
+     * Retorna uma representação em string do objeto Agendamento.
+     * @return Uma string contendo informações detalhadas sobre o agendamento.
+     */
 	@Override
 	public String toString() {
 		return "Agendamento [codAgendamento=" + codAgendamento + ", servico=" + servico + ", cliente=" + cliente
@@ -151,7 +189,11 @@ public class Agendamento {
 	public void setHoraAtendimento(String horaAtendimento) {
 		this.horaAtendimento = horaAtendimento;
 	}
-	
+	/**
+	 * Método para cadastrar um novo agendamento utilizando o AgendaDao.
+	 * @param agendamento Objeto do tipo Agendamento contendo as informações do agendamento a ser cadastrado
+	 * @throws ExceptionDao Exceção lançada em caso de erro ao acessar ou manipular os dados no banco
+	 */
 	public void cadastrarAgendamento(Agendamento agendamento) throws ExceptionDao {
 		
 		new AgendaDao().cadastrarAgendamento(agendamento);

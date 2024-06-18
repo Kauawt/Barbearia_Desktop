@@ -12,9 +12,17 @@ import model.Validador;
 import view.TelaAgendamento;
 import view.TelaAgendamentoPanel;
 
+/**
+ * Classe helper responsável por auxiliar na manipulação de dados e interação da interface
+ * relacionados ao agendamento de serviços.
+ * Recebe e manipula a interface de agendamento (TelaAgendamentoPanel).
+ */
 public class AgendaHelper {
 	private final TelaAgendamentoPanel view;
-
+	 /**
+     * Construtor da classe AgendaHelper.
+     * @param telaAgendamentoPanel A interface de agendamento associada a este helper.
+     */
 	public AgendaHelper(TelaAgendamentoPanel telaAgendamentoPanel) {
 		this.view = telaAgendamentoPanel;
 	}
@@ -37,18 +45,13 @@ public class AgendaHelper {
      * Obtém o serviço selecionado no ComboBox.
      * @return O serviço selecionado.
      */
-	/*public Servico obterServico() {
-		return (Servico) view.getJboxServico().getSelectedItem();
-	}*/
 	public Servico obterServico() {
 		Object selectedItem = view.getJboxServico().getSelectedItem();
 	    if (selectedItem instanceof Servico) {
 	        return (Servico) selectedItem;
 	    } else {
-	        // Lida com o caso em que o item selecionado não é do tipo Servico
-	        return null; // ou lança uma exceção, dependendo do seu fluxo de controle
-	    }
-	}
+	        return null;
+	    }}
 	
 	/**
      * Define o valor do serviço na view.
@@ -108,9 +111,7 @@ public class AgendaHelper {
 		}
 		else {
 			return true;
-		}
-	}
-
+		}}
 	
 	/**
      * Limpa os campos após um agendamento ser concluído.
@@ -124,6 +125,4 @@ public class AgendaHelper {
 		view.getTxtValor().setText("");
 		view.getJboxHora().setSelectedItem("");
 		view.getJboxHora().setToolTipText("");
-	}
-	
-}
+	}}

@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.*;
-
+/**
+ * Classe responsável por estabelecer a conexão com o banco de dados.
+ * Gerencia a conexão com o banco de dados e fornece métodos para abrir, fechar e configurar a conexão.
+ */
 public class ModuloConexao {
 	
 	private static Connection conexao = null;

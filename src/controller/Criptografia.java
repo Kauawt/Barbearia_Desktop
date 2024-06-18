@@ -4,7 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
-
+/**
+ * Classe responsável por realizar operações de criptografia utilizando diferentes algoritmos.
+ * Permite criptografar informações usando os algoritmos SHA-256 e MD5.
+ */
 public class Criptografia {
 	
 	public static final String SHA256 = "SHA-256";
@@ -13,6 +16,11 @@ public class Criptografia {
 	protected String informacao;
 	protected String padrao;
 	
+	/**
+     * Construtor da classe Criptografia.
+     * @param informacao Informação a ser criptografada.
+     * @param padrao     Algoritmo de criptografia a ser utilizado (SHA-256 ou MD5).
+     */
 	public Criptografia(String informacao, String padrao) {
 		super();
 		this.informacao = informacao;

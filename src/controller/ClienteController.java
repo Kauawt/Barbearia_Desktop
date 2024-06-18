@@ -13,11 +13,19 @@ import dao.ClienteDao;
 import dao.ExceptionDao;
 import model.Cliente;
 
+/**
+ * Controlador responsável por gerenciar a lógica relacionada aos clientes.
+ * Coordena a interação entre a interface de cliente (TelaClientePanel) e os dados do sistema.
+ */
 public class ClienteController {
 	private final TelaClientePanel telaClientePanel;
 	private ClienteHelper clienteHelper;
 	private static ClienteDao clienteDao;
 
+	 /**
+     * Construtor da classe ClienteController.
+     * @param telaClientePanel O painel de tela associado a este controlador.
+     */
 	public ClienteController(TelaClientePanel telaClientePanel) {
 		this.telaClientePanel = telaClientePanel;
 		this.clienteHelper = new ClienteHelper(telaClientePanel);
