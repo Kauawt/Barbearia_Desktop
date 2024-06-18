@@ -230,31 +230,32 @@ public class TelaServicoPanel extends JPanel {
 		btnCadastrarServico.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		btnCadastrarServico.setBackground(new Color(240, 240, 240));
 		btnCadastrarServico.setIcon(null);
-
-		if (servicoSelecionado == null) {
-			btnCadastrarServico.setVisible(true);
-			btnCadastrarServico.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+		btnCadastrarServico.setVisible(true);
+		btnCadastrarServico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (servicoSelecionado == null) {
 					try {
 						servicoController.cadastrarServico(txtTipoServico.getText(), txtDescricaoServico.getText(),
 								Double.parseDouble(txtPrecoServico.getText()),
 								Double.parseDouble(txtDuracaoServico.getText()),
 								cbStatusServico.getSelectedItem().toString());
 					} catch (NumberFormatException | ExceptionDao e1) {
+						JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
+						e1.printStackTrace();
+					}
+				} else {
+					try {
+						servicoController.alterarServico(servicoSelecionado.getCodServico(), txtTipoServico.getText(),
+								txtDescricaoServico.getText(), Double.parseDouble(txtPrecoServico.getText()),
+								Double.parseDouble(txtDuracaoServico.getText()),
+								cbStatusServico.getSelectedItem().toString());
+					} catch (NumberFormatException | ParseException | ExceptionDao e1) {
+						JOptionPane.showMessageDialog(null, e1 + "Não foi possível converter os dados captados");
 						e1.printStackTrace();
 					}
 				}
-			});
-		} else {
-			try {
-				servicoController.alterarServico(servicoSelecionado.getCodServico(), txtTipoServico.getText(),
-						txtDescricaoServico.getText(), Double.parseDouble(txtPrecoServico.getText()),
-						Double.parseDouble(txtDuracaoServico.getText()), cbStatusServico.getSelectedItem().toString());
-			} catch (NumberFormatException | ParseException | ExceptionDao e1) {
-
-				e1.printStackTrace();
 			}
-		}
+		});
 
 		JButton btnConsultarServico = new JButton("Consultar");
 		btnConsultarServico.setBounds(405, 368, 124, 41);

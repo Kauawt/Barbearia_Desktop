@@ -2,6 +2,8 @@ package controller;
 
 import java.text.ParseException;
 
+import javax.swing.JOptionPane;
+
 import java.sql.SQLException;
 import dao.ExceptionDao;
 import dao.ServicoDao;
@@ -25,8 +27,15 @@ public class ServicoController {
 	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
 	 */
 	public void cadastrarServico(String tipoServico, String descricaoServico, double precoServico, double duracaoServico, String statusServico) throws ExceptionDao {
-		Servico servico = new Servico(tipoServico, descricaoServico, precoServico, duracaoServico, statusServico);
-		servico.cadastrarServico(servico);
+		try {
+			Servico servico = new Servico(tipoServico, descricaoServico, precoServico, duracaoServico, statusServico);
+			servico.cadastrarServico(servico);
+		}
+		catch(ExceptionDao e) {
+			JOptionPane.showMessageDialog(null, e + "Não foi possível converter os dados captados");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -42,8 +51,14 @@ public class ServicoController {
 	 * @throws ExceptionDao Se ocorrer um erro ao acessar o banco de dados.
 	 */
 	public void alterarServico(int codServico, String tipoServico, String descricaoServico, double precoServico, double duracaoServico, String statusServico) throws ParseException, ExceptionDao {
-		Servico servico = new Servico(codServico, tipoServico, descricaoServico, precoServico, duracaoServico, statusServico);
-		servico.alterarServico(servico);
+		try {
+			Servico servico = new Servico(codServico, tipoServico, descricaoServico, precoServico, duracaoServico, statusServico);
+			servico.alterarServico(servico);
+		}catch(ExceptionDao e) {
+			JOptionPane.showMessageDialog(null, e + "Não foi possível converter os dados captados");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
