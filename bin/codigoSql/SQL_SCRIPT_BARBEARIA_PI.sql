@@ -43,7 +43,7 @@ insert into tbUsuario values (
 '1996-05-21',
 10000,
 'Admin@gmail.com',
-'Admin',
+'E3AFED0047B08059D0FADA10F400C1E5', --Senha: Admin
 'Administrador',
 'Ativo');
 
@@ -53,7 +53,7 @@ insert into tbUsuario values (
 '1991-08-21',
 3000,
 'Fabricio@hotmail.com',
-'Fabricio123',
+'6E286A1D86A7A86B730B841FD53983CD', -- Senha: Fabricio123
 'Funcion�rio',
 'Ativo');
 

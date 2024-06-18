@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-/controller/
-/dao/
-/model/
-/org/
+/codigoSql/
 /view/
-/icones/
-=======
->>>>>>> main
+/dao/
+/controller/

@@ -41,6 +41,7 @@ private final String CADASTRAR_SERVICO = "insert into tbServico(tipoServico,desc
 			pst.setDouble(4, servico.getDuracaoServico());
 			pst.setString(5, servico.getStatusServico());
 			pst.executeUpdate(); // atualiza o banco de dados
+			JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!");
 		} catch (SQLException e) {
 			throw new ExceptionDao("Erro ao Cadastrar o Serviço: " + e);
 		} finally {
