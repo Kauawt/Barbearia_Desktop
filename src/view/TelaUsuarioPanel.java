@@ -126,7 +126,7 @@ public class TelaUsuarioPanel extends JPanel {
 			txtNomeUsuarioPanel = new PlaceholderTextField("NOME");
 		}
 		if (usuarioSelecionado == null) {
-			txtSalarioUsuarioPanel = new PlaceholderTextField("SALÁRIO");
+			txtSalarioUsuarioPanel = new PlaceholderTextField("SALARIO");
 		}
 
 		if (usuarioSelecionado == null) {

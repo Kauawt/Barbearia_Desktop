@@ -35,7 +35,10 @@ import javax.swing.SwingConstants;
 import view.JPictureBox.SizeMode;
 import java.awt.Frame;
 import java.awt.Rectangle;
-
+/**
+ * Classe responsável pela interface de login do sistema.
+ * Esta classe estende JFrame para criar uma janela de login.
+ */
 public class TelaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;

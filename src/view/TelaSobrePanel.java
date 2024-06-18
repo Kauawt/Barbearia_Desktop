@@ -20,7 +20,10 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-
+/**
+ * Painel de interface para exibição de informações sobre o sistema.
+ * Esta classe extende JPanel para criar um painel que apresenta detalhes sobre o sistema.
+ */
 public class TelaSobrePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

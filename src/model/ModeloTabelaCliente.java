@@ -34,8 +34,8 @@ public class ModeloTabelaCliente extends AbstractTableModel {
 	}
 	 /**
      * Obtém o valor a ser exibido em uma célula da tabela.
-     * @param rowIndex Índice da linha
-     * @param columnIndex Índice da coluna
+     * @param rowIndex Indice da linha
+     * @param columnIndex Indice da coluna
      * @return Objeto a ser exibido na célula especificada
      */
 	@Override

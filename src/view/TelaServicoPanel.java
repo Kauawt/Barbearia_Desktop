@@ -51,7 +51,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import javax.swing.UIManager;
-
+/**
+ * Painel de interface para gerenciamento de serviços.
+ */
 public class TelaServicoPanel extends JPanel {
 
 	public Connection conexao = null;
@@ -313,7 +315,11 @@ public class TelaServicoPanel extends JPanel {
 			preencherCampos(servicoSelecionado);
 		}
 	}
-
+	/**
+     * Preenche os campos da interface com as informações do serviço selecionado.
+     * @param servicoSelecionado O serviço cujas informações serão exibidas nos campos da interface.
+     * @throws ExceptionDao Se ocorrer um erro ao acessar os dados do serviço no banco de dados.
+     */
 	private void preencherCampos(Servico servicoSelecionado) throws ExceptionDao {
 		txtTipoServico.setText(servicoSelecionado.getTipoServico());
 		txtDescricaoServico.setText(servicoSelecionado.getDescricaoServico());
